@@ -1,22 +1,22 @@
 <!--
-  NESTOR CASES-BLOK (snippet voor HubSpot / CMS, vastgepind op commit 70a5b2e)
+  NESTOR CASES-BLOK (snippet voor HubSpot / CMS, vastgepind op commit 64f5787)
 
   Deze versie verwijst naar één vaste commit en werkt dus meteen. Nadeel: na een code-wijziging
   op GitHub moet je deze snippet opnieuw genereren (python3 build.py) en opnieuw plakken.
   De gewone snippet (nestor-cases-snippet.html) laadt van GitHub Pages en volgt de branch main.
 
   Plak dit in het HTML-/embed-veld. CSS en script worden geladen van GitHub Pages:
-      https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@70a5b2e/dist/nestor-cases.css
-      https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@70a5b2e/dist/nestor-cases.js
+      https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@64f5787/dist/nestor-cases.css
+      https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@64f5787/dist/nestor-cases.js
   Pas je iets aan in de code, dan push je naar GitHub en staat het binnen ongeveer 10 minuten op de site.
 
   MEDIA: foto's, logo's en video's komen uit de HubSpot File Manager (map "NE - Website",
   met submap "klanten"), via data-media op de <section>. Een ander adres? Pas data-media aan,
-  met een slash op het einde. GitHub Pages heeft dezelfde bestanden als reserve: https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@70a5b2e/media/
+  met een slash op het einde. GitHub Pages heeft dezelfde bestanden als reserve: https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@64f5787/media/
 
   YOUTUBE: per videokaart de YouTube-link in data-video (zie de VERVANG-opmerkingen).
 -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@70a5b2e/dist/nestor-cases.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@64f5787/dist/nestor-cases.css">
 <section class="nc" id="nestor-cases" data-media="https://7551812.fs1.hubspotusercontent-eu1.net/hubfs/7551812/Nestor/NE%20-%20Website/">
   <div class="nc__inner">
     <div class="nc__head">
@@ -66,7 +66,7 @@
         <div class="nc__card nc__card--video" role="button" tabindex="0"
              data-video="https://www.youtube.com/shorts/U2xrfmG9EJ4" data-ratio="9/16" aria-label="Bekijk de video van Johan bij Maatkasten Online">
           <img class="nc__poster" data-src="media/maatkasten-johan.jpg" alt="Johan Haegeman · Maatkasten Online" loading="lazy">
-          <video class="nc__loop" data-src="media/maatkasten-johan-loop.mp4" muted loop playsinline preload="none"></video>
+          <video class="nc__loop" data-src="media/maatkasten-johan-loop.mp4" muted loop playsinline preload="metadata"></video>
           <img class="nc__logo" data-src="media/logo-maatkasten-online.png" alt="Maatkasten Online">
           <div class="nc__grow"></div>
           <button type="button" class="nc__watch" tabindex="-1">
@@ -111,7 +111,7 @@
         <div class="nc__card nc__card--video" role="button" tabindex="0"
              data-video="https://www.youtube.com/shorts/E2r4Isvmha0" data-ratio="9/16" aria-label="Bekijk de video van Luc bij Top Motors">
           <img class="nc__poster" data-src="media/topmotors-nestor.jpg" alt="Luc Vanderheeren · Top Motors" loading="lazy">
-          <video class="nc__loop" data-src="media/topmotors-nestor-loop.mp4" muted loop playsinline preload="none"></video>
+          <video class="nc__loop" data-src="media/topmotors-nestor-loop.mp4" muted loop playsinline preload="metadata"></video>
           <img class="nc__logo" data-src="media/logo-top-motors.png" alt="Top Motors">
           <div class="nc__grow"></div>
           <button type="button" class="nc__watch" tabindex="-1">
@@ -218,7 +218,7 @@
         <div class="nc__card nc__card--video" role="button" tabindex="0"
              data-video="https://www.youtube.com/shorts/u5RsF3bZijc" data-ratio="9/16" aria-label="Bekijk de video van Ronald bij Plopsa Hotel">
           <img class="nc__poster" data-src="media/plopsa-nestor.jpg" alt="Ronald De Smet · Plopsa Hotel" loading="lazy">
-          <video class="nc__loop" data-src="media/plopsa-nestor-loop.mp4" muted loop playsinline preload="none"></video>
+          <video class="nc__loop" data-src="media/plopsa-nestor-loop.mp4" muted loop playsinline preload="metadata"></video>
           <img class="nc__logo" data-src="media/logo-plopsa-hotel.png" alt="Plopsa Hotel">
           <div class="nc__grow"></div>
           <button type="button" class="nc__watch" tabindex="-1">
@@ -266,4 +266,4 @@
   </button>
   <div class="nc-modal__body"></div>
 </div>
-<script src="https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@70a5b2e/dist/nestor-cases.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@64f5787/dist/nestor-cases.js" defer></script>

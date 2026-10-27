@@ -45,24 +45,32 @@ function init() {
   window.addEventListener('resize', updateNav);
   updateNav();
 
-  /* ---- Hover-loop op videokaarten ---- */
-  var canHover = window.matchMedia('(hover: hover)').matches;
+  /* ---- Loop-video's op de videokaarten: spelen vanzelf (zonder geluid) zodra de kaart in beeld is ---- */
   var cards = section.querySelectorAll('.nc__card--video');
 
-  cards.forEach(function (card) {
+  function playLoop(card) {
     var loop = card.querySelector('.nc__loop');
-    if (loop && canHover && !reduceMotion) {
-      card.addEventListener('mouseenter', function () {
-        var p = loop.play();
-        if (p && p.then) p.then(function () { card.classList.add('is-playing'); }).catch(function () {});
-        else card.classList.add('is-playing');
-      });
-      card.addEventListener('mouseleave', function () {
-        card.classList.remove('is-playing');
-        loop.pause();
-        loop.currentTime = 0;
-      });
+    if (!loop) return;
+    var p = loop.play();
+    if (p && p.then) p.then(function () { card.classList.add('is-playing'); }).catch(function () {});
+    else card.classList.add('is-playing');
+  }
+  function pauseLoop(card) {
+    var loop = card.querySelector('.nc__loop');
+    if (loop) loop.pause();
+  }
+  if (!reduceMotion) {
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) playLoop(e.target); else pauseLoop(e.target); });
+      }, { threshold: 0.2 });
+      cards.forEach(function (card) { io.observe(card); });
+    } else {
+      cards.forEach(playLoop);
     }
+  }
+
+  cards.forEach(function (card) {
     card.addEventListener('click', function () { openModal(mediaUrl(card.dataset.video || ''), card.dataset.ratio); });
     card.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(mediaUrl(card.dataset.video || ''), card.dataset.ratio); }
