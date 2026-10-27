@@ -625,13 +625,12 @@ function init() {
     if (loop) loop.pause();
   }
   if (!reduceMotion) {
+    cards.forEach(playLoop);   /* meteen starten; de observer hieronder pauzeert wat buiten beeld is */
     if ('IntersectionObserver' in window) {
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (e) { if (e.isIntersecting) playLoop(e.target); else pauseLoop(e.target); });
       }, { threshold: 0.2 });
       cards.forEach(function (card) { io.observe(card); });
-    } else {
-      cards.forEach(playLoop);
     }
   }
 
