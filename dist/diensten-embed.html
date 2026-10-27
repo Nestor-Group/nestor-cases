@@ -56,6 +56,8 @@
   .nd__inner { max-width: var(--nd-max); margin: 0 auto; padding: var(--nd-pad-y) var(--nd-gutter) 0; }
 
   /* ---- Kop ---- */
+  .nd__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; }
+  .nd__text { min-width: 0; }
   .nd .nd__title {
     margin: 0; max-width: 840px;
     font-family: var(--nd-font-head); font-weight: 700;
@@ -75,13 +77,14 @@
   .nd__link:hover { filter: brightness(.92); }
 
   /* ---- Carrouselknoppen ---- */
-  .nd__nav { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 8px; margin-top: 32px; }
+  .nd__nav { display: flex; flex: none; align-items: center; gap: 8px; margin-top: 4px; }
   .nd .nd__navbtn {
-    width: 36px; height: 36px; border-radius: 50%; border: 1px solid transparent;
+    width: 44px; height: 44px; border-radius: 50%; border: 1px solid transparent;
     background: var(--nd-btn-bg); color: var(--nd-btn-fg); display: grid; place-items: center; cursor: pointer; padding: 0;
     transition: background .2s, color .2s, border-color .2s;
   }
-  .nd__navbtn svg { width: 20px; height: 20px; }
+  .nd__navbtn svg { width: 22px; height: 22px; }
+  .nd .nd__navbtn:focus-visible { outline: 2px solid var(--nd-accent); outline-offset: 2px; }
   .nd__navbtn--prev svg { transform: rotate(180deg); }
   .nd .nd__navbtn:disabled { background: transparent; color: var(--nd-head-text); opacity: .4; border-color: currentColor; cursor: default; }
 
@@ -150,6 +153,12 @@
   .nd__card--foto .nd__answer { text-shadow: 0 1px 2px rgba(0,0,0,.4); }
   .nd__card--foto .nd__grow { flex-basis: 56px; }
 
+  /* ---- Paginapuntjes onder de kaarten ---- */
+  .nd__dots { display: flex; justify-content: center; gap: 8px; margin-top: -24px; padding-bottom: 32px; }
+  .nd__dots span { width: 8px; height: 8px; border-radius: 50%; background: rgba(87,87,87,.25); transition: background .2s, transform .2s; }
+  .nd__dots span.is-active { background: var(--nd-accent); transform: scale(1.25); }
+  .nd__dots:empty { display: none; }
+
   /* ---- Afsluiter onder de kaarten ---- */
   .nd__foot {
     max-width: var(--nd-max); margin: 0 auto; padding: 0 var(--nd-gutter) var(--nd-pad-y);
@@ -162,6 +171,8 @@
     .nd { --nd-pad-y: 48px; }
     .nd .nd__title { font-size: 28px; }
     .nd .nd__intro { font-size: 16px; }
+    .nd__head { flex-direction: column; gap: 20px; }
+    .nd__nav { margin-top: 0; }
     .nd .nd__link { white-space: normal; text-align: center; justify-content: center; line-height: 1.25; }
   }
 
@@ -170,7 +181,7 @@
     .nd__inner, .nd__grid, .nd__foot { --nd-gutter: 16px; --nd-gap: 6px; }
     .nd { --nd-pad-y: 48px; }
     .nd__grid { margin-top: 24px; padding-bottom: 32px; }
-    .nd__nav { margin-top: 24px; }
+    .nd__dots { margin-top: -16px; padding-bottom: 24px; }
     .nd .nd__title { font-size: 28px; }
     .nd .nd__intro { font-size: 16px; }
     .nd .nd__link { padding: 10px 18px; }
@@ -194,19 +205,18 @@
 <section class="nd" id="nestor-diensten" data-media="https://7551812.fs1.hubspotusercontent-eu1.net/hubfs/7551812/Nestor/NE%20-%20Website/">
   <div class="nd__inner">
     <div class="nd__head">
-      <div>
+      <div class="nd__text">
         <h2 class="nd__title">Dit is wat Nestor voor jou kan betekenen</h2>
         <p class="nd__intro">Gepensioneerden en 60-plussers met goesting om nog één tot drie dagen per week te werken, als flexi-jobber of uitzendkracht. Herken je jezelf in een van deze situaties? Dan hebben wij een Nestor voor jou.</p>
       </div>
-    </div>
-
-    <div class="nd__nav">
+      <div class="nd__nav" aria-label="Kaarten bladeren">
       <button type="button" class="nd__navbtn nd__navbtn--prev" aria-label="Vorige" disabled>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </button>
       <button type="button" class="nd__navbtn nd__navbtn--next" aria-label="Volgende">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </button>
+      </div>
     </div>
   </div>
 
@@ -322,6 +332,8 @@
 
   </div>
 
+  <div class="nd__dots" aria-hidden="true"></div>
+
   <div class="nd__foot">
     <p>Staat jouw situatie er niet bij? Nestors zijn inzetbaar in alle sectoren. Kijk zelf wie er in jouw regio goesting heeft om aan de slag te gaan.</p>
     <a class="nd__link" href="https://interim.nestor.be/database-tool">
@@ -372,10 +384,21 @@ function init() {
     i = Math.max(0, Math.min(list.length - 1, i));
     grid.scrollTo({ left: itemLeft(list[i]), behavior: reduceMotion ? 'auto' : 'smooth' });
   }
+  var dots = section.querySelector('.nd__dots');
+  function updateDots() {
+    if (!dots) return;
+    var n = perPage(), pages = Math.ceil(items().length / n), cur = Math.round(currentIndex() / n);
+    if (dots.children.length !== pages) {
+      dots.innerHTML = '';
+      for (var i = 0; i < pages; i++) dots.appendChild(document.createElement('span'));
+    }
+    Array.prototype.forEach.call(dots.children, function (d, i) { d.classList.toggle('is-active', i === cur); });
+  }
   function updateNav() {
     var max = grid.scrollWidth - grid.clientWidth - 1;
     prev.disabled = grid.scrollLeft <= 0;
     next.disabled = grid.scrollLeft >= max;
+    updateDots();
   }
   prev.addEventListener('click', function () { goTo(currentIndex() - perPage()); });
   next.addEventListener('click', function () { goTo(currentIndex() + perPage()); });

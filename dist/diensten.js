@@ -39,10 +39,21 @@ function init() {
     i = Math.max(0, Math.min(list.length - 1, i));
     grid.scrollTo({ left: itemLeft(list[i]), behavior: reduceMotion ? 'auto' : 'smooth' });
   }
+  var dots = section.querySelector('.nd__dots');
+  function updateDots() {
+    if (!dots) return;
+    var n = perPage(), pages = Math.ceil(items().length / n), cur = Math.round(currentIndex() / n);
+    if (dots.children.length !== pages) {
+      dots.innerHTML = '';
+      for (var i = 0; i < pages; i++) dots.appendChild(document.createElement('span'));
+    }
+    Array.prototype.forEach.call(dots.children, function (d, i) { d.classList.toggle('is-active', i === cur); });
+  }
   function updateNav() {
     var max = grid.scrollWidth - grid.clientWidth - 1;
     prev.disabled = grid.scrollLeft <= 0;
     next.disabled = grid.scrollLeft >= max;
+    updateDots();
   }
   prev.addEventListener('click', function () { goTo(currentIndex() - perPage()); });
   next.addEventListener('click', function () { goTo(currentIndex() + perPage()); });

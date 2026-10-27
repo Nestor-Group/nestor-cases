@@ -115,7 +115,8 @@ zodat beide blokken op één pagina kunnen staan.
 Werkwijze bij een aanpassing: `diensten.html` aanpassen, `python3 build.py`, `dist/diensten-embed.html`
 opnieuw plakken in HubSpot, en committen en pushen zodat GitHub de laatste versie heeft.
 
-Opmaak: een carrousel met pijlknoppen die per pagina schuift: drie kaarten per pagina vanaf 640px
+Opmaak: een carrousel met pijlknoppen rechts naast de titel (onder de intro op mobiel) en paginapuntjes onder de
+kaarten, die per pagina schuift: drie kaarten per pagina vanaf 640px
 containerbreedte (compacter tussen 640 en 959px), één kaart per pagina daaronder. Elke kaart heeft een foto
 als achtergrond (`nd__card--foto`, bestanden `media/diensten-*.jpg`, met een donker transparant vlak en witte
 tekst). Een kaart zonder foto: laat de class en de `<img>` weg, dan is het een witte kaart. De foto's staan in de HubSpot File Manager (map "NE - Website") en in `media/`.
