@@ -24,7 +24,6 @@
      KAARTEN: elke kaart is een <div class="nd__item"> met daarin
        - een icoon (inline SVG, geen afbeelding nodig)
        - de functie (nd__fn)
-       - de herkenbare situatie bij de werkgever (nd__case)
        - wat Nestor levert (nd__answer)
      Kaart toevoegen of weghalen: kopieer of verwijder een volledige <div class="nd__item">.
      ===================================================================== -->
@@ -149,12 +148,10 @@
   .nd .nd__fn {
     font-family: var(--nd-font-head); font-weight: 700; font-size: 20px; line-height: 1.15; color: var(--nd-card-text);
   }
-  .nd .nd__case { font-size: 16px; line-height: 1.48; color: var(--nd-card-text); }
   .nd__grow { flex: 1 1 0; }
   .nd__answer {
     display: flex; align-items: flex-start; gap: 8px;
-    padding-top: 12px; border-top: 1px solid rgba(0,0,0,.08);
-    font-size: 16px; line-height: 1.42; font-weight: 600; color: var(--nd-card-text);
+    font-size: 17px; line-height: 1.4; font-weight: 600; color: var(--nd-card-text);
   }
   .nd .nd__answer svg { flex: none; width: 18px; height: 18px; margin-top: 2px; stroke: var(--nd-accent); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 
@@ -167,9 +164,8 @@
   }
   .nd__card--foto > :not(.nd__bg) { position: relative; z-index: 1; }
   .nd__card--foto .nd__icon { background: rgba(255,255,255,.18); color: #fff; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
-  .nd .nd__card--foto .nd__fn, .nd .nd__card--foto .nd__case, .nd .nd__card--foto .nd__answer { color: #fff; }
-  .nd .nd__card--foto .nd__answer { border-top-color: rgba(255,255,255,.3); }
-  .nd__card--foto .nd__case { text-shadow: 0 1px 2px rgba(0,0,0,.4); }
+  .nd .nd__card--foto .nd__fn, .nd .nd__card--foto .nd__answer { color: #fff; }
+  .nd__card--foto .nd__answer { text-shadow: 0 1px 2px rgba(0,0,0,.4); }
   .nd__card--foto .nd__grow { flex-basis: 56px; }
 
   /* ---- Afsluiter onder de kaarten ---- */
@@ -203,8 +199,7 @@
     .nd__icon { width: 36px; height: 36px; }
     .nd .nd__icon svg { width: 18px; height: 18px; }
     .nd .nd__fn { font-size: 16px; }
-    .nd .nd__case { font-size: 14px; line-height: 1.42; }
-    .nd__answer { font-size: 14px; line-height: 1.35; padding-top: 10px; gap: 6px; }
+    .nd__answer { font-size: 15px; line-height: 1.35; gap: 6px; }
     .nd .nd__answer svg { width: 15px; height: 15px; margin-top: 1px; }
     .nd .nd__foot p { font-size: 16px; }
   }
@@ -246,7 +241,6 @@
           <h3 class="nd__fn">Chauffeur</h3>
         </div>
         <div class="nd__grow"></div>
-        <p class="nd__case">Je zit zelf te vaak achter het stuur, tussen je vestigingen of naar klanten.</p>
         <div class="nd__answer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg><span>Een Nestor rijdt voor jou. Hoffelijk, stipt en met een babbel erbij.</span></div>
       </div>
     </div>
@@ -259,7 +253,6 @@
           <h3 class="nd__fn">Logistiek medewerker</h3>
         </div>
         <div class="nd__grow"></div>
-        <p class="nd__case">Bestellingen klaarzetten, laden en lossen, het magazijn op orde: er blijft werk liggen.</p>
         <div class="nd__answer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg><span>Een Nestor die ordelijk en met geduld je goederen in beweging houdt.</span></div>
       </div>
     </div>
@@ -272,7 +265,6 @@
           <h3 class="nd__fn">Administratief medewerker</h3>
         </div>
         <div class="nd__grow"></div>
-        <p class="nd__case">De administratie wordt er “tussendoor” bijgenomen. En blijft dus liggen.</p>
         <div class="nd__answer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg><span>Een Nestor met precisie en organisatietalent, een paar halve dagen per week.</span></div>
       </div>
     </div>
@@ -285,7 +277,6 @@
           <h3 class="nd__fn">Onthaalmedewerker</h3>
         </div>
         <div class="nd__grow"></div>
-        <p class="nd__case">Een paar uur per dag heb je iemand nodig aan het onthaal of aan de telefoon.</p>
         <div class="nd__answer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg><span>Een Nestor met charisma die je bezoekers met een glimlach ontvangt.</span></div>
       </div>
     </div>
@@ -298,7 +289,6 @@
           <h3 class="nd__fn">Pendelchauffeur</h3>
         </div>
         <div class="nd__grow"></div>
-        <p class="nd__case">Je medewerkers moeten elke dag van en naar het werk gebracht worden.</p>
         <div class="nd__answer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg><span>Een Nestor achter het stuur van de pendelbus, altijd op tijd.</span></div>
       </div>
     </div>
@@ -311,7 +301,6 @@
           <h3 class="nd__fn">Autojockey</h3>
         </div>
         <div class="nd__grow"></div>
-        <p class="nd__case">Wagens naar een klant, de garage of de keuring brengen kost je elke week uren.</p>
         <div class="nd__answer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg><span>Een Nestor-jockey brengt ze veilig ter plaatse. Jij blijft aan het werk.</span></div>
       </div>
     </div>
@@ -324,7 +313,6 @@
           <h3 class="nd__fn">Klusjesman</h3>
         </div>
         <div class="nd__grow"></div>
-        <p class="nd__case">Kleine klusjes in en rond het gebouw blijven liggen, want niemand heeft er tijd voor.</p>
         <div class="nd__answer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg><span>Een Nestor met handige handen die het ordelijk en met finesse oplost.</span></div>
       </div>
     </div>
@@ -337,7 +325,6 @@
           <h3 class="nd__fn">Winkelmedewerker</h3>
         </div>
         <div class="nd__grow"></div>
-        <p class="nd__case">Op drukke momenten kom je handen tekort in de winkel.</p>
         <div class="nd__answer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg><span>Een Nestor die graag onder de mensen is en je klanten vriendelijk verder helpt.</span></div>
       </div>
     </div>
@@ -350,7 +337,6 @@
           <h3 class="nd__fn">Eventmedewerker</h3>
         </div>
         <div class="nd__grow"></div>
-        <p class="nd__case">Extra handen nodig op een event, beurs of congres? Al is het maar voor één dag.</p>
         <div class="nd__answer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg><span>Een warme, ervaren Nestor die je gasten graag verwelkomt.</span></div>
       </div>
     </div>
