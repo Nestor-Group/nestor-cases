@@ -1,0 +1,202 @@
+  .nc {
+    /* ---- Kleuren (Nestor-huisstijl) ---- */
+    --nc-bg: #f6f4ef;            /* achtergrond van de sectie */
+    --nc-head-text: #575757;     /* titel en link */
+    --nc-eyebrow: #f73109;       /* kleine kop boven de titel */
+    --nc-card: #ffffff;          /* achtergrond van een kaart */
+    --nc-card-border: rgba(0,0,0,.06);
+    --nc-card-text: #575757;     /* tekst in de kaarten */
+    --nc-quote: #575757;         /* citaten */
+    --nc-accent: #f73109;        /* functie, resultaatregel */
+    --nc-btn-bg: #f73109;        /* knoppen: "Alle cases", pijlen, "Bekijk" */
+    --nc-btn-fg: #ffffff;
+    --nc-font-head: "Baloo Paaji 2", "Euclid Circular A", system-ui, sans-serif;
+    --nc-font-body: "Source Sans 3", "Source Sans Pro", system-ui, sans-serif;
+    --nc-font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --nc-max: 1234px;
+    --nc-gutter: 24px;
+    --nc-gap: 8px;
+    --nc-card-h: 328px;
+    --nc-card-w: min(80vw, 328px);
+    --nc-radius: 12px;
+
+    background: var(--nc-bg);
+    color: var(--nc-card-text);
+    font-family: var(--nc-font-body);
+    font-size: 16px;
+    line-height: 1.2;
+    padding: 120px 0 80px;
+    -webkit-font-smoothing: antialiased;
+    container-type: inline-size;   /* het grid kijkt naar de breedte van het blok, niet van het scherm */
+  }
+  @media (max-width: 767px)  {
+    .nc { padding-top: 80px; }
+    .nc__title { font-size: 28px; }
+    .nc__head { flex-direction: column; gap: 20px; }
+  }
+  @media (min-width: 768px)  { .nc { --nc-gutter: 72px; } }
+  @media (min-width: 1280px) { .nc { --nc-gutter: 104px; } }
+
+  .nc *, .nc *::before, .nc *::after { box-sizing: border-box; }
+  .nc img, .nc video { display: block; max-width: 100%; height: auto; border: 0; }
+  .nc button { font: inherit; color: inherit; margin: 0; appearance: none; -webkit-appearance: none; box-shadow: none; }
+  .nc h2, .nc p { margin: 0; padding: 0; }
+  .nc a, .nc a:hover, .nc a:focus { text-decoration: none; box-shadow: none; }
+  .nc .nc__link, .nc .nc__link > span { color: var(--nc-btn-fg); font-size: 14px; letter-spacing: .02em; }
+  .nc .nc__link:hover { color: var(--nc-btn-fg); }
+  .nc .nc__title { text-transform: none; }
+
+  .nc__inner { max-width: var(--nc-max); margin: 0 auto; padding: 0 var(--nc-gutter); }
+
+  /* ---- Kop ---- */
+  .nc__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; }
+  .nc__eyebrow {
+    font-family: var(--nc-font-head); font-weight: 600; font-size: 14px; line-height: 1.6;
+    letter-spacing: .06em; text-transform: uppercase; color: var(--nc-eyebrow);
+  }
+  .nc__title {
+    margin: 16px 0 0; max-width: 840px;
+    font-family: var(--nc-font-head); font-weight: 700;
+    font-size: 36px; line-height: 1.08; letter-spacing: -.01em; color: var(--nc-head-text);
+  }
+  .nc__link {
+    display: inline-flex; align-items: center; gap: 6px; flex: none;
+    padding: 12px 20px 12px 24px; border-radius: 9999px;
+    background: var(--nc-btn-bg); color: var(--nc-btn-fg); text-decoration: none; white-space: nowrap;
+    font-family: var(--nc-font-head); font-weight: 600; font-size: 14px; line-height: 1; text-transform: uppercase; letter-spacing: .02em;
+    transition: filter .2s;
+  }
+  .nc__link:hover { filter: brightness(.92); }
+  .nc .nc__link svg { width: 20px; height: 20px; color: var(--nc-btn-fg); transition: transform .2s; }
+  .nc__link:hover svg { transform: translate(2px, -2px); }
+
+  /* ---- Carrouselknoppen (alleen onder 1024px) ---- */
+  .nc__nav { display: flex; gap: 8px; margin-top: 40px; }
+  .nc .nc__navbtn {
+    width: 36px; height: 36px; border-radius: 50%; border: 1px solid transparent;
+    background: var(--nc-btn-bg); color: var(--nc-btn-fg); display: grid; place-items: center; cursor: pointer; padding: 0;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .nc__navbtn svg { width: 20px; height: 20px; }
+  .nc__navbtn--prev svg { transform: rotate(180deg); }
+  .nc .nc__navbtn:disabled { background: transparent; color: var(--nc-head-text); opacity: .4; border-color: currentColor; cursor: default; }
+
+  /* ---- Grid / carrousel ---- */
+  .nc__grid {
+    display: flex; gap: var(--nc-gap); margin-top: 24px;
+    overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
+    padding: 0 var(--nc-gutter); scroll-padding: 0 var(--nc-gutter);
+    scrollbar-width: none;
+  }
+  .nc__grid::-webkit-scrollbar { display: none; }
+  .nc__row { display: contents; }
+  .nc__item { flex: 0 0 var(--nc-card-w); height: var(--nc-card-h); scroll-snap-align: start; }
+
+  @container (min-width: 960px) {
+    .nc__nav { display: none; }
+    .nc__grid {
+      display: block; overflow: visible; margin: 48px auto 0;
+      max-width: var(--nc-max); padding: 0 var(--nc-gutter);
+    }
+    .nc__row { display: flex; gap: var(--nc-gap); }
+    .nc__row + .nc__row { margin-top: var(--nc-gap); }
+    .nc__item { flex: 3 1 0; }
+    .nc__item--wide { flex: 5 1 0; }
+  }
+
+  /* ---- Kaart ---- */
+  .nc__card {
+    position: relative; height: 100%; overflow: hidden;
+    background: var(--nc-card); border: 1px solid var(--nc-card-border); border-radius: var(--nc-radius);
+    padding: 16px; display: flex; flex-direction: column;
+  }
+  .nc__grow { flex: 1 1 16px; min-height: 16px; }
+
+  /* Quote-kaart */
+  .nc__quote { margin: 0; font-size: 16px; line-height: 1.48; color: var(--nc-quote); }
+  .nc__foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
+  .nc__author { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1 1 auto; }
+  .nc__avatar { width: 32px; height: 32px; border-radius: 4px; object-fit: cover; flex: none; }
+  .nc__label {
+    font-size: 12px; line-height: 1.42; font-weight: 600; letter-spacing: .01em;
+    text-transform: uppercase; color: var(--nc-accent);
+  }
+  .nc__author .nc__label:first-child { color: var(--nc-card-text); }
+  .nc__label + .nc__label { margin-top: 4px; }
+  .nc .nc__logo { flex: none; max-width: 80px; max-height: 36px; width: auto; height: auto; object-fit: contain; }
+  /* In smalle quote-kaarten geen logo, zodat naam en functie ruimte krijgen */
+  .nc .nc__item:not(.nc__item--wide) .nc__foot .nc__logo,
+  .nc .nc__item:not(.nc__item--wide) .nc__foot .nc__ph-logo { display: none; }
+
+  /* Stat-kaart */
+  .nc .nc__biglogo { height: 78px; width: auto; max-width: 170px; object-fit: contain; object-position: left top; }
+  .nc__company { font-size: 16px; line-height: 1.48; color: var(--nc-card-text); }
+  .nc__card--bgimg .nc__company, .nc__card--bgimg .nc__label { color: #fff; }
+  .nc__card--bgimg .nc__company { margin-top: 0; }
+  .nc__bgimg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .nc__card--bgimg::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,.25) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,.55) 100%);
+  }
+  .nc__card--bgimg > :not(.nc__bgimg) { position: relative; z-index: 1; }
+
+  /* Video-kaart */
+  .nc__card--video { cursor: pointer; padding: 16px; }
+  .nc__poster, .nc__loop { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .nc__loop { opacity: 0; transition: opacity .35s; }
+  .nc__card--video.is-playing .nc__loop { opacity: 1; }
+  .nc__card--video::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,0) 38%, rgba(0,0,0,.45) 100%);
+  }
+  .nc__card--video > :not(.nc__poster):not(.nc__loop) { position: relative; z-index: 1; }
+  .nc .nc__card--video .nc__logo,
+  .nc .nc__card--bgimg .nc__logo { max-width: 110px; max-height: 40px; }
+  .nc .nc__watch {
+    display: inline-flex; align-items: center; gap: 8px; width: fit-content;
+    padding: 8px 12px 8px 8px; border: 0; border-radius: 8px;
+    background: rgba(0,0,0,.45); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    color: #fff; font-weight: 600; font-size: 15px; cursor: pointer;
+    transition: background .2s;
+  }
+  .nc__card--video:hover .nc__watch { background: rgba(0,0,0,.6); }
+  .nc__watch svg { width: 14px; height: 17px; }
+  .nc__card--video:focus-visible { outline: 2px solid var(--nc-accent); outline-offset: 2px; }
+
+  /* ---- Placeholders (VERVANG door echte logo's/foto's en verwijder dan deze stijlen) ---- */
+  .nc__ph-logo {
+    display: inline-flex; align-items: center; height: 28px; padding: 0 8px; border-radius: 4px;
+    border: 1px dashed rgba(0,0,0,.3); color: var(--nc-card-text);
+    font-family: var(--nc-font-head); font-weight: 700; font-size: 12px; letter-spacing: .02em; white-space: nowrap;
+    max-width: 80px; overflow: hidden; text-overflow: ellipsis; display: inline-block; line-height: 26px;
+  }
+  .nc__ph-logo--big { height: auto; max-width: none; padding: 10px 12px; font-size: 20px; line-height: 1.2; width: fit-content; }
+  .nc .nc__card--video .nc__ph-logo, .nc .nc__card--bgimg .nc__ph-logo { max-width: 110px; border-color: rgba(255,255,255,.5); color: #fff; }
+  .nc__ph-avatar {
+    width: 32px; height: 32px; border-radius: 4px; flex: none; display: grid; place-items: center;
+    background: #f6f4ef; color: #575757; font-family: var(--nc-font-head); font-weight: 700; font-size: 12px;
+  }
+
+  /* ---- Videomodal ---- */
+  .nc-modal {
+    position: fixed; inset: 0; z-index: 9999; display: none; align-items: center; justify-content: center;
+    background: rgba(0,0,0,.85); padding: 24px;
+  }
+  .nc-modal.is-open { display: flex; }
+  .nc-modal__close {
+    position: absolute; top: 16px; right: 16px; width: 40px; height: 40px; border-radius: 50%; border: 0;
+    background: #fff; color: #000; display: grid; place-items: center; cursor: pointer;
+  }
+  .nc-modal__close svg { width: 20px; height: 20px; }
+  .nc-modal__body { max-width: 100%; max-height: 100%; display: flex; align-items: center; justify-content: center; }
+  .nc-modal__body video,
+  .nc-modal__body iframe { display: block; max-height: 90vh; max-width: 90vw; border: 0; border-radius: 12px; background: #000; }
+  .nc-modal__body video { height: 90vh; width: auto; }
+  .nc-modal__body iframe { width: min(90vw, 1120px); aspect-ratio: 16 / 9; }
+  .nc-modal__body iframe.is-portrait { width: auto; height: 90vh; aspect-ratio: 9 / 16; }
+  .nc-modal__empty { color: #fff; font-family: var(--nc-font-body); text-align: center; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nc__grid { scroll-behavior: auto; }
+    .nc__loop { transition: none; }
+  }

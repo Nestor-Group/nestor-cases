@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nestor cases</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Alleen voor deze demo-pagina. Op je eigen site laat je dit weg. */
+  body { margin: 0; background: #fff; }
+  .demo-switch { position: fixed; top: 12px; left: 12px; z-index: 10000; display: flex; gap: 6px; background: rgba(0,0,0,.7); padding: 6px; border-radius: 9999px; }
+  .demo-switch button { font: 600 12px/1 "Baloo Paaji 2", sans-serif; text-transform: uppercase; padding: 8px 12px; border: 0; border-radius: 9999px; background: transparent; color: #fff; cursor: pointer; }
+  .demo-switch button.is-active { background: #fff; color: #000; }
+</style>
+
+<!-- =====================================================================
+     NESTOR CASES-BLOK
+     Alles wat je nodig hebt staat tussen <!-- BLOK START -- > en <!-- BLOK EINDE -- >:
+     1. de <style> met de CSS
+     2. de <section class="nc"> met de inhoud
+     3. de <script> voor carrousel, hover-video en videomodal
+     Plak die drie delen in je pagina. De fonts laad je via de Google Fonts-link hierboven.
+
+     Zoek op "VERVANG" om alle placeholders te vinden (logo's, foto's, avatars).
+
+     VIDEOKAARTEN: de short (media/*.jpg als poster, media/*-loop.mp4 als hover-loop)
+     is de kaart zelf. Wat er bij klik in de popup opent, staat in data-video:
+       - een YouTube-link, bv. data-video="https://www.youtube.com/watch?v=XXXXXXXXXXX"
+         (de popup toont dan de YouTube-speler, 16:9; voor een YouTube Short zet je data-ratio="9/16")
+       - of een mp4-bestand, bv. data-video="media/plopsa-werkgever.mp4" met data-ratio="9/16"
+     Zolang er nog geen YouTube-link is, staat het mp4-bestand van de short erin.
+     ===================================================================== -->
+</head>
+<body>
+
+<!-- Alleen voor deze demo-pagina: schakel tussen de lichte en de oranje versie -->
+<div class="demo-switch">
+  <button type="button" class="is-active" data-theme="">Licht</button>
+  <button type="button" data-theme="nc--oranje">Oranje</button>
+</div>
+<script>
+  document.querySelectorAll('.demo-switch button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var sec = document.getElementById('nestor-cases');
+      sec.classList.remove('nc--oranje');
+      if (b.dataset.theme) sec.classList.add(b.dataset.theme);
+      document.querySelectorAll('.demo-switch button').forEach(function (x) { x.classList.toggle('is-active', x === b); });
+    });
+  });
+</script>
+
+<!-- BLOK START -->
+<style>
+  .nc {
+    /* ---- Kleuren (Nestor-huisstijl, lichte versie). Voor de oranje versie: class "nc--oranje" op de section ---- */
+    --nc-bg: #f6f4ef;            /* achtergrond van de sectie */
+    --nc-head-text: #575757;     /* titel en link */
+    --nc-eyebrow: #f73109;       /* kleine kop boven de titel */
+    --nc-card: #ffffff;          /* achtergrond van een kaart */
+    --nc-card-border: rgba(0,0,0,.06);
+    --nc-card-text: #575757;     /* tekst in de kaarten */
+    --nc-quote: #575757;         /* citaten */
+    --nc-accent: #f73109;        /* functie, resultaatregel */
+    --nc-btn-bg: #f73109;        /* knoppen: "Alle cases", pijlen, "Bekijk" */
+    --nc-btn-fg: #ffffff;
+    --nc-font-head: "Baloo Paaji 2", "Euclid Circular A", system-ui, sans-serif;
+    --nc-font-body: "Source Sans 3", "Source Sans Pro", system-ui, sans-serif;
+    --nc-font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --nc-max: 1234px;
+    --nc-gutter: 24px;
+    --nc-gap: 8px;
+    --nc-card-h: 328px;
+    --nc-card-w: min(80vw, 328px);
+    --nc-radius: 12px;
+
+    background: var(--nc-bg);
+    color: var(--nc-card-text);
+    font-family: var(--nc-font-body);
+    font-size: 16px;
+    line-height: 1.2;
+    padding: 120px 0 80px;
+    -webkit-font-smoothing: antialiased;
+    container-type: inline-size;   /* het grid kijkt naar de breedte van het blok, niet van het scherm */
+  }
+  @media (max-width: 767px)  {
+    .nc { padding-top: 80px; }
+    .nc__title { font-size: 28px; }
+    .nc__head { flex-direction: column; gap: 20px; }
+  }
+  .nc--oranje {
+    --nc-bg: #f73109;
+    --nc-head-text: #ffffff;
+    --nc-eyebrow: rgba(255,255,255,.85);
+    --nc-card-border: transparent;
+    --nc-btn-bg: #ffffff;
+    --nc-btn-fg: #f73109;
+  }
+  @media (min-width: 768px)  { .nc { --nc-gutter: 72px; } }
+  @media (min-width: 1280px) { .nc { --nc-gutter: 104px; } }
+
+  .nc *, .nc *::before, .nc *::after { box-sizing: border-box; }
+  .nc img, .nc video { display: block; max-width: 100%; height: auto; border: 0; }
+  .nc button { font: inherit; color: inherit; margin: 0; appearance: none; -webkit-appearance: none; box-shadow: none; }
+  .nc h2, .nc p { margin: 0; padding: 0; }
+  .nc a, .nc a:hover, .nc a:focus { text-decoration: none; box-shadow: none; }
+  .nc .nc__link, .nc .nc__link > span { color: var(--nc-btn-fg); font-size: 14px; letter-spacing: .02em; }
+  .nc .nc__link:hover { color: var(--nc-btn-fg); }
+  .nc .nc__title { text-transform: none; }
+
+  .nc__inner { max-width: var(--nc-max); margin: 0 auto; padding: 0 var(--nc-gutter); }
+
+  /* ---- Kop ---- */
+  .nc__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; }
+  .nc__eyebrow {
+    font-family: var(--nc-font-head); font-weight: 600; font-size: 14px; line-height: 1.6;
+    letter-spacing: .06em; text-transform: uppercase; color: var(--nc-eyebrow);
+  }
+  .nc__title {
+    margin: 16px 0 0; max-width: 840px;
+    font-family: var(--nc-font-head); font-weight: 700;
+    font-size: 36px; line-height: 1.08; letter-spacing: -.01em; color: var(--nc-head-text);
+  }
+  .nc__link {
+    display: inline-flex; align-items: center; gap: 6px; flex: none;
+    padding: 12px 20px 12px 24px; border-radius: 9999px;
+    background: var(--nc-btn-bg); color: var(--nc-btn-fg); text-decoration: none; white-space: nowrap;
+    font-family: var(--nc-font-head); font-weight: 600; font-size: 14px; line-height: 1; text-transform: uppercase; letter-spacing: .02em;
+    transition: filter .2s;
+  }
+  .nc__link:hover { filter: brightness(.92); }
+  .nc .nc__link svg { width: 20px; height: 20px; color: var(--nc-btn-fg); transition: transform .2s; }
+  .nc__link:hover svg { transform: translate(2px, -2px); }
+
+  /* ---- Carrouselknoppen (alleen onder 1024px) ---- */
+  .nc__nav { display: flex; gap: 8px; margin-top: 40px; }
+  .nc .nc__navbtn {
+    width: 36px; height: 36px; border-radius: 50%; border: 1px solid transparent;
+    background: var(--nc-btn-bg); color: var(--nc-btn-fg); display: grid; place-items: center; cursor: pointer; padding: 0;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .nc__navbtn svg { width: 20px; height: 20px; }
+  .nc__navbtn--prev svg { transform: rotate(180deg); }
+  .nc .nc__navbtn:disabled { background: transparent; color: var(--nc-head-text); opacity: .4; border-color: currentColor; cursor: default; }
+
+  /* ---- Grid / carrousel ---- */
+  .nc__grid {
+    display: flex; gap: var(--nc-gap); margin-top: 24px;
+    overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
+    padding: 0 var(--nc-gutter); scroll-padding: 0 var(--nc-gutter);
+    scrollbar-width: none;
+  }
+  .nc__grid::-webkit-scrollbar { display: none; }
+  .nc__row { display: contents; }
+  .nc__item { flex: 0 0 var(--nc-card-w); height: var(--nc-card-h); scroll-snap-align: start; }
+
+  @container (min-width: 960px) {
+    .nc__nav { display: none; }
+    .nc__grid {
+      display: block; overflow: visible; margin: 48px auto 0;
+      max-width: var(--nc-max); padding: 0 var(--nc-gutter);
+    }
+    .nc__row { display: flex; gap: var(--nc-gap); }
+    .nc__row + .nc__row { margin-top: var(--nc-gap); }
+    .nc__item { flex: 3 1 0; }
+    .nc__item--wide { flex: 5 1 0; }
+  }
+
+  /* ---- Kaart ---- */
+  .nc__card {
+    position: relative; height: 100%; overflow: hidden;
+    background: var(--nc-card); border: 1px solid var(--nc-card-border); border-radius: var(--nc-radius);
+    padding: 16px; display: flex; flex-direction: column;
+  }
+  .nc__grow { flex: 1 1 16px; min-height: 16px; }
+
+  /* Quote-kaart */
+  .nc__quote { margin: 0; font-size: 16px; line-height: 1.48; color: var(--nc-quote); }
+  .nc__foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
+  .nc__author { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1 1 auto; }
+  .nc__avatar { width: 32px; height: 32px; border-radius: 4px; object-fit: cover; flex: none; }
+  .nc__label {
+    font-size: 12px; line-height: 1.42; font-weight: 600; letter-spacing: .01em;
+    text-transform: uppercase; color: var(--nc-accent);
+  }
+  .nc__author .nc__label:first-child { color: var(--nc-card-text); }
+  .nc__label + .nc__label { margin-top: 4px; }
+  .nc .nc__logo { flex: none; max-width: 80px; max-height: 36px; width: auto; height: auto; object-fit: contain; }
+  /* In smalle quote-kaarten geen logo, zodat naam en functie ruimte krijgen */
+  .nc .nc__item:not(.nc__item--wide) .nc__foot .nc__logo,
+  .nc .nc__item:not(.nc__item--wide) .nc__foot .nc__ph-logo { display: none; }
+
+  /* Stat-kaart */
+  .nc .nc__biglogo { height: 78px; width: auto; max-width: 170px; object-fit: contain; object-position: left top; }
+  .nc__company { font-size: 16px; line-height: 1.48; color: var(--nc-card-text); }
+  .nc__card--bgimg .nc__company, .nc__card--bgimg .nc__label { color: #fff; }
+  .nc__card--bgimg .nc__company { margin-top: 0; }
+  .nc__bgimg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .nc__card--bgimg::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,.25) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,.55) 100%);
+  }
+  .nc__card--bgimg > :not(.nc__bgimg) { position: relative; z-index: 1; }
+
+  /* Video-kaart */
+  .nc__card--video { cursor: pointer; padding: 16px; }
+  .nc__poster, .nc__loop { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .nc__loop { opacity: 0; transition: opacity .35s; }
+  .nc__card--video.is-playing .nc__loop { opacity: 1; }
+  .nc__card--video::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,0) 38%, rgba(0,0,0,.45) 100%);
+  }
+  .nc__card--video > :not(.nc__poster):not(.nc__loop) { position: relative; z-index: 1; }
+  .nc .nc__card--video .nc__logo,
+  .nc .nc__card--bgimg .nc__logo { max-width: 110px; max-height: 40px; }
+  .nc .nc__watch {
+    display: inline-flex; align-items: center; gap: 8px; width: fit-content;
+    padding: 8px 12px 8px 8px; border: 0; border-radius: 8px;
+    background: rgba(0,0,0,.45); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    color: #fff; font-weight: 600; font-size: 15px; cursor: pointer;
+    transition: background .2s;
+  }
+  .nc__card--video:hover .nc__watch { background: rgba(0,0,0,.6); }
+  .nc__watch svg { width: 14px; height: 17px; }
+  .nc__card--video:focus-visible { outline: 2px solid var(--nc-accent); outline-offset: 2px; }
+
+  /* ---- Placeholders (VERVANG door echte logo's/foto's en verwijder dan deze stijlen) ---- */
+  .nc__ph-logo {
+    display: inline-flex; align-items: center; height: 28px; padding: 0 8px; border-radius: 4px;
+    border: 1px dashed rgba(0,0,0,.3); color: var(--nc-card-text);
+    font-family: var(--nc-font-head); font-weight: 700; font-size: 12px; letter-spacing: .02em; white-space: nowrap;
+    max-width: 80px; overflow: hidden; text-overflow: ellipsis; display: inline-block; line-height: 26px;
+  }
+  .nc__ph-logo--big { height: auto; max-width: none; padding: 10px 12px; font-size: 20px; line-height: 1.2; width: fit-content; }
+  .nc .nc__card--video .nc__ph-logo, .nc .nc__card--bgimg .nc__ph-logo { max-width: 110px; border-color: rgba(255,255,255,.5); color: #fff; }
+  .nc__ph-avatar {
+    width: 32px; height: 32px; border-radius: 4px; flex: none; display: grid; place-items: center;
+    background: #f6f4ef; color: #575757; font-family: var(--nc-font-head); font-weight: 700; font-size: 12px;
+  }
+
+  /* ---- Videomodal ---- */
+  .nc-modal {
+    position: fixed; inset: 0; z-index: 9999; display: none; align-items: center; justify-content: center;
+    background: rgba(0,0,0,.85); padding: 24px;
+  }
+  .nc-modal.is-open { display: flex; }
+  .nc-modal__close {
+    position: absolute; top: 16px; right: 16px; width: 40px; height: 40px; border-radius: 50%; border: 0;
+    background: #fff; color: #000; display: grid; place-items: center; cursor: pointer;
+  }
+  .nc-modal__close svg { width: 20px; height: 20px; }
+  .nc-modal__body { max-width: 100%; max-height: 100%; display: flex; align-items: center; justify-content: center; }
+  .nc-modal__body video,
+  .nc-modal__body iframe { display: block; max-height: 90vh; max-width: 90vw; border: 0; border-radius: 12px; background: #000; }
+  .nc-modal__body video { height: 90vh; width: auto; }
+  .nc-modal__body iframe { width: min(90vw, 1120px); aspect-ratio: 16 / 9; }
+  .nc-modal__body iframe.is-portrait { width: auto; height: 90vh; aspect-ratio: 9 / 16; }
+  .nc-modal__empty { color: #fff; font-family: var(--nc-font-body); text-align: center; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nc__grid { scroll-behavior: auto; }
+    .nc__loop { transition: none; }
+  }
+</style>
+
+<section class="nc" id="nestor-cases">
+  <div class="nc__inner">
+    <div class="nc__head">
+      <div>
+        <div class="nc__eyebrow">Cases</div>
+        <h2 class="nc__title">Voor werkgevers die weten wat ervaring waard is.</h2>
+      </div>
+      <a class="nc__link" href="https://nestor.be/cases">
+        <span>Alle cases</span>
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M6 7C6 6.44772 6.44772 6 7 6H17C17.5523 6 18 6.44772 18 7V17C18 17.5523 17.5523 18 17 18C16.4477 18 16 17.5523 16 17V8H7C6.44772 8 6 7.55228 6 7Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M17.7071 6.29289C18.0976 6.68342 18.0976 7.31658 17.7071 7.70711L7.70711 17.7071C7.31658 18.0976 6.68342 18.0976 6.29289 17.7071C5.90237 17.3166 5.90237 16.6834 6.29289 16.2929L16.2929 6.29289C16.6834 5.90237 17.3166 5.90237 17.7071 6.29289Z" fill="currentColor"/></svg>
+      </a>
+    </div>
+
+    <div class="nc__nav">
+      <button type="button" class="nc__navbtn nc__navbtn--prev" aria-label="Vorige" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+      <button type="button" class="nc__navbtn nc__navbtn--next" aria-label="Volgende">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="nc__grid">
+
+    <!-- ===== RIJ 1 (brede kaart op positie 1) ===== -->
+    <div class="nc__row">
+
+      <div class="nc__item nc__item--wide">
+        <div class="nc__card">
+          <p class="nc__quote">“We zoeken in de eerste plaats mensen die met de glimlach komen werken. Nestor voelt dat heel goed aan en stuurt ons alleen kandidaten door die in dat plaatje passen.”</p>
+          <div class="nc__grow"></div>
+          <div class="nc__foot">
+            <div class="nc__author">
+              <img class="nc__avatar" src="media/emilie-deboo.jpg" alt="Emilie Deboo">
+              <div>
+                <div class="nc__label">Emilie Deboo</div>
+                <div class="nc__label">Operationeel manager · Maatkasten Online</div>
+              </div>
+            </div>
+            <img class="nc__logo" src="media/logo-maatkasten-online-origineel.png" alt="Maatkasten Online">
+          </div>
+        </div>
+      </div>
+
+      <div class="nc__item">
+        <!-- VERVANG: zet hier de YouTube-link, bv. data-video="https://www.youtube.com/watch?v=XXXXXXXXXXX" (en verwijder data-ratio) -->
+        <div class="nc__card nc__card--video" role="button" tabindex="0"
+             data-video="media/maatkasten-johan.mp4" data-ratio="4/5" aria-label="Bekijk de video van Johan bij Maatkasten Online">
+          <img class="nc__poster" src="media/maatkasten-johan.jpg" alt="Johan Haegeman · Maatkasten Online" loading="lazy">
+          <video class="nc__loop" src="media/maatkasten-johan-loop.mp4" muted loop playsinline preload="none"></video>
+          <img class="nc__logo" src="media/logo-maatkasten-online.png" alt="Maatkasten Online">
+          <div class="nc__grow"></div>
+          <button type="button" class="nc__watch" tabindex="-1">
+            <svg viewBox="0 0 14 17" fill="none" aria-hidden="true"><path fill="currentColor" d="M0 14.686V2.702C0 1.23 1.62.332 2.869 1.112l9.587 5.992a1.875 1.875 0 0 1 0 3.18l-9.587 5.992C1.619 17.056 0 16.16 0 14.686"/></svg>
+            <span>Bekijk</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="nc__item">
+        <div class="nc__card">
+          <img class="nc__biglogo" src="media/logo-top-motors-origineel.png" alt="Top Motors">
+          <div class="nc__grow"></div>
+          <div class="nc__company">Top Motors</div>
+          <div class="nc__label">Pool van zes Nestors, flexibel inzetbaar</div>
+        </div>
+      </div>
+
+      <div class="nc__item">
+        <div class="nc__card">
+          <p class="nc__quote">“We geven gewoon de uren door, verder regelt Nestor alles.”</p>
+          <div class="nc__grow"></div>
+          <div class="nc__foot">
+            <div class="nc__author">
+              <img class="nc__avatar" src="media/tom-vanden-broeck.jpg" alt="Tom Vanden Broeck">
+              <div>
+                <div class="nc__label">Tom Vanden Broeck</div>
+                <div class="nc__label">Service Manager · Top Motors</div>
+              </div>
+            </div>
+            <img class="nc__logo" src="media/logo-top-motors-origineel.png" alt="Top Motors">
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===== RIJ 2 (brede kaart op positie 2) ===== -->
+    <div class="nc__row">
+
+      <div class="nc__item">
+        <!-- VERVANG: data-video = YouTube-link -->
+        <div class="nc__card nc__card--video" role="button" tabindex="0"
+             data-video="media/topmotors-nestor.mp4" data-ratio="9/16" aria-label="Bekijk de video van Luc bij Top Motors">
+          <img class="nc__poster" src="media/topmotors-nestor.jpg" alt="Luc Vanderheeren · Top Motors" loading="lazy">
+          <video class="nc__loop" src="media/topmotors-nestor-loop.mp4" muted loop playsinline preload="none"></video>
+          <img class="nc__logo" src="media/logo-top-motors.png" alt="Top Motors">
+          <div class="nc__grow"></div>
+          <button type="button" class="nc__watch" tabindex="-1">
+            <svg viewBox="0 0 14 17" fill="none" aria-hidden="true"><path fill="currentColor" d="M0 14.686V2.702C0 1.23 1.62.332 2.869 1.112l9.587 5.992a1.875 1.875 0 0 1 0 3.18l-9.587 5.992C1.619 17.056 0 16.16 0 14.686"/></svg>
+            <span>Bekijk</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="nc__item nc__item--wide">
+        <div class="nc__card">
+          <p class="nc__quote">“Dentaal Tema en Nestor zijn als partners die elkaar perfect aanvoelen. Na al die jaren loopt onze samenwerking zo vlot dat mijn collega’s en ik er nauwelijks nog tijd in moeten steken.”</p>
+          <div class="nc__grow"></div>
+          <div class="nc__foot">
+            <div class="nc__author">
+              <img class="nc__avatar" src="media/bart-verkeyn.jpg" alt="Bart Verkeyn">
+              <div>
+                <div class="nc__label">Bart Verkeyn</div>
+                <div class="nc__label">Zaakvoerder · Dentaal Tema</div>
+              </div>
+            </div>
+            <img class="nc__logo" src="media/logo-dentaal-tema-origineel.png" alt="Dentaal Tema">
+          </div>
+        </div>
+      </div>
+
+      <div class="nc__item">
+        <div class="nc__card nc__card--bgimg">
+          <img class="nc__bgimg" src="media/foodbag.jpg" alt="Twee Foodbag-chauffeurs in de bestelwagen" loading="lazy" style="object-position: center 35%;">
+          <img class="nc__logo" src="media/logo-foodbag.png" alt="Foodbag">
+          <div class="nc__grow"></div>
+          <div class="nc__company">Foodbag</div>
+          <div class="nc__label">Groeiende pool van Nestor-chauffeurs in 5 depots</div>
+        </div>
+      </div>
+
+      <div class="nc__item">
+        <div class="nc__card">
+          <p class="nc__quote">“Ze zijn betrouwbaar en zeer zelfstandig. De kwaliteit die we terugkrijgen van onze chauffeurs ligt heel hoog.”</p>
+          <div class="nc__grow"></div>
+          <div class="nc__foot">
+            <div class="nc__author">
+              <img class="nc__avatar" src="media/jef-vandenbemden.jpg" alt="Jef Vandenbemden">
+              <div>
+                <div class="nc__label">Jef Vandenbemden</div>
+                <div class="nc__label">Distributiecoördinator · Foodbag</div>
+              </div>
+            </div>
+            <img class="nc__logo" src="media/logo-foodbag-origineel.png" alt="Foodbag">
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===== RIJ 3 (brede kaart op positie 3) ===== -->
+    <div class="nc__row">
+
+      <div class="nc__item">
+        <div class="nc__card">
+          <p class="nc__quote">“Het is voor ons een zeer positief verhaal. Ze zijn gemotiveerd en bovendien zeker niet te duur in vergelijking met andere uitzendkrachten.”</p>
+          <div class="nc__grow"></div>
+          <div class="nc__foot">
+            <div class="nc__author">
+              <img class="nc__avatar" src="media/benny-bellekens.jpg" alt="Benny Bellekens">
+              <div>
+                <div class="nc__label">Benny Bellekens</div>
+                <div class="nc__label">HR-verantwoordelijke · Otheo</div>
+              </div>
+            </div>
+            <img class="nc__logo" src="media/logo-otheo.png" alt="Otheo">
+          </div>
+        </div>
+      </div>
+
+      <div class="nc__item">
+        <div class="nc__card nc__card--bgimg">
+          <img class="nc__bgimg" src="media/otheo.jpg" alt="Twee medewerkers van de klantendienst van Otheo" loading="lazy" style="object-position: center 40%;">
+          <img class="nc__logo" src="media/logo-otheo.png" alt="Otheo">
+          <div class="nc__grow"></div>
+          <div class="nc__company">Otheo</div>
+          <div class="nc__label">Correcter en gemotiveerder dan andere uitzendkrachten</div>
+        </div>
+      </div>
+
+      <div class="nc__item nc__item--wide">
+        <div class="nc__card">
+          <p class="nc__quote">“Ik kan me volledig op mijn werk concentreren en hoef me nergens zorgen over te maken. Dat is een ongelooflijke luxe.”</p>
+          <div class="nc__grow"></div>
+          <div class="nc__foot">
+            <div class="nc__author">
+              <img class="nc__avatar" src="media/marc-celis.jpg" alt="Marc Celis">
+              <div>
+                <div class="nc__label">Marc Celis</div>
+                <div class="nc__label">Transportplanner · Young Charly</div>
+              </div>
+            </div>
+            <img class="nc__logo" src="media/logo-young-charly.webp" alt="Young Charly">
+          </div>
+        </div>
+      </div>
+
+      <div class="nc__item">
+        <!-- VERVANG: data-video = YouTube-link -->
+        <div class="nc__card nc__card--video" role="button" tabindex="0"
+             data-video="media/plopsa-nestor.mp4" data-ratio="9/16" aria-label="Bekijk de video van Ronald bij Plopsa Hotel">
+          <img class="nc__poster" src="media/plopsa-nestor.jpg" alt="Ronald De Smet · Plopsa Hotel" loading="lazy">
+          <video class="nc__loop" src="media/plopsa-nestor-loop.mp4" muted loop playsinline preload="none"></video>
+          <img class="nc__logo" src="media/logo-plopsa-hotel.png" alt="Plopsa Hotel">
+          <div class="nc__grow"></div>
+          <button type="button" class="nc__watch" tabindex="-1">
+            <svg viewBox="0 0 14 17" fill="none" aria-hidden="true"><path fill="currentColor" d="M0 14.686V2.702C0 1.23 1.62.332 2.869 1.112l9.587 5.992a1.875 1.875 0 0 1 0 3.18l-9.587 5.992C1.619 17.056 0 16.16 0 14.686"/></svg>
+            <span>Bekijk</span>
+          </button>
+        </div>
+      </div>
+
+  </div>
+</section>
+
+<!-- Videomodal: één keer per pagina -->
+<div class="nc-modal" id="nc-modal" role="dialog" aria-modal="true" aria-label="Video" hidden>
+  <button type="button" class="nc-modal__close" aria-label="Sluiten">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+  </button>
+  <div class="nc-modal__body"></div>
+</div>
+
+<script>
+(function () {
+function init() {
+  var section = document.getElementById('nestor-cases');
+  if (!section) return;
+
+  /* ---- Media-locatie: data-media op de section (bv. "https://nestor.be/uploads/cases/") ---- */
+  var mediaBase = section.getAttribute('data-media') || 'media/';
+  if (!/\/$/.test(mediaBase)) mediaBase += '/';
+  function mediaUrl(path) { return path.replace(/^media\//, mediaBase); }
+  section.querySelectorAll('[data-src]').forEach(function (el) {
+    el.setAttribute('src', mediaUrl(el.getAttribute('data-src')));
+    el.removeAttribute('data-src');
+  });
+
+  /* ---- Carrousel (onder 1024px) ---- */
+  var grid = section.querySelector('.nc__grid');
+  var prev = section.querySelector('.nc__navbtn--prev');
+  var next = section.querySelector('.nc__navbtn--next');
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function items() { return Array.prototype.slice.call(grid.querySelectorAll('.nc__item')); }
+  function gutter() { return parseFloat(getComputedStyle(grid).paddingLeft) || 0; }
+  function itemLeft(item) {
+    return item.getBoundingClientRect().left - grid.getBoundingClientRect().left + grid.scrollLeft - gutter();
+  }
+  function currentIndex() {
+    var list = items(), idx = 0;
+    for (var i = 0; i < list.length; i++) { if (itemLeft(list[i]) <= grid.scrollLeft + 2) idx = i; }
+    return idx;
+  }
+  function goTo(i) {
+    var list = items();
+    i = Math.max(0, Math.min(list.length - 1, i));
+    grid.scrollTo({ left: itemLeft(list[i]), behavior: reduceMotion ? 'auto' : 'smooth' });
+  }
+  function updateNav() {
+    var max = grid.scrollWidth - grid.clientWidth - 1;
+    prev.disabled = grid.scrollLeft <= 0;
+    next.disabled = grid.scrollLeft >= max;
+  }
+  prev.addEventListener('click', function () { goTo(currentIndex() - 1); });
+  next.addEventListener('click', function () { goTo(currentIndex() + 1); });
+  grid.addEventListener('scroll', updateNav, { passive: true });
+  window.addEventListener('resize', updateNav);
+  updateNav();
+
+  /* ---- Hover-loop op videokaarten ---- */
+  var canHover = window.matchMedia('(hover: hover)').matches;
+  var cards = section.querySelectorAll('.nc__card--video');
+
+  cards.forEach(function (card) {
+    var loop = card.querySelector('.nc__loop');
+    if (loop && canHover && !reduceMotion) {
+      card.addEventListener('mouseenter', function () {
+        var p = loop.play();
+        if (p && p.then) p.then(function () { card.classList.add('is-playing'); }).catch(function () {});
+        else card.classList.add('is-playing');
+      });
+      card.addEventListener('mouseleave', function () {
+        card.classList.remove('is-playing');
+        loop.pause();
+        loop.currentTime = 0;
+      });
+    }
+    card.addEventListener('click', function () { openModal(mediaUrl(card.dataset.video || ''), card.dataset.ratio); });
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(mediaUrl(card.dataset.video || ''), card.dataset.ratio); }
+    });
+  });
+
+  /* ---- Modal ---- */
+  var modal = document.getElementById('nc-modal');
+  var body = modal.querySelector('.nc-modal__body');
+  var closeBtn = modal.querySelector('.nc-modal__close');
+  var lastFocus = null;
+
+  function embedUrl(url) {
+    var yt = url.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{6,})/);
+    if (yt) return 'https://www.youtube-nocookie.com/embed/' + yt[1] + '?autoplay=1&rel=0';
+    var vm = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+    if (vm) return 'https://player.vimeo.com/video/' + vm[1] + '?autoplay=1';
+    return null;
+  }
+
+  function openModal(src, ratio) {
+    lastFocus = document.activeElement;
+    body.innerHTML = '';
+    if (!src) {
+      var p = document.createElement('p');
+      p.className = 'nc-modal__empty';
+      p.textContent = 'Video volgt.';
+      body.appendChild(p);
+    } else if (/\.(mp4|webm|mov)(\?|$)/i.test(src)) {
+      var v = document.createElement('video');
+      v.src = src; v.controls = true; v.autoplay = true; v.playsInline = true;
+      body.appendChild(v);
+    } else {
+      var f = document.createElement('iframe');
+      f.src = embedUrl(src) || src;
+      f.allow = 'autoplay; fullscreen; picture-in-picture';
+      f.setAttribute('allowfullscreen', '');
+      if (ratio === '9/16') f.classList.add('is-portrait');
+      body.appendChild(f);
+    }
+    modal.hidden = false;
+    modal.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+  function closeModal() {
+    modal.classList.remove('is-open');
+    modal.hidden = true;
+    body.innerHTML = '';
+    document.body.style.overflow = '';
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal(); });
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+</script>
+<!-- BLOK EINDE -->
+
+</body>
+</html>
