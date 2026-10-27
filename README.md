@@ -94,7 +94,8 @@ Logo's: in de witte kaarten staan de originele (gekleurde) logo's, op de video- 
 
 ## Tweede blok: "Dit is wat Nestor voor jou kan betekenen" (diensten)
 
-Een overzicht van negen herkenbare situaties bij werkgevers waarvoor Nestor de juiste persoon heeft
+Een overzicht van negen herkenbare situaties bij werkgevers waarvoor Nestor de juiste persoon heeft.
+Het blok zelf heeft geen achtergrondkleur (transparant), zodat de schuine streep van de site erdoor loopt
 (chauffeur, logistiek, administratief medewerker, onthaal, pendelchauffeur, autojockey, klusjesman,
 winkel, events). Zelfde huisstijl en zelfde werkproces als het cases-blok, met eigen CSS-prefix `.nd`,
 zodat beide blokken op één pagina kunnen staan.
