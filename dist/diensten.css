@@ -53,14 +53,12 @@
   }
   .nd__link {
     display: inline-flex; align-items: center; gap: 6px; flex: none;
-    padding: 12px 20px 12px 24px; border-radius: 9999px;
+    padding: 12px 24px; border-radius: 9999px;
     background: var(--nd-btn-bg); color: var(--nd-btn-fg); text-decoration: none; white-space: nowrap;
     font-family: var(--nd-font-head); font-weight: 600; font-size: 14px; line-height: 1; text-transform: uppercase; letter-spacing: .02em;
     transition: filter .2s;
   }
   .nd__link:hover { filter: brightness(.92); }
-  .nd .nd__link svg { width: 20px; height: 20px; color: var(--nd-btn-fg); transition: transform .2s; }
-  .nd__link:hover svg { transform: translate(2px, -2px); }
 
   /* ---- Carrouselknoppen ---- */
   .nd__nav { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 8px; margin-top: 32px; }
@@ -163,9 +161,8 @@
     .nd__nav { margin-top: 24px; }
     .nd .nd__title { font-size: 28px; }
     .nd .nd__intro { font-size: 16px; }
-    .nd .nd__link { padding: 10px 16px 10px 18px; }
+    .nd .nd__link { padding: 10px 18px; }
     .nd .nd__link, .nd .nd__link > span { font-size: 12px; }
-    .nd .nd__link svg { width: 16px; height: 16px; }
     .nd__card { padding: 14px; border-radius: 10px; gap: 10px; --nd-card-h: 270px; }
     .nd__top { gap: 8px; }
     .nd__icon { width: 36px; height: 36px; }
