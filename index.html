@@ -80,14 +80,9 @@
     font-family: var(--nc-font-body);
     font-size: 16px;
     line-height: 1.2;
-    padding: 120px 0 80px;
+    padding: 0;
     -webkit-font-smoothing: antialiased;
     container-type: inline-size;   /* het grid kijkt naar de breedte van het blok, niet van het scherm */
-  }
-  @media (max-width: 767px)  {
-    .nc { padding-top: 80px; }
-    .nc__title { font-size: 28px; }
-    .nc__head { flex-direction: column; gap: 20px; }
   }
   .nc--oranje {
     --nc-bg: #f73109;
@@ -103,13 +98,13 @@
   .nc *, .nc *::before, .nc *::after { box-sizing: border-box; }
   .nc img, .nc video { display: block; max-width: 100%; height: auto; border: 0; }
   .nc button { font: inherit; color: inherit; margin: 0; appearance: none; -webkit-appearance: none; box-shadow: none; }
-  .nc h2, .nc p { margin: 0; padding: 0; }
+  .nc h2, .nc p { margin: 0; padding: 0; font-style: normal; }
   .nc a, .nc a:hover, .nc a:focus { text-decoration: none; box-shadow: none; }
   .nc .nc__link, .nc .nc__link > span { color: var(--nc-btn-fg); font-size: 14px; letter-spacing: .02em; }
   .nc .nc__link:hover { color: var(--nc-btn-fg); }
   .nc .nc__title { text-transform: none; }
 
-  .nc__inner { max-width: var(--nc-max); margin: 0 auto; padding: 0 var(--nc-gutter); }
+  .nc__inner { max-width: var(--nc-max); margin: 0 auto; padding: 120px var(--nc-gutter) 0; }
 
   /* ---- Kop ---- */
   .nc__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; }
@@ -148,24 +143,31 @@
   .nc__grid {
     display: flex; gap: var(--nc-gap); margin-top: 24px;
     overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
-    padding: 0 var(--nc-gutter); scroll-padding: 0 var(--nc-gutter);
+    padding: 0 var(--nc-gutter) 80px; scroll-padding: 0 var(--nc-gutter);
     scrollbar-width: none;
   }
   .nc__grid::-webkit-scrollbar { display: none; }
   .nc__row { display: contents; }
-  .nc__item { flex: 0 0 var(--nc-card-w); height: var(--nc-card-h); scroll-snap-align: start; }
+  .nc__item { flex: 0 0 var(--nc-card-w); height: var(--nc-card-h); scroll-snap-align: start; min-width: 0; }
 
-  @container (min-width: 960px) {
+  /* In een container smaller dan 1300px (bv. een embed in een CMS) volstaan kleine zijmarges */
+  @container (max-width: 1299px) {
+    .nc__inner, .nc__grid { --nc-gutter: 24px; }
+  }
+
+  /* Grid vanaf 640px containerbreedte, carrousel daaronder */
+  @container (min-width: 640px) {
     .nc__nav { display: none; }
     .nc__grid {
       display: block; overflow: visible; margin: 48px auto 0;
-      max-width: var(--nc-max); padding: 0 var(--nc-gutter);
+      max-width: var(--nc-max); padding: 0 var(--nc-gutter) 80px;
     }
     .nc__row { display: flex; gap: var(--nc-gap); }
     .nc__row + .nc__row { margin-top: var(--nc-gap); }
     .nc__item { flex: 3 1 0; }
     .nc__item--wide { flex: 5 1 0; }
   }
+
 
   /* ---- Kaart ---- */
   .nc__card {
@@ -258,6 +260,40 @@
   .nc-modal__body iframe { width: min(90vw, 1120px); aspect-ratio: 16 / 9; }
   .nc-modal__body iframe.is-portrait { width: auto; height: 90vh; aspect-ratio: 9 / 16; }
   .nc-modal__empty { color: #fff; font-family: var(--nc-font-body); text-align: center; }
+
+  /* Smalle containers (mobiel): carrousel met compactere kop */
+  @container (max-width: 639px) {
+    .nc__inner { padding-top: 80px; }
+    .nc__title { font-size: 28px; }
+    .nc__head { flex-direction: column; gap: 20px; }
+  }
+
+  /* Compacte grid voor containers van 640 tot 959px (bv. het embed-blok op nestor.be) */
+  @container (min-width: 640px) and (max-width: 959px) {
+    .nc__inner, .nc__grid { --nc-gutter: 16px; }
+    .nc__inner { padding-top: 56px; }
+    .nc__grid { margin-top: 32px; padding-bottom: 48px; }
+    .nc__title { font-size: 28px; }
+    .nc__head { gap: 16px; }
+    .nc .nc__link { padding: 10px 16px 10px 18px; }
+    .nc .nc__link, .nc .nc__link > span { font-size: 12px; }
+    .nc .nc__link svg { width: 16px; height: 16px; }
+    .nc__item { height: 280px; }
+    .nc__row { gap: 6px; }
+    .nc__row + .nc__row { margin-top: 6px; }
+    .nc__card { padding: 12px; border-radius: 10px; }
+    .nc__quote { font-size: 13px; line-height: 1.4; }
+    .nc__label { font-size: 10px; line-height: 1.35; }
+    .nc__label + .nc__label { margin-top: 2px; }
+    .nc__author { gap: 6px; }
+    .nc__avatar, .nc__ph-avatar { width: 28px; height: 28px; }
+    .nc__company { font-size: 14px; }
+    .nc .nc__biglogo { height: 56px; max-width: 120px; }
+    .nc .nc__logo { max-width: 64px; max-height: 28px; }
+    .nc .nc__card--video .nc__logo, .nc .nc__card--bgimg .nc__logo { max-width: 80px; max-height: 30px; }
+    .nc .nc__watch { font-size: 13px; padding: 6px 10px 6px 8px; }
+    .nc .nc__watch svg { width: 11px; height: 13px; }
+  }
 
   @media (prefers-reduced-motion: reduce) {
     .nc__grid { scroll-behavior: auto; }
