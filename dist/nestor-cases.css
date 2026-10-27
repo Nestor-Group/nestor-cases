@@ -92,7 +92,7 @@
     .nc__inner, .nc__grid { --nc-gutter: 24px; }
   }
 
-  /* Grid vanaf 640px containerbreedte, carrousel daaronder */
+  /* Grid van drie rijen van drie vanaf 640px containerbreedte, carrousel daaronder */
   @container (min-width: 640px) {
     .nc__nav { display: none; }
     .nc__grid {
@@ -203,16 +203,6 @@
     .nc__inner { padding-top: 80px; }
     .nc__title { font-size: 28px; }
     .nc__head { flex-direction: column; gap: 20px; }
-  }
-
-  /* Containers van 640 tot 1199px (bv. het embed-blok op nestor.be): drie kaarten per rij
-     (vier rijen), elke rij één brede kaart. Vanaf 1200px het volledige grid van vier per rij. */
-  @container (min-width: 640px) and (max-width: 1199px) {
-    .nc__grid { display: flex; flex-wrap: wrap; gap: var(--nc-gap); }
-    .nc__row { display: contents; }
-    .nc__item { flex: 0 0 calc((100% - 2 * var(--nc-gap)) * 3 / 11); }
-    .nc__item--wide,
-    .nc__row:nth-child(2) .nc__item:nth-child(3) { flex-basis: calc((100% - 2 * var(--nc-gap)) * 5 / 11); }
   }
 
   /* Compacte maten voor containers van 640 tot 959px */

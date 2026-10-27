@@ -44,14 +44,12 @@ Pages ooit niet beschikbaar is.
 maar bij elke aanpassing moet je opnieuw plakken.
 
 Het blok kijkt naar de breedte van de container waarin het staat:
-- vanaf 1200px: het volledige grid, drie rijen van vier kaarten
-- van 640 tot 1199px: vier rijen van drie kaarten (tussen 640 en 959px met kleinere kaarten en tekst)
+- vanaf 640px: drie rijen van drie kaarten, per rij één brede kaart (tussen 640 en 959px met kleinere kaarten en tekst)
 - onder 640px: carrousel De fonts staan al op nestor.be, er is geen extra stylesheet nodig.
 
 ## Hoe het werkt
 
-- **Desktop (vanaf 1024px)**: drie rijen van vier kaarten. Per rij is één kaart breder (`nc__item--wide`),
-  telkens één positie verder dan in de rij erboven.
+- **Vanaf 640px containerbreedte**: drie rijen van drie kaarten. Per rij is één kaart breder (`nc__item--wide`).
 - **Tablet en mobiel**: dezelfde kaarten als horizontale carrousel met snap-points en twee pijlknoppen.
 - **Quote-kaart**: citaat, avatar, naam, functie en bedrijfslogo.
 - **Stat-kaart**: groot logo, bedrijfsnaam en resultaat.

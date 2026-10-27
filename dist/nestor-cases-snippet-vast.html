@@ -1,22 +1,22 @@
 <!--
-  NESTOR CASES-BLOK (snippet voor HubSpot / CMS, vastgepind op commit 036f23d)
+  NESTOR CASES-BLOK (snippet voor HubSpot / CMS, vastgepind op commit dfa5a0b)
 
   Deze versie verwijst naar één vaste commit en werkt dus meteen. Nadeel: na een code-wijziging
   op GitHub moet je deze snippet opnieuw genereren (python3 build.py) en opnieuw plakken.
   De gewone snippet (nestor-cases-snippet.html) laadt van GitHub Pages en volgt de branch main.
 
   Plak dit in het HTML-/embed-veld. CSS en script worden geladen van GitHub Pages:
-      https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@036f23d/dist/nestor-cases.css
-      https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@036f23d/dist/nestor-cases.js
+      https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@dfa5a0b/dist/nestor-cases.css
+      https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@dfa5a0b/dist/nestor-cases.js
   Pas je iets aan in de code, dan push je naar GitHub en staat het binnen ongeveer 10 minuten op de site.
 
   MEDIA: foto's, logo's en video's komen uit de HubSpot File Manager (map "NE - Website",
   met submap "klanten"), via data-media op de <section>. Een ander adres? Pas data-media aan,
-  met een slash op het einde. GitHub Pages heeft dezelfde bestanden als reserve: https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@036f23d/media/
+  met een slash op het einde. GitHub Pages heeft dezelfde bestanden als reserve: https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@dfa5a0b/media/
 
   YOUTUBE: per videokaart de YouTube-link in data-video (zie de VERVANG-opmerkingen).
 -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@036f23d/dist/nestor-cases.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@dfa5a0b/dist/nestor-cases.css">
 <section class="nc" id="nestor-cases" data-media="https://7551812.fs1.hubspotusercontent-eu1.net/hubfs/7551812/Nestor/NE%20-%20Website/">
   <div class="nc__inner">
     <div class="nc__head">
@@ -42,8 +42,22 @@
 
   <div class="nc__grid">
 
-    <!-- ===== RIJ 1 (brede kaart op positie 1) ===== -->
+    <!-- ===== RIJ 1 (brede kaart op positie 2) ===== -->
     <div class="nc__row">
+
+      <div class="nc__item">
+        <div class="nc__card nc__card--video" role="button" tabindex="0"
+             data-video="https://www.youtube.com/shorts/U2xrfmG9EJ4" data-ratio="9/16" aria-label="Bekijk de video van Johan bij Maatkasten Online">
+          <img class="nc__poster" data-src="media/maatkasten-johan.jpg" alt="Johan Haegeman · Maatkasten Online" loading="lazy">
+          <video class="nc__loop" data-src="media/maatkasten-johan-loop.mp4" muted loop playsinline preload="metadata"></video>
+          <img class="nc__logo" data-src="media/logo-maatkasten-online.png" alt="Maatkasten Online">
+          <div class="nc__grow"></div>
+          <button type="button" class="nc__watch" tabindex="-1">
+            <svg viewBox="0 0 14 17" fill="none" aria-hidden="true"><path fill="currentColor" d="M0 14.686V2.702C0 1.23 1.62.332 2.869 1.112l9.587 5.992a1.875 1.875 0 0 1 0 3.18l-9.587 5.992C1.619 17.056 0 16.16 0 14.686"/></svg>
+            <span>Bekijk</span>
+          </button>
+        </div>
+      </div>
 
       <div class="nc__item nc__item--wide">
         <div class="nc__card">
@@ -63,27 +77,19 @@
       </div>
 
       <div class="nc__item">
-        <div class="nc__card nc__card--video" role="button" tabindex="0"
-             data-video="https://www.youtube.com/shorts/U2xrfmG9EJ4" data-ratio="9/16" aria-label="Bekijk de video van Johan bij Maatkasten Online">
-          <img class="nc__poster" data-src="media/maatkasten-johan.jpg" alt="Johan Haegeman · Maatkasten Online" loading="lazy">
-          <video class="nc__loop" data-src="media/maatkasten-johan-loop.mp4" muted loop playsinline preload="metadata"></video>
-          <img class="nc__logo" data-src="media/logo-maatkasten-online.png" alt="Maatkasten Online">
+        <div class="nc__card nc__card--bgimg">
+          <img class="nc__bgimg" data-src="media/otheo.jpg" alt="Twee medewerkers van de klantendienst van Otheo" loading="lazy" style="object-position: center 40%;">
+          <img class="nc__logo" data-src="media/logo-otheo.png" alt="Otheo">
           <div class="nc__grow"></div>
-          <button type="button" class="nc__watch" tabindex="-1">
-            <svg viewBox="0 0 14 17" fill="none" aria-hidden="true"><path fill="currentColor" d="M0 14.686V2.702C0 1.23 1.62.332 2.869 1.112l9.587 5.992a1.875 1.875 0 0 1 0 3.18l-9.587 5.992C1.619 17.056 0 16.16 0 14.686"/></svg>
-            <span>Bekijk</span>
-          </button>
+          <div class="nc__company">Otheo</div>
+          <div class="nc__label">Correcter en gemotiveerder dan andere uitzendkrachten</div>
         </div>
       </div>
 
-      <div class="nc__item">
-        <div class="nc__card">
-          <img class="nc__biglogo" data-src="media/logo-top-motors-origineel.png" alt="Top Motors">
-          <div class="nc__grow"></div>
-          <div class="nc__company">Top Motors</div>
-          <div class="nc__label">Pool van zes Nestors, flexibel inzetbaar</div>
-        </div>
-      </div>
+    </div>
+
+    <!-- ===== RIJ 2 (brede kaart op positie 3) ===== -->
+    <div class="nc__row">
 
       <div class="nc__item">
         <div class="nc__card">
@@ -101,11 +107,6 @@
           </div>
         </div>
       </div>
-
-    </div>
-
-    <!-- ===== RIJ 2 (brede kaart op positie 2) ===== -->
-    <div class="nc__row">
 
       <div class="nc__item">
         <div class="nc__card nc__card--video" role="button" tabindex="0"
@@ -138,7 +139,12 @@
         </div>
       </div>
 
-      <div class="nc__item">
+    </div>
+
+    <!-- ===== RIJ 3 (brede kaart op positie 1) ===== -->
+    <div class="nc__row">
+
+      <div class="nc__item nc__item--wide">
         <div class="nc__card nc__card--bgimg">
           <img class="nc__bgimg" data-src="media/foodbag.jpg" alt="Twee Foodbag-chauffeurs in de bestelwagen" loading="lazy" style="object-position: center 35%;">
           <img class="nc__logo" data-src="media/logo-foodbag.png" alt="Foodbag">
@@ -161,55 +167,6 @@
               </div>
             </div>
             <img class="nc__logo" data-src="media/logo-foodbag-origineel.png" alt="Foodbag">
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- ===== RIJ 3 (brede kaart op positie 3) ===== -->
-    <div class="nc__row">
-
-      <div class="nc__item">
-        <div class="nc__card">
-          <p class="nc__quote">“Het is voor ons een zeer positief verhaal. Ze zijn gemotiveerd en bovendien zeker niet te duur in vergelijking met andere uitzendkrachten.”</p>
-          <div class="nc__grow"></div>
-          <div class="nc__foot">
-            <div class="nc__author">
-              <img class="nc__avatar" data-src="media/benny-bellekens.jpg" alt="Benny Bellekens">
-              <div>
-                <div class="nc__label">Benny Bellekens</div>
-                <div class="nc__label">HR-verantwoordelijke · Otheo</div>
-              </div>
-            </div>
-            <img class="nc__logo" data-src="media/logo-otheo.png" alt="Otheo">
-          </div>
-        </div>
-      </div>
-
-      <div class="nc__item">
-        <div class="nc__card nc__card--bgimg">
-          <img class="nc__bgimg" data-src="media/otheo.jpg" alt="Twee medewerkers van de klantendienst van Otheo" loading="lazy" style="object-position: center 40%;">
-          <img class="nc__logo" data-src="media/logo-otheo.png" alt="Otheo">
-          <div class="nc__grow"></div>
-          <div class="nc__company">Otheo</div>
-          <div class="nc__label">Correcter en gemotiveerder dan andere uitzendkrachten</div>
-        </div>
-      </div>
-
-      <div class="nc__item nc__item--wide">
-        <div class="nc__card">
-          <p class="nc__quote">“Ik kan me volledig op mijn werk concentreren en hoef me nergens zorgen over te maken. Dat is een ongelooflijke luxe.”</p>
-          <div class="nc__grow"></div>
-          <div class="nc__foot">
-            <div class="nc__author">
-              <img class="nc__avatar" data-src="media/marc-celis.jpg" alt="Marc Celis">
-              <div>
-                <div class="nc__label">Marc Celis</div>
-                <div class="nc__label">Transportplanner · Young Charly</div>
-              </div>
-            </div>
-            <img class="nc__logo" data-src="media/logo-young-charly.webp" alt="Young Charly">
           </div>
         </div>
       </div>
@@ -266,4 +223,4 @@
   </button>
   <div class="nc-modal__body"></div>
 </div>
-<script src="https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@036f23d/dist/nestor-cases.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@dfa5a0b/dist/nestor-cases.js" defer></script>

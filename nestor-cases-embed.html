@@ -108,7 +108,7 @@
     .nc__inner, .nc__grid { --nc-gutter: 24px; }
   }
 
-  /* Grid vanaf 640px containerbreedte, carrousel daaronder */
+  /* Grid van drie rijen van drie vanaf 640px containerbreedte, carrousel daaronder */
   @container (min-width: 640px) {
     .nc__nav { display: none; }
     .nc__grid {
@@ -221,16 +221,6 @@
     .nc__head { flex-direction: column; gap: 20px; }
   }
 
-  /* Containers van 640 tot 1199px (bv. het embed-blok op nestor.be): drie kaarten per rij
-     (vier rijen), elke rij één brede kaart. Vanaf 1200px het volledige grid van vier per rij. */
-  @container (min-width: 640px) and (max-width: 1199px) {
-    .nc__grid { display: flex; flex-wrap: wrap; gap: var(--nc-gap); }
-    .nc__row { display: contents; }
-    .nc__item { flex: 0 0 calc((100% - 2 * var(--nc-gap)) * 3 / 11); }
-    .nc__item--wide,
-    .nc__row:nth-child(2) .nc__item:nth-child(3) { flex-basis: calc((100% - 2 * var(--nc-gap)) * 5 / 11); }
-  }
-
   /* Compacte maten voor containers van 640 tot 959px */
   @container (min-width: 640px) and (max-width: 959px) {
     .nc__inner, .nc__grid { --nc-gutter: 16px; --nc-gap: 6px; }
@@ -317,8 +307,22 @@
 
   <div class="nc__grid">
 
-    <!-- ===== RIJ 1 (brede kaart op positie 1) ===== -->
+    <!-- ===== RIJ 1 (brede kaart op positie 2) ===== -->
     <div class="nc__row">
+
+      <div class="nc__item">
+        <div class="nc__card nc__card--video" role="button" tabindex="0"
+             data-video="https://www.youtube.com/shorts/U2xrfmG9EJ4" data-ratio="9/16" aria-label="Bekijk de video van Johan bij Maatkasten Online">
+          <img class="nc__poster" data-src="media/maatkasten-johan.jpg" alt="Johan Haegeman · Maatkasten Online" loading="lazy">
+          <video class="nc__loop" data-src="media/maatkasten-johan-loop.mp4" muted loop playsinline preload="metadata"></video>
+          <img class="nc__logo" data-src="media/logo-maatkasten-online.png" alt="Maatkasten Online">
+          <div class="nc__grow"></div>
+          <button type="button" class="nc__watch" tabindex="-1">
+            <svg viewBox="0 0 14 17" fill="none" aria-hidden="true"><path fill="currentColor" d="M0 14.686V2.702C0 1.23 1.62.332 2.869 1.112l9.587 5.992a1.875 1.875 0 0 1 0 3.18l-9.587 5.992C1.619 17.056 0 16.16 0 14.686"/></svg>
+            <span>Bekijk</span>
+          </button>
+        </div>
+      </div>
 
       <div class="nc__item nc__item--wide">
         <div class="nc__card">
@@ -338,27 +342,19 @@
       </div>
 
       <div class="nc__item">
-        <div class="nc__card nc__card--video" role="button" tabindex="0"
-             data-video="https://www.youtube.com/shorts/U2xrfmG9EJ4" data-ratio="9/16" aria-label="Bekijk de video van Johan bij Maatkasten Online">
-          <img class="nc__poster" data-src="media/maatkasten-johan.jpg" alt="Johan Haegeman · Maatkasten Online" loading="lazy">
-          <video class="nc__loop" data-src="media/maatkasten-johan-loop.mp4" muted loop playsinline preload="metadata"></video>
-          <img class="nc__logo" data-src="media/logo-maatkasten-online.png" alt="Maatkasten Online">
+        <div class="nc__card nc__card--bgimg">
+          <img class="nc__bgimg" data-src="media/otheo.jpg" alt="Twee medewerkers van de klantendienst van Otheo" loading="lazy" style="object-position: center 40%;">
+          <img class="nc__logo" data-src="media/logo-otheo.png" alt="Otheo">
           <div class="nc__grow"></div>
-          <button type="button" class="nc__watch" tabindex="-1">
-            <svg viewBox="0 0 14 17" fill="none" aria-hidden="true"><path fill="currentColor" d="M0 14.686V2.702C0 1.23 1.62.332 2.869 1.112l9.587 5.992a1.875 1.875 0 0 1 0 3.18l-9.587 5.992C1.619 17.056 0 16.16 0 14.686"/></svg>
-            <span>Bekijk</span>
-          </button>
+          <div class="nc__company">Otheo</div>
+          <div class="nc__label">Correcter en gemotiveerder dan andere uitzendkrachten</div>
         </div>
       </div>
 
-      <div class="nc__item">
-        <div class="nc__card">
-          <img class="nc__biglogo" data-src="media/logo-top-motors-origineel.png" alt="Top Motors">
-          <div class="nc__grow"></div>
-          <div class="nc__company">Top Motors</div>
-          <div class="nc__label">Pool van zes Nestors, flexibel inzetbaar</div>
-        </div>
-      </div>
+    </div>
+
+    <!-- ===== RIJ 2 (brede kaart op positie 3) ===== -->
+    <div class="nc__row">
 
       <div class="nc__item">
         <div class="nc__card">
@@ -376,11 +372,6 @@
           </div>
         </div>
       </div>
-
-    </div>
-
-    <!-- ===== RIJ 2 (brede kaart op positie 2) ===== -->
-    <div class="nc__row">
 
       <div class="nc__item">
         <div class="nc__card nc__card--video" role="button" tabindex="0"
@@ -413,7 +404,12 @@
         </div>
       </div>
 
-      <div class="nc__item">
+    </div>
+
+    <!-- ===== RIJ 3 (brede kaart op positie 1) ===== -->
+    <div class="nc__row">
+
+      <div class="nc__item nc__item--wide">
         <div class="nc__card nc__card--bgimg">
           <img class="nc__bgimg" data-src="media/foodbag.jpg" alt="Twee Foodbag-chauffeurs in de bestelwagen" loading="lazy" style="object-position: center 35%;">
           <img class="nc__logo" data-src="media/logo-foodbag.png" alt="Foodbag">
@@ -436,55 +432,6 @@
               </div>
             </div>
             <img class="nc__logo" data-src="media/logo-foodbag-origineel.png" alt="Foodbag">
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- ===== RIJ 3 (brede kaart op positie 3) ===== -->
-    <div class="nc__row">
-
-      <div class="nc__item">
-        <div class="nc__card">
-          <p class="nc__quote">“Het is voor ons een zeer positief verhaal. Ze zijn gemotiveerd en bovendien zeker niet te duur in vergelijking met andere uitzendkrachten.”</p>
-          <div class="nc__grow"></div>
-          <div class="nc__foot">
-            <div class="nc__author">
-              <img class="nc__avatar" data-src="media/benny-bellekens.jpg" alt="Benny Bellekens">
-              <div>
-                <div class="nc__label">Benny Bellekens</div>
-                <div class="nc__label">HR-verantwoordelijke · Otheo</div>
-              </div>
-            </div>
-            <img class="nc__logo" data-src="media/logo-otheo.png" alt="Otheo">
-          </div>
-        </div>
-      </div>
-
-      <div class="nc__item">
-        <div class="nc__card nc__card--bgimg">
-          <img class="nc__bgimg" data-src="media/otheo.jpg" alt="Twee medewerkers van de klantendienst van Otheo" loading="lazy" style="object-position: center 40%;">
-          <img class="nc__logo" data-src="media/logo-otheo.png" alt="Otheo">
-          <div class="nc__grow"></div>
-          <div class="nc__company">Otheo</div>
-          <div class="nc__label">Correcter en gemotiveerder dan andere uitzendkrachten</div>
-        </div>
-      </div>
-
-      <div class="nc__item nc__item--wide">
-        <div class="nc__card">
-          <p class="nc__quote">“Ik kan me volledig op mijn werk concentreren en hoef me nergens zorgen over te maken. Dat is een ongelooflijke luxe.”</p>
-          <div class="nc__grow"></div>
-          <div class="nc__foot">
-            <div class="nc__author">
-              <img class="nc__avatar" data-src="media/marc-celis.jpg" alt="Marc Celis">
-              <div>
-                <div class="nc__label">Marc Celis</div>
-                <div class="nc__label">Transportplanner · Young Charly</div>
-              </div>
-            </div>
-            <img class="nc__logo" data-src="media/logo-young-charly.webp" alt="Young Charly">
           </div>
         </div>
       </div>
