@@ -293,6 +293,12 @@ dhost = f"""<!doctype html>
   h2 {{ font-size: 70px; text-transform: uppercase; margin: 80px; color: pink; }}
   h3 {{ font-size: 50px; text-transform: uppercase; margin: 60px; color: orange; font-style: italic; }}
   p {{ margin: 40px; font-style: italic; }}
+  /* Echte prose-regels van nestor.be (main.css) */
+  .prose a {{ padding-bottom: .125rem; font-weight: 600; color: rgba(247,49,9,1); text-decoration: underline; }}
+  .prose h3 {{ font-size: 1.25em; margin-top: 1.6em; margin-bottom: .6em; line-height: 1.6; color: #010306; font-weight: 600; }}
+  .prose h2 {{ font-size: 2.5rem; line-height: 3rem; margin-top: 2em; margin-bottom: 1em; }}
+  .prose p {{ margin-top: 1.25em; margin-bottom: 1.25em; }}
+  .prose img, .prose video {{ margin-top: 2em; margin-bottom: 2em; }}
   .site-container {{ width: 700px; max-width: 100%; margin: 40px auto; background: #fff; padding: 20px; }}
   .site-container.w-375 {{ width: 375px; }}
   .site-container.w-1027 {{ width: 1027px; }}
@@ -313,12 +319,12 @@ dhost = f"""<!doctype html>
   document.querySelectorAll('.demo-switch button').forEach(function (b) {{
     b.addEventListener('click', function () {{
       var c = document.querySelector('.site-container');
-      c.className = 'site-container ' + b.dataset.w;
+      c.className = 'site-container prose ' + b.dataset.w;
       document.querySelectorAll('.demo-switch button').forEach(function (x) {{ x.classList.toggle('is-active', x === b); }});
     }});
   }});
 </script>
-<div class="site-container">
+<div class="site-container prose">
   <h2>Site-kop boven het blok</h2>
 {dembed_local}
   <p>Site-tekst onder het blok.</p>
