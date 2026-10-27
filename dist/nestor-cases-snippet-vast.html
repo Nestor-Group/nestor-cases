@@ -1,23 +1,23 @@
 <!--
-  NESTOR CASES-BLOK (snippet voor HubSpot / CMS, vastgepind op commit ba94fc9)
+  NESTOR CASES-BLOK (snippet voor HubSpot / CMS, vastgepind op commit 70a5b2e)
 
   Deze versie verwijst naar één vaste commit en werkt dus meteen. Nadeel: na een code-wijziging
   op GitHub moet je deze snippet opnieuw genereren (python3 build.py) en opnieuw plakken.
   De gewone snippet (nestor-cases-snippet.html) laadt van GitHub Pages en volgt de branch main.
 
   Plak dit in het HTML-/embed-veld. CSS en script worden geladen van GitHub Pages:
-      https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@ba94fc9/dist/nestor-cases.css
-      https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@ba94fc9/dist/nestor-cases.js
+      https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@70a5b2e/dist/nestor-cases.css
+      https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@70a5b2e/dist/nestor-cases.js
   Pas je iets aan in de code, dan push je naar GitHub en staat het binnen ongeveer 10 minuten op de site.
 
-  MEDIA: foto's, logo's en video's komen standaard ook van GitHub (data-media op de <section>).
-  Wil je ze liever in de HubSpot File Manager zetten, upload dan de map "media" en vul de URL
-  van die map in bij data-media, met een slash op het einde.
+  MEDIA: foto's, logo's en video's komen uit de HubSpot File Manager (map "NE - Website",
+  met submap "klanten"), via data-media op de <section>. Een ander adres? Pas data-media aan,
+  met een slash op het einde. GitHub Pages heeft dezelfde bestanden als reserve: https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@70a5b2e/media/
 
   YOUTUBE: per videokaart de YouTube-link in data-video (zie de VERVANG-opmerkingen).
 -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@ba94fc9/dist/nestor-cases.css">
-<section class="nc" id="nestor-cases" data-media="https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@ba94fc9/media/">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@70a5b2e/dist/nestor-cases.css">
+<section class="nc" id="nestor-cases" data-media="https://7551812.fs1.hubspotusercontent-eu1.net/hubfs/7551812/Nestor/NE%20-%20Website/">
   <div class="nc__inner">
     <div class="nc__head">
       <div>
@@ -266,4 +266,4 @@
   </button>
   <div class="nc-modal__body"></div>
 </div>
-<script src="https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@ba94fc9/dist/nestor-cases.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@70a5b2e/dist/nestor-cases.js" defer></script>

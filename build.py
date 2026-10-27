@@ -38,7 +38,8 @@ assert 'src="media/' not in block.replace('data-src="media/', "")
 # instelbare media-locatie op de section
 block = block.replace('<section class="nc" id="nestor-cases">',
                       '<section class="nc" id="nestor-cases" data-media="media/">')
-MEDIA_CDN = f"{PAGES}/media/"
+HUBSPOT_MEDIA = "https://7551812.fs1.hubspotusercontent-eu1.net/hubfs/7551812/Nestor/NE%20-%20Website/"   # HubSpot File Manager, map "NE - Website"
+MEDIA_CDN = HUBSPOT_MEDIA   # standaard media-locatie in de snippet (alternatief: f"{PAGES}/media/")
 
 intro = """<!--
   NESTOR CASES-BLOK (embed-versie)
@@ -118,9 +119,9 @@ snippet_intro = f"""<!--
       {CDN}/nestor-cases.js
   Pas je iets aan in de code, dan push je naar GitHub en staat het binnen ongeveer 10 minuten op de site.
 
-  MEDIA: foto's, logo's en video's komen standaard ook van GitHub (data-media op de <section>).
-  Wil je ze liever in de HubSpot File Manager zetten, upload dan de map "media" en vul de URL
-  van die map in bij data-media, met een slash op het einde.
+  MEDIA: foto's, logo's en video's komen uit de HubSpot File Manager (map "NE - Website",
+  met submap "klanten"), via data-media op de <section>. Een ander adres? Pas data-media aan,
+  met een slash op het einde. GitHub Pages heeft dezelfde bestanden als reserve: {PAGES}/media/
 
   YOUTUBE: per videokaart de YouTube-link in data-video (zie de VERVANG-opmerkingen).
 -->

@@ -23,8 +23,10 @@ Een nabouw van het casestudies-blok van metaview.ai, gevuld met quotes uit de ca
 
 ## In de website zetten (aanbevolen: media in HubSpot, code op GitHub)
 
-1. **Media in HubSpot.** Upload de map `media` in de HubSpot File Manager (Marketing > Files), bijvoorbeeld in een
-   map `cases/media`. Noteer de URL van die map, iets als `https://www.nestor.be/hubfs/cases/media/`.
+1. **Media in HubSpot.** De map `media` staat in de HubSpot File Manager onder `Nestor / NE - Website` (met de
+   submap `klanten`). De snippet laadt de media van daar:
+   `https://7551812.fs1.hubspotusercontent-eu1.net/hubfs/7551812/Nestor/NE%20-%20Website/`.
+   Nieuwe bestanden upload je op beide plekken: in die HubSpot-map en in `media/` in deze repository.
 2. **Code op GitHub.** Deze map staat in de repository `Nestor-Group/nestor-cases`, met GitHub Pages aan.
    De map `dist` bevat `nestor-cases.css` en `nestor-cases.js`; die worden geladen van
    `https://nestor-group.github.io/nestor-cases/dist/nestor-cases.css` (idem voor `.js`). De media komen
