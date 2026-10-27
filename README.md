@@ -119,5 +119,5 @@ Opmaak: een carrousel met pijlknoppen die per pagina schuift: drie kaarten per p
 containerbreedte (compacter tussen 640 en 959px), één kaart per pagina daaronder. Elke kaart heeft een foto
 als achtergrond (`nd__card--foto`, bestanden `media/diensten-*.jpg`, met een donker transparant vlak en witte
 tekst). Een kaart zonder foto: laat de class en de `<img>` weg, dan is het een witte kaart. De foto's staan in de HubSpot File Manager (map "NE - Website") en in `media/`.
-De knop "Zoek gratis en vrijblijvend tussen onze kandidaten" verwijst naar `https://interim.nestor.be/database-tool`. De ruimte boven en onder in het blok staat in `--nd-pad-y` (64px, 48px in smalle containers);
+De knop "Zoek gratis en vrijblijvend tussen onze kandidaten" en elke kaart verwijzen naar `https://interim.nestor.be/database-tool`. De ruimte boven en onder in het blok staat in `--nd-pad-y` (64px, 48px in smalle containers);
 de container van de site geeft er zelf ook al marge bij. 

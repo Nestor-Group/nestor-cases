@@ -112,9 +112,12 @@
     .nd__card { min-height: var(--nd-card-h, 300px); }
   }
 
-  /* ---- Kaart ---- */
+  /* ---- Kaart (elke kaart is een link naar de database-tool) ---- */
+  .nd a.nd__card, .nd a.nd__card:hover, .nd a.nd__card:focus { color: var(--nd-card-text); text-decoration: none; font: inherit; }
+  .nd a.nd__card:focus-visible { outline: 2px solid var(--nd-accent); outline-offset: 2px; }
   .nd__card {
-    width: 100%; overflow: hidden;
+    width: 100%; overflow: hidden; cursor: pointer;
+    transition: box-shadow .2s, transform .2s;
     background: var(--nd-card); border: 1px solid var(--nd-card-border); border-radius: var(--nd-radius);
     padding: 20px; display: flex; flex-direction: column; gap: 12px;
   }
@@ -134,7 +137,9 @@
 
   /* ---- Fotokaart: foto als achtergrond, donker transparant vlak, witte tekst ---- */
   .nd__card--foto { position: relative; color: #fff; }
-  .nd .nd__bg { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; object-fit: cover; }
+  .nd .nd__bg { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; object-fit: cover; transition: transform .4s; }
+  .nd__card:hover { box-shadow: 0 8px 24px rgba(0,0,0,.12); }
+  .nd .nd__card--foto:hover .nd__bg { transform: scale(1.04); }
   .nd__card--foto::after {
     content: ""; position: absolute; inset: 0;
     background: linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,.2) 35%, rgba(0,0,0,.6) 60%, rgba(0,0,0,.8) 100%);
@@ -181,6 +186,8 @@
 
   @media (prefers-reduced-motion: reduce) {
     .nd__grid { scroll-behavior: auto; }
+    .nd .nd__bg, .nd__card { transition: none; }
+    .nd .nd__card--foto:hover .nd__bg { transform: none; }
   }
 </style>
 
@@ -206,7 +213,7 @@
   <div class="nd__grid">
 
     <div class="nd__item">
-      <div class="nd__card nd__card--foto">
+      <a class="nd__card nd__card--foto" href="https://interim.nestor.be/database-tool">
         <img class="nd__bg" src="https://7551812.fs1.hubspotusercontent-eu1.net/hubfs/7551812/Nestor/NE%20-%20Website/diensten-chauffeur.jpg" alt="Nestor-chauffeur van Foodbag in de laadruimte van zijn bestelwagen" loading="lazy" style="object-position: center 22%;">
         <div class="nd__top">
           <div class="nd__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 17h-2v-5l2-5h12l3 5v5h-2"/><circle cx="7.5" cy="17" r="2"/><circle cx="16.5" cy="17" r="2"/><path d="M9.5 17h5"/><path d="M5 12h14"/></svg></div>
@@ -214,11 +221,11 @@
         </div>
         <div class="nd__grow"></div>
         <div class="nd__answer">Een Nestor neemt het rijden tussen je vestigingen en naar je klanten over.</div>
-      </div>
+      </a>
     </div>
 
     <div class="nd__item">
-      <div class="nd__card nd__card--foto">
+      <a class="nd__card nd__card--foto" href="https://interim.nestor.be/database-tool">
         <img class="nd__bg" src="https://7551812.fs1.hubspotusercontent-eu1.net/hubfs/7551812/Nestor/NE%20-%20Website/diensten-logistiek.jpg" alt="Nestor-logistiek medewerker neemt een onderdeel uit de stelling" loading="lazy" style="object-position: 70% 28%;">
         <div class="nd__top">
           <div class="nd__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3 8 9-4 9 4v9l-9 4-9-4z"/><path d="M3 8l9 4 9-4"/><path d="M12 12v9"/><path d="M7.5 6l9 4"/></svg></div>
@@ -226,11 +233,11 @@
         </div>
         <div class="nd__grow"></div>
         <div class="nd__answer">Een Nestor houdt je magazijn op orde en krijgt je bestellingen op tijd de deur uit.</div>
-      </div>
+      </a>
     </div>
 
     <div class="nd__item">
-      <div class="nd__card nd__card--foto">
+      <a class="nd__card nd__card--foto" href="https://interim.nestor.be/database-tool">
         <img class="nd__bg" src="https://7551812.fs1.hubspotusercontent-eu1.net/hubfs/7551812/Nestor/NE%20-%20Website/diensten-administratie.jpg" alt="Nestor aan haar bureau" loading="lazy" style="object-position: center 20%;">
         <div class="nd__top">
           <div class="nd__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8"/><path d="M8 17h8"/></svg></div>
@@ -238,11 +245,11 @@
         </div>
         <div class="nd__grow"></div>
         <div class="nd__answer">Een Nestor werkt je administratie bij, een paar halve dagen per week.</div>
-      </div>
+      </a>
     </div>
 
     <div class="nd__item">
-      <div class="nd__card nd__card--foto">
+      <a class="nd__card nd__card--foto" href="https://interim.nestor.be/database-tool">
         <img class="nd__bg" src="https://7551812.fs1.hubspotusercontent-eu1.net/hubfs/7551812/Nestor/NE%20-%20Website/diensten-onthaal.jpg" alt="Nestor aan de telefoon" loading="lazy" style="object-position: 60% 25%;">
         <div class="nd__top">
           <div class="nd__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 10a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v3H6z"/><path d="M4 13h16v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M12 8V5"/><path d="M12 5a2 2 0 1 1 2-2"/></svg></div>
@@ -250,11 +257,11 @@
         </div>
         <div class="nd__grow"></div>
         <div class="nd__answer">Een Nestor bemant je onthaal en je telefoon, net de uren dat je het nodig hebt.</div>
-      </div>
+      </a>
     </div>
 
     <div class="nd__item">
-      <div class="nd__card nd__card--foto">
+      <a class="nd__card nd__card--foto" href="https://interim.nestor.be/database-tool">
         <img class="nd__bg" src="https://7551812.fs1.hubspotusercontent-eu1.net/hubfs/7551812/Nestor/NE%20-%20Website/diensten-pendel.jpg" alt="Nestor-chauffeur bij de open deur van een personenbusje" loading="lazy" style="object-position: 60% 45%;">
         <div class="nd__top">
           <div class="nd__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M4 11h16"/><path d="M7 18v2"/><path d="M17 18v2"/><circle cx="8" cy="14.5" r="1"/><circle cx="16" cy="14.5" r="1"/></svg></div>
@@ -262,11 +269,11 @@
         </div>
         <div class="nd__grow"></div>
         <div class="nd__answer">Een Nestor brengt je medewerkers en klanten op tijd op de juiste plek.</div>
-      </div>
+      </a>
     </div>
 
     <div class="nd__item">
-      <div class="nd__card nd__card--foto">
+      <a class="nd__card nd__card--foto" href="https://interim.nestor.be/database-tool">
         <img class="nd__bg" src="https://7551812.fs1.hubspotusercontent-eu1.net/hubfs/7551812/Nestor/NE%20-%20Website/diensten-autojockey.jpg" alt="Nestor achter het stuur van een bestelwagen van Maatkasten Online" loading="lazy" style="object-position: 47% 45%;">
         <div class="nd__top">
           <div class="nd__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="m10.85 12.15 8.15-8.15"/><path d="M18 4l2 2"/><path d="m15 7 2 2"/></svg></div>
@@ -274,11 +281,11 @@
         </div>
         <div class="nd__grow"></div>
         <div class="nd__answer">Een Nestor brengt je wagens naar de klant, de garage of de keuring.</div>
-      </div>
+      </a>
     </div>
 
     <div class="nd__item">
-      <div class="nd__card nd__card--foto">
+      <a class="nd__card nd__card--foto" href="https://interim.nestor.be/database-tool">
         <img class="nd__bg" src="https://7551812.fs1.hubspotusercontent-eu1.net/hubfs/7551812/Nestor/NE%20-%20Website/diensten-klusjesman.jpg" alt="Nestor-klusjesman aan een werkbank in het atelier" loading="lazy" style="object-position: 38% 40%;">
         <div class="nd__top">
           <div class="nd__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0 5 5L13 18a2.1 2.1 0 0 1-3-3l6.7-6.7z"/><path d="M14.7 6.3 18 3l3 3-3.3 3.3"/><path d="m5 14-2 2 5 5 2-2"/></svg></div>
@@ -286,11 +293,11 @@
         </div>
         <div class="nd__grow"></div>
         <div class="nd__answer">Een Nestor werkt de klusjes in en rond je gebouw weg.</div>
-      </div>
+      </a>
     </div>
 
     <div class="nd__item">
-      <div class="nd__card nd__card--foto">
+      <a class="nd__card nd__card--foto" href="https://interim.nestor.be/database-tool">
         <img class="nd__bg" src="https://7551812.fs1.hubspotusercontent-eu1.net/hubfs/7551812/Nestor/NE%20-%20Website/diensten-winkel.jpg" alt="Nestor-winkelmedewerker met een houten krat in de winkel" loading="lazy" style="object-position: center 22%;">
         <div class="nd__top">
           <div class="nd__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 7h12l1 13H5z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg></div>
@@ -298,11 +305,11 @@
         </div>
         <div class="nd__grow"></div>
         <div class="nd__answer">Een Nestor springt bij in je winkel op de drukke momenten.</div>
-      </div>
+      </a>
     </div>
 
     <div class="nd__item">
-      <div class="nd__card nd__card--foto">
+      <a class="nd__card nd__card--foto" href="https://interim.nestor.be/database-tool">
         <img class="nd__bg" src="https://7551812.fs1.hubspotusercontent-eu1.net/hubfs/7551812/Nestor/NE%20-%20Website/diensten-event.jpg" alt="Twee Nestors lachen bij een koffie" loading="lazy" style="object-position: center 35%;">
         <div class="nd__top">
           <div class="nd__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16"/><path d="M8 3v4"/><path d="M16 3v4"/><path d="m9.5 16 1.5 1.5 3.5-3.5"/></svg></div>
@@ -310,7 +317,7 @@
         </div>
         <div class="nd__grow"></div>
         <div class="nd__answer">Een Nestor helpt je event, beurs of congres vlot verlopen, ook voor één dag.</div>
-      </div>
+      </a>
     </div>
 
   </div>
