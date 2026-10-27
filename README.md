@@ -115,8 +115,8 @@ Werkwijze bij een aanpassing: `diensten.html` aanpassen, `python3 build.py`, `di
 opnieuw plakken in HubSpot, en committen en pushen zodat GitHub de laatste versie heeft.
 
 Opmaak: een carrousel met pijlknoppen die per pagina schuift: drie kaarten per pagina vanaf 640px
-containerbreedte (compacter tussen 640 en 959px), één kaart per pagina daaronder. Zes kaarten hebben een foto
+containerbreedte (compacter tussen 640 en 959px), één kaart per pagina daaronder. Acht kaarten hebben een foto
 als achtergrond (`nd__card--foto`, bestanden `media/diensten-*.jpg`, met een donker transparant vlak en witte
-tekst); de andere drie zijn wit. De foto's staan in de HubSpot File Manager (map "NE - Website") en in `media/`.
+tekst); alleen de winkelmedewerker is nog een witte kaart. De foto's staan in de HubSpot File Manager (map "NE - Website") en in `media/`.
 De knop "Zoek gratis en vrijblijvend tussen onze kandidaten" verwijst naar `https://interim.nestor.be/database-tool`. De ruimte boven en onder in het blok staat in `--nd-pad-y` (64px, 48px in smalle containers);
 de container van de site geeft er zelf ook al marge bij. 
