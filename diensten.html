@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nestor: dit is wat Nestor voor jou kan betekenen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Alleen voor deze demo-pagina. Op je eigen site laat je dit weg. */
+  body { margin: 0; background: #fff; }
+</style>
+
+<!-- =====================================================================
+     NESTOR DIENSTEN-BLOK: "Dit is wat Nestor voor jou kan betekenen"
+     Alles wat je nodig hebt staat tussen <!-- BLOK START -- > en <!-- BLOK EINDE -- >:
+     1. de <style> met de CSS
+     2. de <section class="nd"> met de inhoud
+     3. de <script> voor de carrousel op smalle schermen
+     Dit is het bronbestand. Pas hier iets aan en draai daarna "python3 build.py":
+     dat maakt dist/diensten.css, dist/diensten.js en dist/diensten-snippet.html.
+
+     KAARTEN: elke kaart is een <div class="nd__item"> met daarin
+       - een icoon (inline SVG, geen afbeelding nodig)
+       - de functie (nd__fn)
+       - de herkenbare situatie bij de werkgever (nd__case)
+       - wat Nestor levert (nd__answer)
+     Kaart toevoegen of weghalen: kopieer of verwijder een volledige <div class="nd__item">.
+     ===================================================================== -->
+</head>
+<body>
+
+<!-- BLOK START -->
+<style>
+  .nd {
+    /* ---- Kleuren (Nestor-huisstijl) ---- */
+    --nd-bg: #f6f4ef;            /* achtergrond van de sectie */
+    --nd-head-text: #575757;     /* titel en intro */
+    --nd-eyebrow: #f73109;       /* kleine kop boven de titel */
+    --nd-card: #ffffff;          /* achtergrond van een kaart */
+    --nd-card-border: rgba(0,0,0,.06);
+    --nd-card-text: #575757;     /* tekst in de kaarten */
+    --nd-accent: #f73109;        /* icoon, pijl */
+    --nd-icon-bg: #fdeae4;       /* zachte oranje cirkel achter het icoon */
+    --nd-btn-bg: #f73109;        /* pil-knoppen en pijlknoppen */
+    --nd-btn-fg: #ffffff;
+    --nd-font-head: "Baloo Paaji 2", "Euclid Circular A", system-ui, sans-serif;
+    --nd-font-body: "Source Sans 3", "Source Sans Pro", system-ui, sans-serif;
+    --nd-max: 1234px;
+    --nd-gutter: 24px;
+    --nd-gap: 8px;
+    --nd-card-w: min(80vw, 328px);
+    --nd-radius: 12px;
+
+    background: var(--nd-bg);
+    color: var(--nd-card-text);
+    font-family: var(--nd-font-body);
+    font-size: 16px;
+    line-height: 1.2;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    container-type: inline-size;   /* het grid kijkt naar de breedte van het blok, niet van het scherm */
+  }
+  @media (min-width: 768px)  { .nd { --nd-gutter: 72px; } }
+  @media (min-width: 1280px) { .nd { --nd-gutter: 104px; } }
+
+  /* ---- Verdediging tegen de site-CSS (prose-marges, link- en knopstijlen) ---- */
+  .nd *, .nd *::before, .nd *::after { box-sizing: border-box; }
+  .nd img, .nd svg { display: block; max-width: 100%; height: auto; border: 0; margin: 0; padding: 0; box-shadow: none; }
+  .nd button { font: inherit; color: inherit; margin: 0; appearance: none; -webkit-appearance: none; box-shadow: none; }
+  .nd h2, .nd h3, .nd p { margin: 0; padding: 0; font-style: normal; text-transform: none; }
+  .nd a, .nd a:hover, .nd a:focus { text-decoration: none; box-shadow: none; }
+  .nd .nd__link, .nd .nd__link > span { color: var(--nd-btn-fg); font-size: 14px; letter-spacing: .02em; }
+  .nd .nd__link:hover { color: var(--nd-btn-fg); }
+
+  .nd__inner { max-width: var(--nd-max); margin: 0 auto; padding: 120px var(--nd-gutter) 0; }
+
+  /* ---- Kop ---- */
+  .nd__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; }
+  .nd__eyebrow {
+    font-family: var(--nd-font-head); font-weight: 600; font-size: 14px; line-height: 1.6;
+    letter-spacing: .06em; text-transform: uppercase; color: var(--nd-eyebrow);
+  }
+  .nd .nd__title {
+    margin: 16px 0 0; max-width: 840px;
+    font-family: var(--nd-font-head); font-weight: 700;
+    font-size: 36px; line-height: 1.08; letter-spacing: -.01em; color: var(--nd-head-text);
+  }
+  .nd .nd__intro {
+    margin: 16px 0 0; max-width: 640px;
+    font-size: 18px; line-height: 1.5; color: var(--nd-head-text);
+  }
+  .nd__link {
+    display: inline-flex; align-items: center; gap: 6px; flex: none;
+    padding: 12px 20px 12px 24px; border-radius: 9999px;
+    background: var(--nd-btn-bg); color: var(--nd-btn-fg); text-decoration: none; white-space: nowrap;
+    font-family: var(--nd-font-head); font-weight: 600; font-size: 14px; line-height: 1; text-transform: uppercase; letter-spacing: .02em;
+    transition: filter .2s;
+  }
+  .nd__link:hover { filter: brightness(.92); }
+  .nd .nd__link svg { width: 20px; height: 20px; color: var(--nd-btn-fg); transition: transform .2s; }
+  .nd__link:hover svg { transform: translate(2px, -2px); }
+
+  /* ---- Carrouselknoppen (alleen onder 640px) ---- */
+  .nd__nav { display: flex; gap: 8px; margin-top: 32px; }
+  .nd .nd__navbtn {
+    width: 36px; height: 36px; border-radius: 50%; border: 1px solid transparent;
+    background: var(--nd-btn-bg); color: var(--nd-btn-fg); display: grid; place-items: center; cursor: pointer; padding: 0;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .nd__navbtn svg { width: 20px; height: 20px; }
+  .nd__navbtn--prev svg { transform: rotate(180deg); }
+  .nd .nd__navbtn:disabled { background: transparent; color: var(--nd-head-text); opacity: .4; border-color: currentColor; cursor: default; }
+
+  /* ---- Grid / carrousel ---- */
+  .nd__grid {
+    display: flex; gap: var(--nd-gap); margin-top: 24px;
+    overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
+    padding: 0 var(--nd-gutter) 48px; scroll-padding: 0 var(--nd-gutter);
+    scrollbar-width: none;
+  }
+  .nd__grid::-webkit-scrollbar { display: none; }
+  .nd__item { flex: 0 0 var(--nd-card-w); scroll-snap-align: start; min-width: 0; display: flex; }
+
+  /* In een container smaller dan 1300px (bv. een embed in een CMS) volstaan kleine zijmarges */
+  @container (max-width: 1299px) {
+    .nd__inner, .nd__grid, .nd__foot { --nd-gutter: 24px; }
+  }
+
+  /* Grid van drie kolommen vanaf 640px containerbreedte, carrousel daaronder */
+  @container (min-width: 640px) {
+    .nd__nav { display: none; }
+    .nd__grid {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: visible;
+      margin: 40px auto 0; max-width: var(--nd-max); padding: 0 var(--nd-gutter) 48px;
+    }
+    .nd__item { flex: none; }
+  }
+
+  /* ---- Kaart ---- */
+  .nd__card {
+    width: 100%; overflow: hidden;
+    background: var(--nd-card); border: 1px solid var(--nd-card-border); border-radius: var(--nd-radius);
+    padding: 20px; display: flex; flex-direction: column; gap: 12px;
+  }
+  .nd__top { display: flex; align-items: center; gap: 12px; }
+  .nd__icon {
+    flex: none; width: 44px; height: 44px; border-radius: 50%;
+    background: var(--nd-icon-bg); color: var(--nd-accent); display: grid; place-items: center;
+  }
+  .nd .nd__icon svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .nd .nd__fn {
+    font-family: var(--nd-font-head); font-weight: 700; font-size: 20px; line-height: 1.15; color: var(--nd-card-text);
+  }
+  .nd .nd__case { font-size: 16px; line-height: 1.48; color: var(--nd-card-text); }
+  .nd__grow { flex: 1 1 0; }
+  .nd__answer {
+    display: flex; align-items: flex-start; gap: 8px;
+    padding-top: 12px; border-top: 1px solid rgba(0,0,0,.08);
+    font-size: 16px; line-height: 1.42; font-weight: 600; color: var(--nd-card-text);
+  }
+  .nd .nd__answer svg { flex: none; width: 18px; height: 18px; margin-top: 2px; stroke: var(--nd-accent); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ---- Afsluiter onder de kaarten ---- */
+  .nd__foot {
+    max-width: var(--nd-max); margin: 0 auto; padding: 0 var(--nd-gutter) 80px;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px;
+  }
+  .nd .nd__foot p { font-size: 18px; line-height: 1.4; color: var(--nd-head-text); flex: 1 1 320px; }
+
+  /* Smalle containers (mobiel): carrousel met compactere kop */
+  @container (max-width: 639px) {
+    .nd__inner { padding-top: 80px; }
+    .nd .nd__title { font-size: 28px; }
+    .nd .nd__intro { font-size: 16px; }
+    .nd__head { flex-direction: column; gap: 20px; }
+    .nd__head .nd__link { display: none; }   /* op mobiel staat de knop alleen onderaan */
+    .nd__foot { padding-bottom: 64px; }
+  }
+
+  /* Compacte maten voor containers van 640 tot 959px */
+  @container (min-width: 640px) and (max-width: 959px) {
+    .nd__inner, .nd__grid, .nd__foot { --nd-gutter: 16px; --nd-gap: 6px; }
+    .nd__inner { padding-top: 56px; }
+    .nd__grid { margin-top: 28px; padding-bottom: 32px; }
+    .nd .nd__title { font-size: 28px; }
+    .nd .nd__intro { font-size: 16px; }
+    .nd__head { gap: 16px; }
+    .nd .nd__link { padding: 10px 16px 10px 18px; }
+    .nd .nd__link, .nd .nd__link > span { font-size: 12px; }
+    .nd .nd__link svg { width: 16px; height: 16px; }
+    .nd__card { padding: 14px; border-radius: 10px; gap: 10px; }
+    .nd__top { gap: 8px; }
+    .nd__icon { width: 36px; height: 36px; }
+    .nd .nd__icon svg { width: 18px; height: 18px; }
+    .nd .nd__fn { font-size: 16px; }
+    .nd .nd__case { font-size: 14px; line-height: 1.42; }
+    .nd__answer { font-size: 14px; line-height: 1.35; padding-top: 10px; gap: 6px; }
+    .nd .nd__answer svg { width: 15px; height: 15px; margin-top: 1px; }
+    .nd__foot { padding-bottom: 56px; }
+    .nd .nd__foot p { font-size: 16px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nd__grid { scroll-behavior: auto; }
+  }
+</style>
+
+<section class="nd" id="nestor-diensten">
+  <div class="nd__inner">
+    <div class="nd__head">
+      <div>
+        <div class="nd__eyebrow">Voor werkgevers</div>
+        <h2 class="nd__title">Dit is wat Nestor voor jou kan betekenen</h2>
+        <p class="nd__intro">Ervaren gepensioneerden en 60-plussers die graag nog één tot drie dagen per week werken, als flexi-jobber of uitzendkracht. Herken je een van deze situaties? Dan hebben wij de juiste Nestor voor jou.</p>
+      </div>
+      <a class="nd__link" href="https://nestor.be/werkgevers/contact">
+        <span>Stuur je vraag door</span>
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M6 7C6 6.44772 6.44772 6 7 6H17C17.5523 6 18 6.44772 18 7V17C18 17.5523 17.5523 18 17 18C16.4477 18 16 17.5523 16 17V8H7C6.44772 8 6 7.55228 6 7Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M17.7071 6.29289C18.0976 6.68342 18.0976 7.31658 17.7071 7.70711L7.70711 17.7071C7.31658 18.0976 6.68342 18.0976 6.29289 17.7071C5.90237 17.3166 5.90237 16.6834 6.29289 16.2929L16.2929 6.29289C16.6834 5.90237 17.3166 5.90237 17.7071 6.29289Z" fill="currentColor"/></svg>
+      </a>
+    </div>
+
+    <div class="nd__nav">
+      <button type="button" class="nd__navbtn nd__navbtn--prev" aria-label="Vorige" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+      <button type="button" class="nd__navbtn nd__navbtn--next" aria-label="Volgende">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="nd__grid">
+
+    <div class="nd__item">
+      <div class="nd__card">
+        <div class="nd__top">
+          <div class="nd__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 17h-2v-5l2-5h12l3 5v5h-2"/><circle cx="7.5" cy="17" r="2"/><circle cx="16.5" cy="17" r="2"/><path d="M9.5 17h5"/><path d="M5 12h14"/></svg></div>
+          <h3 class="nd__fn">Chauffeur</h3>
+        </div>
+        <p class="nd__case">Je rijdt zelf regelmatig tussen je vestigingen of naar klanten.</p>
+        <div class="nd__grow"></div>
+        <div class="nd__answer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg><span>Wij leveren een ervaren chauffeur.</span></div>
+      </div>
+    </div>
+
+    <div class="nd__item">
+      <div class="nd__card">
+        <div class="nd__top">
+          <div class="nd__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="m10.85 12.15 8.15-8.15"/><path d="M18 4l2 2"/><path d="m15 7 2 2"/></svg></div>
+          <h3 class="nd__fn">Autojockey</h3>
+        </div>
+        <p class="nd__case">Je brengt zelf wagens naar een klant, de garage of de keuring.</p>
+        <div class="nd__grow"></div>
+        <div class="nd__answer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg><span>Wij leveren een jockey die dat voor jou doet.</span></div>
+      </div>
+    </div>
+
+    <div class="nd__item">
+      <div class="nd__card">
+        <div class="nd__top">
+          <div class="nd__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8"/><path d="M8 17h8"/></svg></div>
+          <h3 class="nd__fn">Administratief medewerker</h3>
+        </div>
+        <p class="nd__case">Iemand pakt tussendoor de administratie op, en die blijft liggen.</p>
+        <div class="nd__grow"></div>
+        <div class="nd__answer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg><span>Wij leveren een administratieve kracht, een paar halve dagen per week.</span></div>
+      </div>
+    </div>
+
+    <div class="nd__item">
+      <div class="nd__card">
+        <div class="nd__top">
+          <div class="nd__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 10a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v3H6z"/><path d="M4 13h16v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M12 8V5"/><path d="M12 5a2 2 0 1 1 2-2"/></svg></div>
+          <h3 class="nd__fn">Onthaalmedewerker</h3>
+        </div>
+        <p class="nd__case">Je hebt een paar uur per dag iemand nodig aan het onthaal.</p>
+        <div class="nd__grow"></div>
+        <div class="nd__answer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg><span>Wij leveren een receptionist of gastheer of gastvrouw.</span></div>
+      </div>
+    </div>
+
+    <div class="nd__item">
+      <div class="nd__card">
+        <div class="nd__top">
+          <div class="nd__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M4 11h16"/><path d="M7 18v2"/><path d="M17 18v2"/><circle cx="8" cy="14.5" r="1"/><circle cx="16" cy="14.5" r="1"/></svg></div>
+          <h3 class="nd__fn">Pendelchauffeur</h3>
+        </div>
+        <p class="nd__case">Je medewerkers moeten van en naar het werk gebracht worden.</p>
+        <div class="nd__grow"></div>
+        <div class="nd__answer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg><span>Wij leveren een ervaren chauffeur voor de pendelbus.</span></div>
+      </div>
+    </div>
+
+    <div class="nd__item">
+      <div class="nd__card">
+        <div class="nd__top">
+          <div class="nd__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3 8 9-4 9 4v9l-9 4-9-4z"/><path d="M3 8l9 4 9-4"/><path d="M12 12v9"/><path d="M7.5 6l9 4"/></svg></div>
+          <h3 class="nd__fn">Magazijnmedewerker</h3>
+        </div>
+        <p class="nd__case">Je pakt en verstuurt zelf regelmatig de bestellingen.</p>
+        <div class="nd__grow"></div>
+        <div class="nd__answer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg><span>Wij leveren een magazijnmedewerker of orderpicker.</span></div>
+      </div>
+    </div>
+
+    <div class="nd__item">
+      <div class="nd__card">
+        <div class="nd__top">
+          <div class="nd__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0 5 5L13 18a2.1 2.1 0 0 1-3-3l6.7-6.7z"/><path d="M14.7 6.3 18 3l3 3-3.3 3.3"/><path d="m5 14-2 2 5 5 2-2"/></svg></div>
+          <h3 class="nd__fn">Klusjesman</h3>
+        </div>
+        <p class="nd__case">Kleine klusjes in en rond het gebouw blijven liggen.</p>
+        <div class="nd__grow"></div>
+        <div class="nd__answer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg><span>Wij leveren een klusjesman of onderhoudsmedewerker.</span></div>
+      </div>
+    </div>
+
+    <div class="nd__item">
+      <div class="nd__card">
+        <div class="nd__top">
+          <div class="nd__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 7h12l1 13H5z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg></div>
+          <h3 class="nd__fn">Winkelmedewerker</h3>
+        </div>
+        <p class="nd__case">Op drukke momenten kom je handen tekort in de winkel.</p>
+        <div class="nd__grow"></div>
+        <div class="nd__answer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg><span>Wij leveren een winkelmedewerker die klanten graag helpt.</span></div>
+      </div>
+    </div>
+
+    <div class="nd__item">
+      <div class="nd__card">
+        <div class="nd__top">
+          <div class="nd__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16"/><path d="M8 3v4"/><path d="M16 3v4"/><path d="m9.5 16 1.5 1.5 3.5-3.5"/></svg></div>
+          <h3 class="nd__fn">Eventmedewerker</h3>
+        </div>
+        <p class="nd__case">Je hebt extra handen nodig bij een event, beurs of congres.</p>
+        <div class="nd__grow"></div>
+        <div class="nd__answer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg><span>Wij leveren ervaren eventmedewerkers, ook voor één dag.</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="nd__foot">
+    <p>Staat jouw situatie er niet bij? Nestors zijn inzetbaar in alle sectoren. Vertel ons wat je nodig hebt en wij zoeken de juiste match.</p>
+    <a class="nd__link" href="https://nestor.be/werkgevers/contact">
+      <span>Stuur je vraag door</span>
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M6 7C6 6.44772 6.44772 6 7 6H17C17.5523 6 18 6.44772 18 7V17C18 17.5523 17.5523 18 17 18C16.4477 18 16 17.5523 16 17V8H7C6.44772 8 6 7.55228 6 7Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M17.7071 6.29289C18.0976 6.68342 18.0976 7.31658 17.7071 7.70711L7.70711 17.7071C7.31658 18.0976 6.68342 18.0976 6.29289 17.7071C5.90237 17.3166 5.90237 16.6834 6.29289 16.2929L16.2929 6.29289C16.6834 5.90237 17.3166 5.90237 17.7071 6.29289Z" fill="currentColor"/></svg>
+    </a>
+  </div>
+</section>
+
+<script>
+(function () {
+function init() {
+  var section = document.getElementById('nestor-diensten');
+  if (!section) return;
+
+  /* ---- Media-locatie: data-media op de section (voor eventuele afbeeldingen met data-src) ---- */
+  var mediaBase = section.getAttribute('data-media') || 'media/';
+  if (!/\/$/.test(mediaBase)) mediaBase += '/';
+  section.querySelectorAll('[data-src]').forEach(function (el) {
+    el.setAttribute('src', el.getAttribute('data-src').replace(/^media\//, mediaBase));
+    el.removeAttribute('data-src');
+  });
+
+  /* ---- Carrousel (onder 640px containerbreedte) ---- */
+  var grid = section.querySelector('.nd__grid');
+  var prev = section.querySelector('.nd__navbtn--prev');
+  var next = section.querySelector('.nd__navbtn--next');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function items() { return Array.prototype.slice.call(grid.querySelectorAll('.nd__item')); }
+  function gutter() { return parseFloat(getComputedStyle(grid).paddingLeft) || 0; }
+  function itemLeft(item) {
+    return item.getBoundingClientRect().left - grid.getBoundingClientRect().left + grid.scrollLeft - gutter();
+  }
+  function currentIndex() {
+    var list = items(), idx = 0;
+    for (var i = 0; i < list.length; i++) { if (itemLeft(list[i]) <= grid.scrollLeft + 2) idx = i; }
+    return idx;
+  }
+  function goTo(i) {
+    var list = items();
+    i = Math.max(0, Math.min(list.length - 1, i));
+    grid.scrollTo({ left: itemLeft(list[i]), behavior: reduceMotion ? 'auto' : 'smooth' });
+  }
+  function updateNav() {
+    var max = grid.scrollWidth - grid.clientWidth - 1;
+    prev.disabled = grid.scrollLeft <= 0;
+    next.disabled = grid.scrollLeft >= max;
+  }
+  prev.addEventListener('click', function () { goTo(currentIndex() - 1); });
+  next.addEventListener('click', function () { goTo(currentIndex() + 1); });
+  grid.addEventListener('scroll', updateNav, { passive: true });
+  window.addEventListener('resize', updateNav);
+  if ('ResizeObserver' in window) new ResizeObserver(updateNav).observe(grid);   /* ook als alleen de container van breedte verandert */
+  updateNav();
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+</script>
+<!-- BLOK EINDE -->
+
+</body>
+</html>

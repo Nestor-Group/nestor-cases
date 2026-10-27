@@ -91,3 +91,25 @@ De demo-pagina heeft linksboven een schakelaar om beide te vergelijken. Die scha
 
 Alle kleuren staan als CSS-variabelen bovenaan de `<style>` (`--nc-bg`, `--nc-card`, `--nc-accent`, `--nc-btn-bg` …).
 Logo's: in de witte kaarten staan de originele (gekleurde) logo's, op de video- en fotokaarten de witte versies.
+
+## Tweede blok: "Dit is wat Nestor voor jou kan betekenen" (diensten)
+
+Een overzicht van negen herkenbare situaties bij werkgevers en de Nestor die daarbij past
+(chauffeur, autojockey, administratief medewerker, onthaal, pendelchauffeur, magazijn, klusjesman,
+winkel, events). Zelfde huisstijl en zelfde werkproces als het cases-blok, met eigen CSS-prefix `.nd`,
+zodat beide blokken op één pagina kunnen staan.
+
+- `diensten.html`: het bronbestand (CSS, HTML en script tussen `BLOK START` en `BLOK EINDE`). Pas hier de
+  teksten aan; elke kaart is één `<div class="nd__item">` met een icoon (inline SVG, geen afbeelding nodig),
+  de functie (`nd__fn`), de situatie (`nd__case`) en wat Nestor levert (`nd__answer`).
+- `dist/diensten.css`, `dist/diensten.js`, `dist/diensten-snippet.html`: gemaakt door `python3 build.py`.
+  **De snippet plak je in het HubSpot-embedveld.** CSS en script komen van GitHub Pages.
+- `test-diensten.html`: vijandige testpagina met linksboven een schakelaar voor de containerbreedte
+  (375, 700, 1027 of vol).
+
+Werkwijze bij een aanpassing: `diensten.html` aanpassen, `python3 build.py`, committen en pushen. Verandert
+alleen de opmaak, dan staat het binnen ongeveer 10 minuten live. Verandert de HTML van de kaarten (tekst,
+volgorde, een kaart meer of minder), plak dan ook `dist/diensten-snippet.html` opnieuw in HubSpot.
+
+Opmaak: vanaf 640px containerbreedte drie kolommen (compacter tussen 640 en 959px), daaronder een carrousel
+met pijlknoppen. De knop "Stuur je vraag door" verwijst naar `https://nestor.be/werkgevers/contact`.

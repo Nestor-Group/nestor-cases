@@ -5,6 +5,11 @@
   nestor-cases-embed.html   alleen het blok, om in een embed-/HTML-veld van je CMS te plakken
   test-host.html            testpagina die het embed-blok in een "vijandige" site plaatst
 
+En uit diensten.html (het blok "Dit is wat Nestor voor jou kan betekenen"):
+
+  dist/diensten.css, dist/diensten.js, dist/diensten-snippet.html
+  test-diensten.html        vijandige testpagina met schakelaar voor de containerbreedte
+
 Uitvoeren:  python3 build.py
 """
 import re
@@ -152,3 +157,103 @@ if sha:
 print("ok:", "nestor-cases-licht.html", len(light), "| nestor-cases-embed.html", len(embed),
       "| test-host.html | dist/nestor-cases.css", len(css), "| dist/nestor-cases.js", len(js),
       "| dist/nestor-cases-snippet.html | test-dist.html")
+
+
+# =====================================================================
+# DIENSTEN-BLOK: "Dit is wat Nestor voor jou kan betekenen" (bron: diensten.html, prefix .nd)
+# =====================================================================
+dsrc = (HERE / "diensten.html").read_text(encoding="utf-8")
+dstart = dsrc.index("<!-- BLOK START -->")
+dend = dsrc.index("<!-- BLOK EINDE -->") + len("<!-- BLOK EINDE -->")
+dblock = dsrc[dstart:dend]
+
+# eventuele afbeeldingen: src -> data-src, zodat het script ze laadt vanaf data-media
+dblock = re.sub(r'<(img|video)([^>]*?)\ssrc="media/', r'<\1\2 data-src="media/', dblock)
+dblock = dblock.replace('<section class="nd" id="nestor-diensten">',
+                        '<section class="nd" id="nestor-diensten" data-media="media/">')
+
+dcss = re.search(r"<style>\n(.*?)</style>", dblock, flags=re.S).group(1)
+djs = re.search(r"<script>\n(.*?)</script>", dblock, flags=re.S).group(1)
+dhtml = dblock
+dhtml = re.sub(r"<style>.*?</style>\n", "", dhtml, flags=re.S)
+dhtml = re.sub(r"<script>.*?</script>\n", "", dhtml, flags=re.S)
+dhtml = dhtml.replace("<!-- BLOK START -->\n", "").replace("<!-- BLOK EINDE -->", "").strip()
+
+(dist / "diensten.css").write_text(dcss, encoding="utf-8")
+(dist / "diensten.js").write_text(djs, encoding="utf-8")
+
+def dsnippet(css_url, js_url):
+    return (f'<link rel="stylesheet" href="{css_url}">\n'
+            f"{dhtml}\n"
+            f'<script src="{js_url}" defer></script>\n')
+
+dsnippet_intro = f"""<!--
+  NESTOR DIENSTEN-BLOK: "Dit is wat Nestor voor jou kan betekenen" (snippet voor HubSpot / CMS)
+
+  Plak dit in het HTML-/embed-veld. CSS en script worden geladen van GitHub Pages:
+      {CDN}/diensten.css
+      {CDN}/diensten.js
+  Pas je iets aan in diensten.html, draai python3 build.py, push naar GitHub en het staat
+  binnen ongeveer 10 minuten op de site. Verandert de HTML van de kaarten zelf (tekst, volgorde,
+  een kaart meer of minder), plak dan deze snippet opnieuw.
+
+  De iconen zijn inline SVG: er zijn geen afbeeldingen nodig. Zet je ooit toch een foto in het
+  blok (met data-src="media/..."), dan wordt die geladen vanaf data-media op de <section>.
+-->
+"""
+dsnippet_html = dsnippet(f"{CDN}/diensten.css", f"{CDN}/diensten.js").replace('data-media="media/"', f'data-media="{MEDIA_CDN}"')
+(dist / "diensten-snippet.html").write_text(dsnippet_intro + dsnippet_html, encoding="utf-8")
+
+# testpagina: vijandige site-CSS, met schakelaar voor de containerbreedte (375, 700, 1027 en vol)
+dhost = f"""<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Testpagina: diensten-blok in een vreemde site</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Opzettelijk lelijke site-CSS om te testen of het blok zich daartegen verdedigt */
+  body {{ margin: 0; background: #223; color: #0f0; font-family: Georgia, serif; font-size: 22px; }}
+  a {{ color: #ff0 !important; text-decoration: underline; font-size: 30px; }}
+  a span {{ color: #0ff; }}
+  button {{ background: lime; color: purple; border: 4px dotted red; font-size: 40px; padding: 30px; }}
+  img, svg {{ max-width: 40%; border: 5px solid magenta; margin: 32px 0; height: auto; }}
+  h2 {{ font-size: 70px; text-transform: uppercase; margin: 80px; color: pink; }}
+  h3 {{ font-size: 50px; text-transform: uppercase; margin: 60px; color: orange; font-style: italic; }}
+  p {{ margin: 40px; font-style: italic; }}
+  .site-container {{ width: 700px; max-width: 100%; margin: 40px auto; background: #fff; padding: 20px; }}
+  .site-container.w-375 {{ width: 375px; }}
+  .site-container.w-1027 {{ width: 1027px; }}
+  .site-container.w-full {{ width: 1400px; }}
+  .demo-switch {{ position: fixed; top: 12px; left: 12px; z-index: 10000; display: flex; gap: 6px; background: rgba(0,0,0,.7); padding: 6px; border-radius: 9999px; }}
+  .demo-switch button {{ font: 600 12px/1 "Baloo Paaji 2", sans-serif; padding: 8px 12px; border: 0; border-radius: 9999px; background: transparent; color: #fff; cursor: pointer; }}
+  .demo-switch button.is-active {{ background: #fff; color: #000; }}
+</style>
+</head>
+<body>
+<div class="demo-switch">
+  <button type="button" data-w="w-375">375</button>
+  <button type="button" data-w="" class="is-active">700</button>
+  <button type="button" data-w="w-1027">1027</button>
+  <button type="button" data-w="w-full">vol</button>
+</div>
+<script>
+  document.querySelectorAll('.demo-switch button').forEach(function (b) {{
+    b.addEventListener('click', function () {{
+      var c = document.querySelector('.site-container');
+      c.className = 'site-container ' + b.dataset.w;
+      document.querySelectorAll('.demo-switch button').forEach(function (x) {{ x.classList.toggle('is-active', x === b); }});
+    }});
+  }});
+</script>
+<div class="site-container">
+  <h2>Site-kop boven het blok</h2>
+{dsnippet("dist/diensten.css", "dist/diensten.js")}
+  <p>Site-tekst onder het blok.</p>
+</div>
+</body>
+</html>
+"""
+(HERE / "test-diensten.html").write_text(dhost, encoding="utf-8")
+print("ok: dist/diensten.css", len(dcss), "| dist/diensten.js", len(djs), "| dist/diensten-snippet.html | test-diensten.html")
