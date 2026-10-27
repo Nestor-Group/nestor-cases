@@ -24,6 +24,7 @@ assert "demo-switch" not in light and "nc--oranje" not in light
 (HERE / "nestor-cases-licht.html").write_text(light, encoding="utf-8")
 
 REPO = "Nestor-Group/nestor-cases"          # GitHub-repository
+PAGES = "https://nestor-group.github.io/nestor-cases"   # GitHub Pages van de repository
 
 # ---- embed: alleen het blok ----
 start = light.index("<!-- BLOK START -->")
@@ -37,7 +38,7 @@ assert 'src="media/' not in block.replace('data-src="media/', "")
 # instelbare media-locatie op de section
 block = block.replace('<section class="nc" id="nestor-cases">',
                       '<section class="nc" id="nestor-cases" data-media="media/">')
-MEDIA_CDN = f"https://cdn.jsdelivr.net/gh/{REPO}@main/media/"
+MEDIA_CDN = f"{PAGES}/media/"
 
 intro = """<!--
   NESTOR CASES-BLOK (embed-versie)
@@ -89,7 +90,8 @@ host = f"""<!doctype html>
 (HERE / "test-host.html").write_text(host, encoding="utf-8")
 
 # ---- dist: losse CSS, JS en HTML-snippet, voor hosting via GitHub (jsDelivr) ----
-CDN = f"https://cdn.jsdelivr.net/gh/{REPO}@main/dist"
+CDN = f"{PAGES}/dist"
+JSDELIVR = f"https://cdn.jsdelivr.net/gh/{REPO}"
 dist = HERE / "dist"
 dist.mkdir(exist_ok=True)
 
@@ -111,10 +113,10 @@ def snippet(css_url, js_url):
 snippet_intro = f"""<!--
   NESTOR CASES-BLOK (snippet voor HubSpot / CMS)
 
-  Plak dit in het HTML-/embed-veld. CSS en script worden geladen van GitHub via jsDelivr:
+  Plak dit in het HTML-/embed-veld. CSS en script worden geladen van GitHub Pages:
       {CDN}/nestor-cases.css
       {CDN}/nestor-cases.js
-  Pas je iets aan in de code, dan push je naar GitHub en staat het automatisch op de site.
+  Pas je iets aan in de code, dan push je naar GitHub en staat het binnen ongeveer 10 minuten op de site.
 
   MEDIA: foto's, logo's en video's komen standaard ook van GitHub (data-media op de <section>).
   Wil je ze liever in de HubSpot File Manager zetten, upload dan de map "media" en vul de URL
@@ -138,13 +140,12 @@ try:
 except Exception:
     sha = None
 if sha:
-    pinned = (snippet_intro + snippet_html).replace(f"@main/", f"@{sha}/")
+    pinned = (snippet_intro + snippet_html).replace(f"{PAGES}/", f"{JSDELIVR}@{sha}/")
     pinned = pinned.replace("NESTOR CASES-BLOK (snippet voor HubSpot / CMS)",
         f"NESTOR CASES-BLOK (snippet voor HubSpot / CMS, vastgepind op commit {sha})\n\n"
         "  Deze versie verwijst naar één vaste commit en werkt dus meteen. Nadeel: na een code-wijziging\n"
         "  op GitHub moet je deze snippet opnieuw genereren (python3 build.py) en opnieuw plakken.\n"
-        "  De gewone snippet (nestor-cases-snippet.html) volgt de branch main, maar jsDelivr kan daar\n"
-        "  tot 12 uur achterlopen.")
+        "  De gewone snippet (nestor-cases-snippet.html) laadt van GitHub Pages en volgt de branch main.")
     (dist / "nestor-cases-snippet-vast.html").write_text(pinned, encoding="utf-8")
 
 print("ok:", "nestor-cases-licht.html", len(light), "| nestor-cases-embed.html", len(embed),

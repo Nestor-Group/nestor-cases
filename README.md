@@ -25,16 +25,18 @@ Een nabouw van het casestudies-blok van metaview.ai, gevuld met quotes uit de ca
 
 1. **Media in HubSpot.** Upload de map `media` in de HubSpot File Manager (Marketing > Files), bijvoorbeeld in een
    map `cases/media`. Noteer de URL van die map, iets als `https://www.nestor.be/hubfs/cases/media/`.
-2. **Code op GitHub.** Zet deze map in een GitHub-repository (`Nestor-Group/nestor-cases`). De map `dist` bevat
-   `nestor-cases.css` en `nestor-cases.js`; die worden via jsDelivr geladen:
-   `https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@main/dist/nestor-cases.css` (idem voor `.js`).
+2. **Code op GitHub.** Deze map staat in de repository `Nestor-Group/nestor-cases`, met GitHub Pages aan.
+   De map `dist` bevat `nestor-cases.css` en `nestor-cases.js`; die worden geladen van
+   `https://nestor-group.github.io/nestor-cases/dist/nestor-cases.css` (idem voor `.js`). De media komen
+   standaard ook van Pages (`https://nestor-group.github.io/nestor-cases/media/`).
 3. **Snippet in HubSpot.** Open `dist/nestor-cases-snippet.html`, vul de media-URL in bij `data-media="..."` op de
    `<section>` (met slash op het einde) en plak de volledige inhoud in het HTML-/embed-veld van de pagina.
 
-Daarna: iets aanpassen in `index.html`, `python3 build.py` draaien, committen en pushen. jsDelivr pikt de nieuwe
-versie op (soms met een vertraging tot 12 uur; tussendoor kan je de cache legen via
-`https://purge.jsdelivr.net/gh/Nestor-Group/nestor-cases@main/dist/nestor-cases.css`).
+Daarna: iets aanpassen in `index.html`, `python3 build.py` draaien, committen en pushen. GitHub Pages bouwt de
+site opnieuw (een paar minuten) en serveert met een cache van 10 minuten.
 Alleen als de HTML van de kaarten zelf verandert (nieuwe quote, andere volgorde), plak je de snippet opnieuw.
+`dist/nestor-cases-snippet-vast.html` is een variant die via jsDelivr naar één vaste commit verwijst, voor als
+Pages ooit niet beschikbaar is.
 
 **Alternatief zonder GitHub:** plak `nestor-cases-embed.html` in zijn geheel in het embed-veld. Zelfde resultaat,
 maar bij elke aanpassing moet je opnieuw plakken.
