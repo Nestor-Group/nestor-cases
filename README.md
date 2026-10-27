@@ -102,14 +102,17 @@ zodat beide blokken op één pagina kunnen staan.
 - `diensten.html`: het bronbestand (CSS, HTML en script tussen `BLOK START` en `BLOK EINDE`). Pas hier de
   teksten aan; elke kaart is één `<div class="nd__item">` met een icoon (inline SVG, geen afbeelding nodig),
   de functie (`nd__fn`), de situatie (`nd__case`) en wat Nestor levert (`nd__answer`).
-- `dist/diensten.css`, `dist/diensten.js`, `dist/diensten-snippet.html`: gemaakt door `python3 build.py`.
-  **De snippet plak je in het HubSpot-embedveld.** CSS en script komen van GitHub Pages.
-- `test-diensten.html`: vijandige testpagina met linksboven een schakelaar voor de containerbreedte
-  (375, 700, 1027 of vol).
+- `dist/diensten-embed.html`: **dit plak je in het HubSpot-embedveld.** Alles in één bestand (CSS, HTML en
+  script), er wordt niets van GitHub geladen. Dit blok staat als eerste onder de hero, dus het mag niet
+  wachten op een extern bestand.
+- `dist/diensten.css`, `dist/diensten.js`, `dist/diensten-snippet.html`: de variant die CSS en script van
+  GitHub Pages laadt, zoals het cases-blok. Alleen nodig als je liever niet bij elke wijziging opnieuw plakt.
+- `test-diensten.html`: vijandige testpagina met de alles-in-één snippet en linksboven een schakelaar voor de
+  containerbreedte (375, 700, 1027 of vol).
 
-Werkwijze bij een aanpassing: `diensten.html` aanpassen, `python3 build.py`, committen en pushen. Verandert
-alleen de opmaak, dan staat het binnen ongeveer 10 minuten live. Verandert de HTML van de kaarten (tekst,
-volgorde, een kaart meer of minder), plak dan ook `dist/diensten-snippet.html` opnieuw in HubSpot.
+Werkwijze bij een aanpassing: `diensten.html` aanpassen, `python3 build.py`, `dist/diensten-embed.html`
+opnieuw plakken in HubSpot, en committen en pushen zodat GitHub de laatste versie heeft.
 
 Opmaak: vanaf 640px containerbreedte drie kolommen (compacter tussen 640 en 959px), daaronder een carrousel
-met pijlknoppen. De knop "Stuur je vraag door" verwijst naar `https://nestor.be/werkgevers/contact`.
+met pijlknoppen. De ruimte boven en onder in het blok staat in `--nd-pad-y` (64px, 48px in smalle containers);
+de container van de site geeft er zelf ook al marge bij. De knop "Stuur je vraag door" verwijst naar `https://nestor.be/werkgevers/contact`.

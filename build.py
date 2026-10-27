@@ -7,7 +7,8 @@
 
 En uit diensten.html (het blok "Dit is wat Nestor voor jou kan betekenen"):
 
-  dist/diensten.css, dist/diensten.js, dist/diensten-snippet.html
+  dist/diensten.css, dist/diensten.js, dist/diensten-snippet.html (laadt van GitHub Pages)
+  dist/diensten-embed.html  alles-in-één snippet zonder GitHub (aanbevolen voor dit blok)
   test-diensten.html        vijandige testpagina met schakelaar voor de containerbreedte
 
 Uitvoeren:  python3 build.py
@@ -254,6 +255,22 @@ dsnippet_intro = f"""<!--
 dsnippet_html = dsnippet(f"{CDN}/diensten.css", f"{CDN}/diensten.js").replace('data-media="media/"', f'data-media="{MEDIA_CDN}"')
 (dist / "diensten-snippet.html").write_text(dsnippet_intro + dsnippet_html, encoding="utf-8")
 
+# alles-in-één: CSS, HTML en script in één bestand, zonder iets van GitHub (voor een blok hoog op de pagina)
+dembed_intro = f"""<!--
+  NESTOR DIENSTEN-BLOK: "Dit is wat Nestor voor jou kan betekenen" (alles-in-één, aanbevolen)
+
+  Plak dit volledige bestand in het HTML-/embed-veld. CSS, HTML en script zitten erin;
+  er wordt niets van GitHub geladen, dus het blok staat meteen goed, ook als eerste blok
+  onder de hero. De fonts (Baloo Paaji 2 en Source Sans Pro) staan al op nestor.be.
+
+  Iets aanpassen? Pas diensten.html aan, draai python3 build.py en plak dit bestand opnieuw.
+  (dist/diensten-snippet.html is de variant die CSS en script van GitHub Pages laadt.)
+-->
+"""
+dembed = (dblock.replace("<!-- BLOK START -->\n", "").replace("<!-- BLOK EINDE -->", "").strip()
+          .replace('data-media="media/"', f'data-media="{MEDIA_CDN}"'))
+(dist / "diensten-embed.html").write_text(dembed_intro + dembed + "\n", encoding="utf-8")
+
 # testpagina: vijandige site-CSS, met schakelaar voor de containerbreedte (375, 700, 1027 en vol)
 dhost = f"""<!doctype html>
 <html lang="nl">
@@ -299,11 +316,11 @@ dhost = f"""<!doctype html>
 </script>
 <div class="site-container">
   <h2>Site-kop boven het blok</h2>
-{dsnippet("dist/diensten.css", "dist/diensten.js")}
+{dembed}
   <p>Site-tekst onder het blok.</p>
 </div>
 </body>
 </html>
 """
 (HERE / "test-diensten.html").write_text(dhost, encoding="utf-8")
-print("ok: dist/diensten.css", len(dcss), "| dist/diensten.js", len(djs), "| dist/diensten-snippet.html | test-diensten.html")
+print("ok: dist/diensten.css", len(dcss), "| dist/diensten.js", len(djs), "| dist/diensten-snippet.html | dist/diensten-embed.html", len(dembed), "| test-diensten.html")
