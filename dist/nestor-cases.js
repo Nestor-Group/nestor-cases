@@ -71,6 +71,9 @@ function init() {
 
   /* ---- Modal ---- */
   var modal = document.getElementById('nc-modal');
+  /* De popup moet rechtstreeks onder <body> staan: een voorouder met transform (bv. een
+     fade-in-animatie van de site) zou "position: fixed" anders ten opzichte van zichzelf plaatsen. */
+  if (modal.parentElement !== document.body) document.body.appendChild(modal);
   var body = modal.querySelector('.nc-modal__body');
   var closeBtn = modal.querySelector('.nc-modal__close');
   var lastFocus = null;
@@ -106,14 +109,14 @@ function init() {
     modal.hidden = false;
     modal.classList.add('is-open');
     document.body.style.overflow = 'hidden';
-    closeBtn.focus();
+    try { closeBtn.focus({ preventScroll: true }); } catch (e) { closeBtn.focus(); }
   }
   function closeModal() {
     modal.classList.remove('is-open');
     modal.hidden = true;
     body.innerHTML = '';
     document.body.style.overflow = '';
-    if (lastFocus && lastFocus.focus) lastFocus.focus();
+    if (lastFocus && lastFocus.focus) { try { lastFocus.focus({ preventScroll: true }); } catch (e) { lastFocus.focus(); } }
   }
   closeBtn.addEventListener('click', closeModal);
   modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
