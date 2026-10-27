@@ -205,31 +205,33 @@
     .nc__head { flex-direction: column; gap: 20px; }
   }
 
-  /* Compacte grid voor containers van 640 tot 959px (bv. het embed-blok op nestor.be) */
+  /* Compacte grid voor containers van 640 tot 959px (bv. het embed-blok op nestor.be):
+     drie kaarten per rij (vier rijen), elke rij één brede kaart */
   @container (min-width: 640px) and (max-width: 959px) {
     .nc__inner, .nc__grid { --nc-gutter: 16px; }
     .nc__inner { padding-top: 56px; }
-    .nc__grid { margin-top: 32px; padding-bottom: 48px; }
+    .nc__grid { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 32px; padding-bottom: 48px; }
+    .nc__row { display: contents; }
+    .nc__item { flex: 0 0 calc((100% - 12px) * 3 / 11); height: 300px; }
+    .nc__item--wide,
+    .nc__row:nth-child(2) .nc__item:nth-child(3) { flex-basis: calc((100% - 12px) * 5 / 11); }
     .nc__title { font-size: 28px; }
     .nc__head { gap: 16px; }
     .nc .nc__link { padding: 10px 16px 10px 18px; }
     .nc .nc__link, .nc .nc__link > span { font-size: 12px; }
     .nc .nc__link svg { width: 16px; height: 16px; }
-    .nc__item { height: 280px; }
-    .nc__row { gap: 6px; }
-    .nc__row + .nc__row { margin-top: 6px; }
-    .nc__card { padding: 12px; border-radius: 10px; }
-    .nc__quote { font-size: 13px; line-height: 1.4; }
-    .nc__label { font-size: 10px; line-height: 1.35; }
+    .nc__card { padding: 14px; border-radius: 10px; }
+    .nc__quote { font-size: 14px; line-height: 1.42; }
+    .nc__label { font-size: 11px; line-height: 1.35; }
     .nc__label + .nc__label { margin-top: 2px; }
     .nc__author { gap: 6px; }
     .nc__avatar, .nc__ph-avatar { width: 28px; height: 28px; }
-    .nc__company { font-size: 14px; }
-    .nc .nc__biglogo { height: 56px; max-width: 120px; }
-    .nc .nc__logo { max-width: 64px; max-height: 28px; }
-    .nc .nc__card--video .nc__logo, .nc .nc__card--bgimg .nc__logo { max-width: 80px; max-height: 30px; }
-    .nc .nc__watch { font-size: 13px; padding: 6px 10px 6px 8px; }
-    .nc .nc__watch svg { width: 11px; height: 13px; }
+    .nc__company { font-size: 15px; }
+    .nc .nc__biglogo { height: 60px; max-width: 130px; }
+    .nc .nc__logo { max-width: 72px; max-height: 30px; }
+    .nc .nc__card--video .nc__logo, .nc .nc__card--bgimg .nc__logo { max-width: 90px; max-height: 32px; }
+    .nc .nc__watch { font-size: 14px; padding: 7px 10px 7px 8px; }
+    .nc .nc__watch svg { width: 12px; height: 14px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
