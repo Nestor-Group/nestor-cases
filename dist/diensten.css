@@ -116,10 +116,8 @@
   }
   .nd__grow { flex: 1 1 0; }
   .nd__answer {
-    display: flex; align-items: flex-start; gap: 8px;
     font-size: 17px; line-height: 1.4; font-weight: 600; color: var(--nd-card-text);
   }
-  .nd .nd__answer svg { flex: none; width: 18px; height: 18px; margin-top: 2px; stroke: var(--nd-accent); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 
   /* ---- Fotokaart: foto als achtergrond, donker transparant vlak, witte tekst ---- */
   .nd__card--foto { position: relative; color: #fff; }
@@ -165,8 +163,7 @@
     .nd__icon { width: 36px; height: 36px; }
     .nd .nd__icon svg { width: 18px; height: 18px; }
     .nd .nd__fn { font-size: 16px; }
-    .nd__answer { font-size: 15px; line-height: 1.35; gap: 6px; }
-    .nd .nd__answer svg { width: 15px; height: 15px; margin-top: 1px; }
+    .nd__answer { font-size: 15px; line-height: 1.35; }
     .nd .nd__foot p { font-size: 16px; }
   }
 

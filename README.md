@@ -94,14 +94,14 @@ Logo's: in de witte kaarten staan de originele (gekleurde) logo's, op de video- 
 
 ## Tweede blok: "Dit is wat Nestor voor jou kan betekenen" (diensten)
 
-Een overzicht van negen herkenbare situaties bij werkgevers en de Nestor die daarbij past
+Een overzicht van negen herkenbare situaties bij werkgevers waarvoor Nestor de juiste persoon heeft
 (chauffeur, logistiek, administratief medewerker, onthaal, pendelchauffeur, autojockey, klusjesman,
 winkel, events). Zelfde huisstijl en zelfde werkproces als het cases-blok, met eigen CSS-prefix `.nd`,
 zodat beide blokken op één pagina kunnen staan.
 
 - `diensten.html`: het bronbestand (CSS, HTML en script tussen `BLOK START` en `BLOK EINDE`). Pas hier de
   teksten aan; elke kaart is één `<div class="nd__item">` met een icoon (inline SVG), de functie (`nd__fn`)
-  en de vette regel onderaan (`nd__answer`). Een fotokaart heeft daarbij de class
+  en de herkenbare situatie als vette regel onderaan (`nd__answer`). Een fotokaart heeft daarbij de class
   `nd__card--foto` en een `<img class="nd__bg">` met de foto (`object-position` bepaalt welk deel in beeld blijft).
 - `dist/diensten-embed.html`: **dit plak je in het HubSpot-embedveld.** Alles in één bestand (CSS, HTML en
   script), er wordt niets van GitHub geladen. Dit blok staat als eerste onder de hero, dus het mag niet
