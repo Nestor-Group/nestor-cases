@@ -23,6 +23,8 @@ light = light.replace("<title>Nestor cases</title>", "<title>Nestor cases (licht
 assert "demo-switch" not in light and "nc--oranje" not in light
 (HERE / "nestor-cases-licht.html").write_text(light, encoding="utf-8")
 
+REPO = "Nestor-Group/nestor-cases"          # GitHub-repository
+
 # ---- embed: alleen het blok ----
 start = light.index("<!-- BLOK START -->")
 end = light.index("<!-- BLOK EINDE -->") + len("<!-- BLOK EINDE -->")
@@ -35,6 +37,7 @@ assert 'src="media/' not in block.replace('data-src="media/', "")
 # instelbare media-locatie op de section
 block = block.replace('<section class="nc" id="nestor-cases">',
                       '<section class="nc" id="nestor-cases" data-media="media/">')
+MEDIA_CDN = f"https://cdn.jsdelivr.net/gh/{{REPO}}@main/media/"
 
 intro = """<!--
   NESTOR CASES-BLOK (embed-versie)
@@ -86,7 +89,6 @@ host = f"""<!doctype html>
 (HERE / "test-host.html").write_text(host, encoding="utf-8")
 
 # ---- dist: losse CSS, JS en HTML-snippet, voor hosting via GitHub (jsDelivr) ----
-REPO = "Nestor-Group/nestor-cases"          # GitHub-repository
 CDN = f"https://cdn.jsdelivr.net/gh/{REPO}@main/dist"
 dist = HERE / "dist"
 dist.mkdir(exist_ok=True)
@@ -114,13 +116,15 @@ snippet_intro = f"""<!--
       {CDN}/nestor-cases.js
   Pas je iets aan in de code, dan push je naar GitHub en staat het automatisch op de site.
 
-  MEDIA: zet de map "media" in de HubSpot File Manager (of elders) en vul de URL van die map in
-  bij data-media op de <section>, met een slash op het einde.
+  MEDIA: foto's, logo's en video's komen standaard ook van GitHub (data-media op de <section>).
+  Wil je ze liever in de HubSpot File Manager zetten, upload dan de map "media" en vul de URL
+  van die map in bij data-media, met een slash op het einde.
 
   YOUTUBE: per videokaart de YouTube-link in data-video (zie de VERVANG-opmerkingen).
 -->
 """
-(dist / "nestor-cases-snippet.html").write_text(snippet_intro + snippet(f"{CDN}/nestor-cases.css", f"{CDN}/nestor-cases.js"), encoding="utf-8")
+snippet_html = snippet(f"{CDN}/nestor-cases.css", f"{CDN}/nestor-cases.js").replace('data-media="media/"', f'data-media="{MEDIA_CDN}"')
+(dist / "nestor-cases-snippet.html").write_text(snippet_intro + snippet_html, encoding="utf-8")
 
 # testpagina die de losse bestanden lokaal gebruikt (zelfde vijandige site-CSS)
 host_local = host.replace(embed, snippet("dist/nestor-cases.css", "dist/nestor-cases.js"))

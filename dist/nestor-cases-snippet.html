@@ -6,13 +6,14 @@
       https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@main/dist/nestor-cases.js
   Pas je iets aan in de code, dan push je naar GitHub en staat het automatisch op de site.
 
-  MEDIA: zet de map "media" in de HubSpot File Manager (of elders) en vul de URL van die map in
-  bij data-media op de <section>, met een slash op het einde.
+  MEDIA: foto's, logo's en video's komen standaard ook van GitHub (data-media op de <section>).
+  Wil je ze liever in de HubSpot File Manager zetten, upload dan de map "media" en vul de URL
+  van die map in bij data-media, met een slash op het einde.
 
   YOUTUBE: per videokaart de YouTube-link in data-video (zie de VERVANG-opmerkingen).
 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nestor-Group/nestor-cases@main/dist/nestor-cases.css">
-<section class="nc" id="nestor-cases" data-media="media/">
+<section class="nc" id="nestor-cases" data-media="https://cdn.jsdelivr.net/gh/{REPO}@main/media/">
   <div class="nc__inner">
     <div class="nc__head">
       <div>
