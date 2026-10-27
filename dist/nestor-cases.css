@@ -33,7 +33,7 @@
   @media (min-width: 1280px) { .nc { --nc-gutter: 104px; } }
 
   .nc *, .nc *::before, .nc *::after { box-sizing: border-box; }
-  .nc img, .nc video { display: block; max-width: 100%; height: auto; border: 0; }
+  .nc img, .nc video { display: block; max-width: 100%; height: auto; border: 0; margin: 0; padding: 0; border-radius: 0; box-shadow: none; }
   .nc button { font: inherit; color: inherit; margin: 0; appearance: none; -webkit-appearance: none; box-shadow: none; }
   .nc h2, .nc p { margin: 0; padding: 0; font-style: normal; }
   .nc a, .nc a:hover, .nc a:focus { text-decoration: none; box-shadow: none; }
@@ -125,7 +125,7 @@
   }
   .nc__author .nc__label:first-child { color: var(--nc-card-text); }
   .nc__label + .nc__label { margin-top: 4px; }
-  .nc .nc__logo { flex: none; max-width: 80px; max-height: 36px; width: auto; height: auto; object-fit: contain; }
+  .nc .nc__logo { flex: none; max-width: 80px; max-height: 36px; width: auto; height: auto; margin: 0; object-fit: contain; }
   /* In smalle quote-kaarten geen logo, zodat naam en functie ruimte krijgen */
   .nc .nc__item:not(.nc__item--wide) .nc__foot .nc__logo,
   .nc .nc__item:not(.nc__item--wide) .nc__foot .nc__ph-logo { display: none; }
@@ -135,7 +135,7 @@
   .nc__company { font-size: 16px; line-height: 1.48; color: var(--nc-card-text); }
   .nc__card--bgimg .nc__company, .nc__card--bgimg .nc__label { color: #fff; }
   .nc__card--bgimg .nc__company { margin-top: 0; }
-  .nc__bgimg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .nc .nc__bgimg { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; object-fit: cover; }
   .nc__card--bgimg::after {
     content: ""; position: absolute; inset: 0;
     background: linear-gradient(180deg, rgba(0,0,0,.25) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,.55) 100%);
@@ -144,7 +144,7 @@
 
   /* Video-kaart */
   .nc__card--video { cursor: pointer; padding: 16px; }
-  .nc__poster, .nc__loop { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .nc .nc__poster, .nc .nc__loop { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; object-fit: cover; }
   .nc__loop { opacity: 0; transition: opacity .35s; }
   .nc__card--video.is-playing .nc__loop { opacity: 1; }
   .nc__card--video::after {
