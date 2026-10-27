@@ -131,6 +131,22 @@ host_local = host.replace(embed, snippet("dist/nestor-cases.css", "dist/nestor-c
 assert host_local != host
 (HERE / "test-dist.html").write_text(host_local, encoding="utf-8")
 
+# ---- vastgepinde snippet: verwijst naar één commit, werkt meteen (jsDelivr cachet de branch tot 12 uur) ----
+import subprocess
+try:
+    sha = subprocess.check_output(["git", "rev-parse", "--short", "HEAD"], cwd=HERE, text=True).strip()
+except Exception:
+    sha = None
+if sha:
+    pinned = (snippet_intro + snippet_html).replace(f"@main/", f"@{sha}/")
+    pinned = pinned.replace("NESTOR CASES-BLOK (snippet voor HubSpot / CMS)",
+        f"NESTOR CASES-BLOK (snippet voor HubSpot / CMS, vastgepind op commit {sha})\n\n"
+        "  Deze versie verwijst naar één vaste commit en werkt dus meteen. Nadeel: na een code-wijziging\n"
+        "  op GitHub moet je deze snippet opnieuw genereren (python3 build.py) en opnieuw plakken.\n"
+        "  De gewone snippet (nestor-cases-snippet.html) volgt de branch main, maar jsDelivr kan daar\n"
+        "  tot 12 uur achterlopen.")
+    (dist / "nestor-cases-snippet-vast.html").write_text(pinned, encoding="utf-8")
+
 print("ok:", "nestor-cases-licht.html", len(light), "| nestor-cases-embed.html", len(embed),
       "| test-host.html | dist/nestor-cases.css", len(css), "| dist/nestor-cases.js", len(js),
       "| dist/nestor-cases-snippet.html | test-dist.html")
