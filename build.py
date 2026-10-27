@@ -37,7 +37,7 @@ assert 'src="media/' not in block.replace('data-src="media/', "")
 # instelbare media-locatie op de section
 block = block.replace('<section class="nc" id="nestor-cases">',
                       '<section class="nc" id="nestor-cases" data-media="media/">')
-MEDIA_CDN = f"https://cdn.jsdelivr.net/gh/{{REPO}}@main/media/"
+MEDIA_CDN = f"https://cdn.jsdelivr.net/gh/{REPO}@main/media/"
 
 intro = """<!--
   NESTOR CASES-BLOK (embed-versie)
