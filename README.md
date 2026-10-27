@@ -95,7 +95,7 @@ Logo's: in de witte kaarten staan de originele (gekleurde) logo's, op de video- 
 ## Tweede blok: "Dit is wat Nestor voor jou kan betekenen" (diensten)
 
 Een overzicht van negen herkenbare situaties bij werkgevers en de Nestor die daarbij past
-(chauffeur, autojockey, administratief medewerker, onthaal, pendelchauffeur, magazijn, klusjesman,
+(chauffeur, logistiek, administratief medewerker, onthaal, pendelchauffeur, autojockey, klusjesman,
 winkel, events). Zelfde huisstijl en zelfde werkproces als het cases-blok, met eigen CSS-prefix `.nd`,
 zodat beide blokken op één pagina kunnen staan.
 
