@@ -41,8 +41,10 @@ Pages ooit niet beschikbaar is.
 **Alternatief zonder GitHub:** plak `nestor-cases-embed.html` in zijn geheel in het embed-veld. Zelfde resultaat,
 maar bij elke aanpassing moet je opnieuw plakken.
 
-Het blok kijkt naar de breedte van de container waarin het staat: breed genoeg (vanaf 960px) wordt het een grid
-van drie rijen, smaller wordt het een carrousel. De fonts staan al op nestor.be, er is geen extra stylesheet nodig.
+Het blok kijkt naar de breedte van de container waarin het staat:
+- vanaf 1200px: het volledige grid, drie rijen van vier kaarten
+- van 640 tot 1199px: vier rijen van drie kaarten (tussen 640 en 959px met kleinere kaarten en tekst)
+- onder 640px: carrousel De fonts staan al op nestor.be, er is geen extra stylesheet nodig.
 
 ## Hoe het werkt
 
