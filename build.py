@@ -248,11 +248,11 @@ dsnippet_intro = f"""<!--
   binnen ongeveer 10 minuten op de site. Verandert de HTML van de kaarten zelf (tekst, volgorde,
   een kaart meer of minder), plak dan deze snippet opnieuw.
 
-  De iconen zijn inline SVG: er zijn geen afbeeldingen nodig. Zet je ooit toch een foto in het
-  blok (met data-src="media/..."), dan wordt die geladen vanaf data-media op de <section>.
+  FOTO'S: de foto's op de kaarten (media/diensten-*.jpg) staan in de HubSpot File Manager,
+  map "NE - Website". Hun adres staat volledig in de HTML hieronder.
 -->
 """
-dsnippet_html = dsnippet(f"{CDN}/diensten.css", f"{CDN}/diensten.js").replace('data-media="media/"', f'data-media="{MEDIA_CDN}"')
+dsnippet_html = dsnippet(f"{CDN}/diensten.css", f"{CDN}/diensten.js").replace('data-media="media/"', f'data-media="{MEDIA_CDN}"').replace('data-src="media/', f'src="{MEDIA_CDN}')
 (dist / "diensten-snippet.html").write_text(dsnippet_intro + dsnippet_html, encoding="utf-8")
 
 # alles-in-één: CSS, HTML en script in één bestand, zonder iets van GitHub (voor een blok hoog op de pagina)
@@ -263,12 +263,16 @@ dembed_intro = f"""<!--
   er wordt niets van GitHub geladen, dus het blok staat meteen goed, ook als eerste blok
   onder de hero. De fonts (Baloo Paaji 2 en Source Sans Pro) staan al op nestor.be.
 
+  FOTO'S: de foto's op de kaarten (media/diensten-*.jpg) staan in de HubSpot File Manager,
+  map "NE - Website". Hun adres staat volledig in de HTML hieronder.
+
   Iets aanpassen? Pas diensten.html aan, draai python3 build.py en plak dit bestand opnieuw.
   (dist/diensten-snippet.html is de variant die CSS en script van GitHub Pages laadt.)
 -->
 """
-dembed = (dblock.replace("<!-- BLOK START -->\n", "").replace("<!-- BLOK EINDE -->", "").strip()
-          .replace('data-media="media/"', f'data-media="{MEDIA_CDN}"'))
+dembed_local = dblock.replace("<!-- BLOK START -->\n", "").replace("<!-- BLOK EINDE -->", "").strip()
+# in de snippets staan de foto's met hun volledige adres (geen script nodig om ze te laden)
+dembed = dembed_local.replace('data-media="media/"', f'data-media="{MEDIA_CDN}"').replace('data-src="media/', f'src="{MEDIA_CDN}')
 (dist / "diensten-embed.html").write_text(dembed_intro + dembed + "\n", encoding="utf-8")
 
 # testpagina: vijandige site-CSS, met schakelaar voor de containerbreedte (375, 700, 1027 en vol)
@@ -316,7 +320,7 @@ dhost = f"""<!doctype html>
 </script>
 <div class="site-container">
   <h2>Site-kop boven het blok</h2>
-{dembed}
+{dembed_local}
   <p>Site-tekst onder het blok.</p>
 </div>
 </body>

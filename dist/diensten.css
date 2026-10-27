@@ -42,7 +42,6 @@
   .nd__inner { max-width: var(--nd-max); margin: 0 auto; padding: var(--nd-pad-y) var(--nd-gutter) 0; }
 
   /* ---- Kop ---- */
-  .nd__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; }
   .nd .nd__title {
     margin: 0; max-width: 840px;
     font-family: var(--nd-font-head); font-weight: 700;
@@ -63,8 +62,9 @@
   .nd .nd__link svg { width: 20px; height: 20px; color: var(--nd-btn-fg); transition: transform .2s; }
   .nd__link:hover svg { transform: translate(2px, -2px); }
 
-  /* ---- Carrouselknoppen (alleen onder 640px) ---- */
-  .nd__nav { display: flex; gap: 8px; margin-top: 32px; }
+  /* ---- Carrouselknoppen ---- */
+  .nd__nav { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 8px; margin-top: 32px; }
+  .nd__nav .nd__link { margin-left: auto; }
   .nd .nd__navbtn {
     width: 36px; height: 36px; border-radius: 50%; border: 1px solid transparent;
     background: var(--nd-btn-bg); color: var(--nd-btn-fg); display: grid; place-items: center; cursor: pointer; padding: 0;
@@ -83,20 +83,22 @@
   }
   .nd__grid::-webkit-scrollbar { display: none; }
   .nd__item { flex: 0 0 var(--nd-card-w); scroll-snap-align: start; min-width: 0; display: flex; }
+  .nd__card--foto { min-height: 300px; }
 
   /* In een container smaller dan 1300px (bv. een embed in een CMS) volstaan kleine zijmarges */
   @container (max-width: 1299px) {
     .nd__inner, .nd__grid, .nd__foot { --nd-gutter: 24px; }
   }
 
-  /* Grid van drie kolommen vanaf 640px containerbreedte, carrousel daaronder */
+  /* Vanaf 640px containerbreedte: drie kaarten per pagina, de pijlen schuiven per drie */
   @container (min-width: 640px) {
-    .nd__nav { display: none; }
     .nd__grid {
-      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: visible;
-      margin: 40px auto 0; max-width: var(--nd-max); padding: 0 var(--nd-gutter) 48px;
+      padding-left: 0; padding-right: 0; scroll-padding: 0;
+      margin: 32px max(var(--nd-gutter), calc((100% - var(--nd-max)) / 2)) 0;
     }
-    .nd__item { flex: none; }
+    .nd__item { flex: 0 0 calc((100% - 2 * var(--nd-gap)) / 3); scroll-snap-align: none; }
+    .nd__item:nth-child(3n + 1) { scroll-snap-align: start; }
+    .nd__card { min-height: var(--nd-card-h, 300px); }
   }
 
   /* ---- Kaart ---- */
@@ -123,6 +125,20 @@
   }
   .nd .nd__answer svg { flex: none; width: 18px; height: 18px; margin-top: 2px; stroke: var(--nd-accent); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 
+  /* ---- Fotokaart: foto als achtergrond, donker transparant vlak, witte tekst ---- */
+  .nd__card--foto { position: relative; color: #fff; }
+  .nd .nd__bg { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; object-fit: cover; }
+  .nd__card--foto::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,.2) 35%, rgba(0,0,0,.6) 60%, rgba(0,0,0,.8) 100%);
+  }
+  .nd__card--foto > :not(.nd__bg) { position: relative; z-index: 1; }
+  .nd__card--foto .nd__icon { background: rgba(255,255,255,.18); color: #fff; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+  .nd .nd__card--foto .nd__fn, .nd .nd__card--foto .nd__case, .nd .nd__card--foto .nd__answer { color: #fff; }
+  .nd .nd__card--foto .nd__answer { border-top-color: rgba(255,255,255,.3); }
+  .nd__card--foto .nd__case { text-shadow: 0 1px 2px rgba(0,0,0,.4); }
+  .nd__card--foto .nd__grow { flex-basis: 56px; }
+
   /* ---- Afsluiter onder de kaarten ---- */
   .nd__foot {
     max-width: var(--nd-max); margin: 0 auto; padding: 0 var(--nd-gutter) var(--nd-pad-y);
@@ -135,22 +151,22 @@
     .nd { --nd-pad-y: 48px; }
     .nd .nd__title { font-size: 28px; }
     .nd .nd__intro { font-size: 16px; }
-    .nd__head { flex-direction: column; gap: 20px; }
-    .nd__head .nd__link { display: none; }   /* op mobiel staat de knop alleen onderaan */
+    .nd .nd__link { white-space: normal; text-align: center; justify-content: center; line-height: 1.25; }
+    .nd__nav .nd__link { flex: 1 1 100%; margin-left: 0; }
   }
 
   /* Compacte maten voor containers van 640 tot 959px */
   @container (min-width: 640px) and (max-width: 959px) {
     .nd__inner, .nd__grid, .nd__foot { --nd-gutter: 16px; --nd-gap: 6px; }
     .nd { --nd-pad-y: 48px; }
-    .nd__grid { margin-top: 28px; padding-bottom: 32px; }
+    .nd__grid { margin-top: 24px; padding-bottom: 32px; }
+    .nd__nav { margin-top: 24px; }
     .nd .nd__title { font-size: 28px; }
     .nd .nd__intro { font-size: 16px; }
-    .nd__head { gap: 16px; }
     .nd .nd__link { padding: 10px 16px 10px 18px; }
     .nd .nd__link, .nd .nd__link > span { font-size: 12px; }
     .nd .nd__link svg { width: 16px; height: 16px; }
-    .nd__card { padding: 14px; border-radius: 10px; gap: 10px; }
+    .nd__card { padding: 14px; border-radius: 10px; gap: 10px; --nd-card-h: 270px; }
     .nd__top { gap: 8px; }
     .nd__icon { width: 36px; height: 36px; }
     .nd .nd__icon svg { width: 18px; height: 18px; }
