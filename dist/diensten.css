@@ -62,7 +62,6 @@
 
   /* ---- Carrouselknoppen ---- */
   .nd__nav { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 8px; margin-top: 32px; }
-  .nd__nav .nd__link { margin-left: auto; }
   .nd .nd__navbtn {
     width: 36px; height: 36px; border-radius: 50%; border: 1px solid transparent;
     background: var(--nd-btn-bg); color: var(--nd-btn-fg); display: grid; place-items: center; cursor: pointer; padding: 0;
@@ -145,7 +144,6 @@
     .nd .nd__title { font-size: 28px; }
     .nd .nd__intro { font-size: 16px; }
     .nd .nd__link { white-space: normal; text-align: center; justify-content: center; line-height: 1.25; }
-    .nd__nav .nd__link { flex: 1 1 100%; margin-left: 0; }
   }
 
   /* Compacte maten voor containers van 640 tot 959px */
