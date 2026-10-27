@@ -1,0 +1,188 @@
+<!--
+  NESTOR CASES-BLOK, VERSIE 2 (snippet voor HubSpot / CMS)
+
+  Drie rijen van twee kaarten: telkens een groot quote-blok naast een video. Zelfde CSS en script
+  als versie 1; het verschil zit in de class nc--v2 op de <section> en de kaartindeling.
+
+  Plak dit in het HTML-/embed-veld. CSS en script worden geladen van GitHub Pages:
+      https://nestor-group.github.io/nestor-cases/dist/nestor-cases.css
+      https://nestor-group.github.io/nestor-cases/dist/nestor-cases.js
+  Pas je iets aan in de code, dan push je naar GitHub en staat het binnen ongeveer 10 minuten op de site.
+
+  MEDIA: foto's, logo's en video's komen uit de HubSpot File Manager (map "NE - Website",
+  met submap "klanten"), via data-media op de <section>. Een ander adres? Pas data-media aan,
+  met een slash op het einde. GitHub Pages heeft dezelfde bestanden als reserve: https://nestor-group.github.io/nestor-cases/media/
+
+  YOUTUBE: per videokaart de YouTube-link in data-video (zie de VERVANG-opmerkingen).
+-->
+<link rel="stylesheet" href="https://nestor-group.github.io/nestor-cases/dist/nestor-cases.css">
+<section class="nc nc--v2" id="nestor-cases" data-media="https://7551812.fs1.hubspotusercontent-eu1.net/hubfs/7551812/Nestor/NE%20-%20Website/">
+  <div class="nc__inner">
+    <div class="nc__head">
+      <div>
+        <div class="nc__eyebrow">Cases</div>
+        <h2 class="nc__title">Enkele mooie samenwerkingen</h2>
+      </div>
+      <a class="nc__link" href="https://nestor.be/cases">
+        <span>Alle cases</span>
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M6 7C6 6.44772 6.44772 6 7 6H17C17.5523 6 18 6.44772 18 7V17C18 17.5523 17.5523 18 17 18C16.4477 18 16 17.5523 16 17V8H7C6.44772 8 6 7.55228 6 7Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M17.7071 6.29289C18.0976 6.68342 18.0976 7.31658 17.7071 7.70711L7.70711 17.7071C7.31658 18.0976 6.68342 18.0976 6.29289 17.7071C5.90237 17.3166 5.90237 16.6834 6.29289 16.2929L16.2929 6.29289C16.6834 5.90237 17.3166 5.90237 17.7071 6.29289Z" fill="currentColor"/></svg>
+      </a>
+    </div>
+
+    <div class="nc__nav">
+      <button type="button" class="nc__navbtn nc__navbtn--prev" aria-label="Vorige" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+      <button type="button" class="nc__navbtn nc__navbtn--next" aria-label="Volgende">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="nc__grid">
+
+    <!-- ===== RIJ 1: video links, groot quote-blok rechts ===== -->
+    <div class="nc__row">
+
+      <div class="nc__item">
+        <div class="nc__card nc__card--video" role="button" tabindex="0"
+             data-video="https://www.youtube.com/shorts/U2xrfmG9EJ4" data-ratio="9/16" aria-label="Bekijk de video van Johan bij Maatkasten Online">
+          <img class="nc__poster" data-src="media/maatkasten-johan.jpg" alt="Johan Haegeman · Maatkasten Online" loading="lazy">
+          <video class="nc__loop" data-src="media/maatkasten-johan-loop.mp4" muted loop playsinline preload="metadata"></video>
+          <img class="nc__logo" data-src="media/logo-maatkasten-online.png" alt="Maatkasten Online">
+          <div class="nc__grow"></div>
+          <button type="button" class="nc__watch" tabindex="-1">
+            <svg viewBox="0 0 14 17" fill="none" aria-hidden="true"><path fill="currentColor" d="M0 14.686V2.702C0 1.23 1.62.332 2.869 1.112l9.587 5.992a1.875 1.875 0 0 1 0 3.18l-9.587 5.992C1.619 17.056 0 16.16 0 14.686"/></svg>
+            <span>Bekijk</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="nc__item nc__item--wide">
+        <div class="nc__card">
+          <p class="nc__quote">“We zoeken in de eerste plaats mensen die met de glimlach komen werken. Nestor voelt dat heel goed aan en stuurt ons alleen kandidaten door die in dat plaatje passen.”</p>
+          <div class="nc__grow"></div>
+          <div class="nc__foot">
+            <div class="nc__author">
+              <img class="nc__avatar" data-src="media/emilie-deboo.jpg" alt="Emilie Deboo">
+              <div>
+                <div class="nc__label">Emilie Deboo</div>
+                <div class="nc__label">Operationeel manager · Maatkasten Online</div>
+              </div>
+            </div>
+            <img class="nc__logo" data-src="media/logo-maatkasten-online-origineel.png" alt="Maatkasten Online">
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===== RIJ 2: groot quote-blok links, video rechts ===== -->
+    <div class="nc__row">
+
+      <div class="nc__item nc__item--wide">
+        <div class="nc__card">
+          <p class="nc__quote">“Het was effectief een schot in de roos! Intussen beschikken we over een pool van een zestal Nestors die vertrouwd zijn met onze werking en die we vrij snel en flexibel kunnen inzetten.”</p>
+          <div class="nc__grow"></div>
+          <div class="nc__foot">
+            <div class="nc__author">
+              <img class="nc__avatar" data-src="media/tom-vanden-broeck.jpg" alt="Tom Vanden Broeck">
+              <div>
+                <div class="nc__label">Tom Vanden Broeck</div>
+                <div class="nc__label">Service Manager · Top Motors</div>
+              </div>
+            </div>
+            <img class="nc__logo" data-src="media/logo-top-motors-origineel.png" alt="Top Motors">
+          </div>
+        </div>
+      </div>
+
+      <div class="nc__item">
+        <div class="nc__card nc__card--video" role="button" tabindex="0"
+             data-video="https://www.youtube.com/shorts/E2r4Isvmha0" data-ratio="9/16" aria-label="Bekijk de video van Luc bij Top Motors">
+          <img class="nc__poster" data-src="media/topmotors-nestor.jpg" alt="Luc Vanderheeren · Top Motors" loading="lazy">
+          <video class="nc__loop" data-src="media/topmotors-nestor-loop.mp4" muted loop playsinline preload="metadata"></video>
+          <img class="nc__logo" data-src="media/logo-top-motors.png" alt="Top Motors">
+          <div class="nc__grow"></div>
+          <button type="button" class="nc__watch" tabindex="-1">
+            <svg viewBox="0 0 14 17" fill="none" aria-hidden="true"><path fill="currentColor" d="M0 14.686V2.702C0 1.23 1.62.332 2.869 1.112l9.587 5.992a1.875 1.875 0 0 1 0 3.18l-9.587 5.992C1.619 17.056 0 16.16 0 14.686"/></svg>
+            <span>Bekijk</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===== RIJ 3: video links, groot quote-blok rechts ===== -->
+    <div class="nc__row">
+
+      <div class="nc__item">
+        <div class="nc__card nc__card--video" role="button" tabindex="0"
+             data-video="https://www.youtube.com/shorts/u5RsF3bZijc" data-ratio="9/16" aria-label="Bekijk de video van Ronald bij Plopsa Hotel">
+          <img class="nc__poster" data-src="media/plopsa-nestor.jpg" alt="Ronald De Smet · Plopsa Hotel" loading="lazy">
+          <video class="nc__loop" data-src="media/plopsa-nestor-loop.mp4" muted loop playsinline preload="metadata"></video>
+          <img class="nc__logo" data-src="media/logo-plopsa-hotel.png" alt="Plopsa Hotel">
+          <div class="nc__grow"></div>
+          <button type="button" class="nc__watch" tabindex="-1">
+            <svg viewBox="0 0 14 17" fill="none" aria-hidden="true"><path fill="currentColor" d="M0 14.686V2.702C0 1.23 1.62.332 2.869 1.112l9.587 5.992a1.875 1.875 0 0 1 0 3.18l-9.587 5.992C1.619 17.056 0 16.16 0 14.686"/></svg>
+            <span>Bekijk</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="nc__item nc__item--wide">
+        <div class="nc__card">
+          <p class="nc__quote">“Dentaal Tema en Nestor zijn als partners die elkaar perfect aanvoelen. Na al die jaren loopt onze samenwerking zo vlot dat mijn collega’s en ik er nauwelijks nog tijd in moeten steken.”</p>
+          <div class="nc__grow"></div>
+          <div class="nc__foot">
+            <div class="nc__author">
+              <img class="nc__avatar" data-src="media/bart-verkeyn.jpg" alt="Bart Verkeyn">
+              <div>
+                <div class="nc__label">Bart Verkeyn</div>
+                <div class="nc__label">Zaakvoerder · Dentaal Tema</div>
+              </div>
+            </div>
+            <img class="nc__logo" data-src="media/logo-dentaal-tema-origineel.png" alt="Dentaal Tema">
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ===== LOGO-RIJ: traag doorlopende logo's van klanten. Tweede reeks is een kopie voor de naadloze loop. ===== -->
+  <div class="nc__logos" aria-label="Bedrijven die met Nestors werken">
+    <div class="nc__logos-inner">
+      <div class="nc__logos-track">
+        <img class="nc__klant" style="--h: 52px" data-src="media/klanten/zetes.png" alt="Zetes" loading="lazy">
+        <img class="nc__klant" style="--h: 37px" data-src="media/klanten/sodexo.png" alt="Sodexo" loading="lazy">
+        <img class="nc__klant" style="--h: 58px" data-src="media/klanten/nh-hotels.png" alt="NH Hotels" loading="lazy">
+        <img class="nc__klant" style="--h: 60px" data-src="media/klanten/mcdonalds.png" alt="McDonald's" loading="lazy">
+        <img class="nc__klant" style="--h: 36px" data-src="media/klanten/jumbo.png" alt="Jumbo" loading="lazy">
+        <img class="nc__klant" style="--h: 41px" data-src="media/klanten/engie.png" alt="Engie" loading="lazy">
+        <img class="nc__klant" style="--h: 38px" data-src="media/klanten/colruyt-group.png" alt="Colruyt Group" loading="lazy">
+        <img class="nc__klant" style="--h: 71px" data-src="media/klanten/club-brugge.png" alt="Club Brugge" loading="lazy">
+        <img class="nc__klant" style="--h: 40px" data-src="media/klanten/bavet.png" alt="Bavet" loading="lazy">
+        <img class="nc__klant" style="--h: 52px" data-src="media/klanten/zetes.png" alt="" aria-hidden="true" loading="lazy">
+        <img class="nc__klant" style="--h: 37px" data-src="media/klanten/sodexo.png" alt="" aria-hidden="true" loading="lazy">
+        <img class="nc__klant" style="--h: 58px" data-src="media/klanten/nh-hotels.png" alt="" aria-hidden="true" loading="lazy">
+        <img class="nc__klant" style="--h: 60px" data-src="media/klanten/mcdonalds.png" alt="" aria-hidden="true" loading="lazy">
+        <img class="nc__klant" style="--h: 36px" data-src="media/klanten/jumbo.png" alt="" aria-hidden="true" loading="lazy">
+        <img class="nc__klant" style="--h: 41px" data-src="media/klanten/engie.png" alt="" aria-hidden="true" loading="lazy">
+        <img class="nc__klant" style="--h: 38px" data-src="media/klanten/colruyt-group.png" alt="" aria-hidden="true" loading="lazy">
+        <img class="nc__klant" style="--h: 71px" data-src="media/klanten/club-brugge.png" alt="" aria-hidden="true" loading="lazy">
+        <img class="nc__klant" style="--h: 40px" data-src="media/klanten/bavet.png" alt="" aria-hidden="true" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Videomodal: één keer per pagina -->
+<div class="nc-modal" id="nc-modal" role="dialog" aria-modal="true" aria-label="Video" hidden>
+  <button type="button" class="nc-modal__close" aria-label="Sluiten">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+  </button>
+  <div class="nc-modal__body"></div>
+</div>
+<script src="https://nestor-group.github.io/nestor-cases/dist/nestor-cases.js" defer></script>

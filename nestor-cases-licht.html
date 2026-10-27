@@ -293,6 +293,23 @@
     .nc .nc__klant { height: calc(var(--h, 56px) * var(--nc-logo-scale, 0.7) * 0.85); }
   }
 
+  /* ---- V2: drie rijen van twee, een groot quote-blok naast een video (class "nc--v2" op de section) ---- */
+  @container (min-width: 640px) {
+    .nc--v2 .nc__item { flex: 1 1 0; }
+    .nc--v2 .nc__item--wide { flex: 2 1 0; }
+    .nc--v2 .nc__item--wide .nc__card { padding: 28px; }
+    .nc--v2 .nc__item--wide .nc__quote { font-size: 20px; line-height: 1.45; max-width: 32ch; }
+    .nc--v2 .nc__item--wide .nc__label { font-size: 12px; }
+    .nc--v2 .nc__item--wide .nc__avatar { width: 40px; height: 40px; }
+    .nc--v2 .nc__item--wide .nc__foot .nc__logo { display: block; }
+  }
+  @container (min-width: 640px) and (max-width: 959px) {
+    .nc--v2 .nc__item--wide .nc__card { padding: 18px; }
+    .nc--v2 .nc__item--wide .nc__quote { font-size: 16px; line-height: 1.42; }
+    .nc--v2 .nc__item--wide .nc__label { font-size: 11px; }
+    .nc--v2 .nc__item--wide .nc__avatar { width: 32px; height: 32px; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .nc__grid { scroll-behavior: auto; }
     .nc__loop { transition: none; }

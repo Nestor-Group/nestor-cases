@@ -139,6 +139,56 @@ host_local = host.replace(embed, snippet("dist/nestor-cases.css", "dist/nestor-c
 assert host_local != host
 (HERE / "test-dist.html").write_text(host_local, encoding="utf-8")
 
+# ---- V2: drie rijen van twee (groot quote-blok naast een video), zelfde kaarten, class "nc--v2" ----
+def _grid_items(h):
+    g0 = h.index('  <div class="nc__grid">'); g1 = h.index('  <!-- ===== LOGO-RIJ')
+    grid = h[g0:g1]
+    items = ['      <div class="nc__item' + x for x in grid.split('      <div class="nc__item')[1:]]
+    clean = []
+    for it in items:
+        it = re.split(r"\n    (?:</div>|<!-- ===== RIJ|<div class=\"nc__row\">)", it)[0]   # knip af bij het einde van de rij
+        lines = it.rstrip("\n").split("\n")
+        while lines and (re.fullmatch(r" {0,8}</div>\s*", lines[-1]) or lines[-1].strip() == ""):
+            lines.pop()
+        clean.append("\n".join(lines) + "\n        </div>\n      </div>\n")
+    return g0, g1, clean
+
+def _pick(items, key):
+    m = [i for i in items if key in i]
+    assert len(m) == 1, (key, len(m))
+    return m[0]
+
+def _wide(item, on):
+    item = item.replace('<div class="nc__item nc__item--wide">', '<div class="nc__item">', 1)
+    return item.replace('<div class="nc__item">', '<div class="nc__item nc__item--wide">', 1) if on else item
+
+g0, g1, items = _grid_items(html)
+V2_TOM = ("“Het was effectief een schot in de roos! Intussen beschikken we over een pool van een zestal Nestors "
+          "die vertrouwd zijn met onze werking en die we vrij snel en flexibel kunnen inzetten.”")
+tom = re.sub(r"<p class=\"nc__quote\">.*?</p>", '<p class="nc__quote">' + V2_TOM + "</p>", _pick(items, "Tom Vanden"), flags=re.S)
+v2_rows = [
+    ("RIJ 1: video links, groot quote-blok rechts", [_wide(_pick(items, "maatkasten-johan"), False), _wide(_pick(items, "Emilie Deboo"), True)]),
+    ("RIJ 2: groot quote-blok links, video rechts", [_wide(tom, True), _wide(_pick(items, "topmotors-nestor"), False)]),
+    ("RIJ 3: video links, groot quote-blok rechts", [_wide(_pick(items, "plopsa-nestor"), False), _wide(_pick(items, "Bart Verkeyn"), True)]),
+]
+v2_grid = '  <div class="nc__grid">\n\n'
+for title, its in v2_rows:
+    v2_grid += f'    <!-- ===== {title} ===== -->\n    <div class="nc__row">\n\n' + "\n".join(its) + "\n    </div>\n\n"
+v2_grid += "  </div>\n\n"
+v2_html = (html[:g0] + v2_grid + html[g1:]).replace('<section class="nc" id="nestor-cases"', '<section class="nc nc--v2" id="nestor-cases"', 1)
+assert 'nc nc--v2' in v2_html and v2_html.count('class="nc__item') == 6
+
+v2_snippet = (f'<link rel="stylesheet" href="{CDN}/nestor-cases.css">\n{v2_html}\n'
+              f'<script src="{CDN}/nestor-cases.js" defer></script>\n').replace('data-media="media/"', f'data-media="{MEDIA_CDN}"')
+v2_intro = snippet_intro.replace("NESTOR CASES-BLOK (snippet voor HubSpot / CMS)",
+    "NESTOR CASES-BLOK, VERSIE 2 (snippet voor HubSpot / CMS)\n\n"
+    "  Drie rijen van twee kaarten: telkens een groot quote-blok naast een video. Zelfde CSS en script\n"
+    "  als versie 1; het verschil zit in de class nc--v2 op de <section> en de kaartindeling.")
+(dist / "nestor-cases-v2-snippet.html").write_text(v2_intro + v2_snippet, encoding="utf-8")
+v2_local = f'<link rel="stylesheet" href="dist/nestor-cases.css">\n{v2_html}\n<script src="dist/nestor-cases.js" defer></script>\n'
+(HERE / "test-v2.html").write_text(host.replace(embed, v2_local).replace("<title>Testpagina: embed in een vreemde site</title>", "<title>Testpagina: cases-blok V2</title>"), encoding="utf-8")
+print("ok: dist/nestor-cases-v2-snippet.html | test-v2.html")
+
 # ---- vastgepinde snippet: verwijst naar één commit, werkt meteen (jsDelivr cachet de branch tot 12 uur) ----
 import subprocess
 try:
