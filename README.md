@@ -101,7 +101,7 @@ zodat beide blokken op één pagina kunnen staan.
 
 - `diensten.html`: het bronbestand (CSS, HTML en script tussen `BLOK START` en `BLOK EINDE`). Pas hier de
   teksten aan; elke kaart is één `<div class="nd__item">` met een icoon (inline SVG), de functie (`nd__fn`)
-  en de herkenbare situatie als vette regel onderaan (`nd__answer`). Een fotokaart heeft daarbij de class
+  en wat een Nestor oplost als vette regel onderaan (`nd__answer`). Een fotokaart heeft daarbij de class
   `nd__card--foto` en een `<img class="nd__bg">` met de foto (`object-position` bepaalt welk deel in beeld blijft).
 - `dist/diensten-embed.html`: **dit plak je in het HubSpot-embedveld.** Alles in één bestand (CSS, HTML en
   script), er wordt niets van GitHub geladen. Dit blok staat als eerste onder de hero, dus het mag niet
