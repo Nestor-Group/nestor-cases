@@ -85,7 +85,7 @@
   .nd button { font: inherit; color: inherit; margin: 0; appearance: none; -webkit-appearance: none; box-shadow: none; }
   .nd h2, .nd h3, .nd p { margin: 0; padding: 0; font-style: normal; text-transform: none; }
   .nd a, .nd a:hover, .nd a:focus { text-decoration: none; box-shadow: none; }
-  .nd .nd__link, .nd .nd__link > span { color: var(--nd-btn-fg); font-size: 14px; letter-spacing: .02em; }
+  .nd .nd__link, .nd .nd__link > span { color: var(--nd-btn-fg); font-size: 14px; letter-spacing: .02em; white-space: normal; }   /* tekst mag afbreken als de knop te breed wordt */
   .nd .nd__link:hover { color: var(--nd-btn-fg); }
 
   .nd__inner { max-width: var(--nd-max); margin: 0 auto; padding: var(--nd-pad-y) var(--nd-gutter) 0; }
@@ -105,11 +105,16 @@
   .nd__link {
     display: inline-flex; align-items: center; gap: 6px; flex: none;
     padding: 12px 24px; border-radius: 9999px;
-    background: var(--nd-btn-bg); color: var(--nd-btn-fg); text-decoration: none; white-space: nowrap;
-    font-family: var(--nd-font-head); font-weight: 600; font-size: 14px; line-height: 1; text-transform: uppercase; letter-spacing: .02em;
+    background: var(--nd-btn-bg); color: var(--nd-btn-fg); text-decoration: none; max-width: 100%; text-align: center; justify-content: center;
+    font-family: var(--nd-font-head); font-weight: 600; font-size: 14px; line-height: 1.25; text-transform: uppercase; letter-spacing: .02em;
     transition: filter .2s;
   }
   .nd__link:hover { filter: brightness(.92); }
+
+  /* In een container smaller dan 1300px (bv. een embed in een CMS) volstaan kleine zijmarges */
+  @container (max-width: 1299px) {
+    .nd__inner, .nd__grid, .nd__foot { --nd-gutter: 24px; }
+  }
 
   /* ---- Raster: drie kaarten per rij, één per rij in smalle containers ---- */
   .nd__grid {
@@ -188,9 +193,14 @@
     .nd { --nd-pad-y: 48px; }
     .nd .nd__title { font-size: 28px; }
     .nd .nd__intro { font-size: 16px; }
-    .nd .nd__link { white-space: normal; text-align: center; justify-content: center; line-height: 1.25; }
+    .nd .nd__link { width: 100%; }
   }
 
+
+  /* Reserve voor oudere browsers zonder containerqueries */
+  @media (max-width: 639px) {
+    .nd .nd__link { width: 100%; }
+  }
 
   @media (prefers-reduced-motion: reduce) {
     .nd .nd__bg, .nd a.nd__card { transition: none; }
