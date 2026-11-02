@@ -103,16 +103,19 @@ zodat beide blokken op één pagina kunnen staan.
 - `diensten.html`: het bronbestand (CSS, HTML en script tussen `BLOK START` en `BLOK EINDE`). Pas hier de
   teksten aan; elke kaart is één `<div class="nd__item">` met een icoon (inline SVG), de foto (`<img class="nd__bg">`,
   `object-position` bepaalt welk deel in beeld blijft), de functie (`nd__fn`) en drie taken (`nd__task`).
-- `dist/diensten-embed.html`: **dit plak je in het HubSpot-embedveld.** Alles in één bestand (CSS, HTML en
-  script), er wordt niets van GitHub geladen. Dit blok staat als eerste onder de hero, dus het mag niet
-  wachten op een extern bestand.
+- `dist/diensten-remote-snippet.html`: **dit plak je in het HubSpot-embedveld** (twee regels). Het script
+  `dist/diensten-loader.js` zet opmaak en inhoud op de pagina en komt van GitHub Pages. Na een aanpassing hoef je
+  nergens opnieuw te plakken: `diensten.html` aanpassen, `python3 build.py`, committen en pushen; binnen
+  ongeveer 10 minuten staat het op elke pagina. De foto's komen uit de HubSpot File Manager.
+- `dist/diensten-embed.html`: alternatief, alles in één bestand (CSS, HTML en script) zonder GitHub. Dan moet je bij
+  elke aanpassing wel overal opnieuw plakken.
 - `dist/diensten.css`, `dist/diensten.js`, `dist/diensten-snippet.html`: de variant die CSS en script van
   GitHub Pages laadt, zoals het cases-blok. Alleen nodig als je liever niet bij elke wijziging opnieuw plakt.
-- `test-diensten.html`: vijandige testpagina met de alles-in-één snippet en linksboven een schakelaar voor de
+- `test-diensten.html` en `test-diensten-remote.html`: vijandige testpagina's met de alles-in-één snippet, resp. het loader-script, en linksboven een schakelaar voor de
   containerbreedte (375, 700, 1027 of vol).
 
-Werkwijze bij een aanpassing: `diensten.html` aanpassen, `python3 build.py`, `dist/diensten-embed.html`
-opnieuw plakken in HubSpot, en committen en pushen zodat GitHub de laatste versie heeft.
+Werkwijze bij een aanpassing: `diensten.html` aanpassen, `python3 build.py`, committen en pushen. Klaar.
+(Alleen wie de alles-in-één variant gebruikt, plakt `dist/diensten-embed.html` opnieuw.)
 
 Opmaak: een vast raster met alle kaarten, drie per rij vanaf 640px containerbreedte (compacter tussen 640 en
 959px), één per rij daaronder. Geen carrousel. Elke kaart is een link naar de database-tool met de foto als achtergrond

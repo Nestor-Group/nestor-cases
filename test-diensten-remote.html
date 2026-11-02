@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Testpagina: diensten-blok via loader-script</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Opzettelijk lelijke site-CSS om te testen of het blok zich daartegen verdedigt */
+  body { margin: 0; background: #223; color: #0f0; font-family: Georgia, serif; font-size: 22px; }
+  a { color: #ff0 !important; text-decoration: underline; font-size: 30px; }
+  a span { color: #0ff; }
+  button { background: lime; color: purple; border: 4px dotted red; font-size: 40px; padding: 30px; }
+  img, svg { max-width: 40%; border: 5px solid magenta; margin: 32px 0; height: auto; }
+  h2 { font-size: 70px; text-transform: uppercase; margin: 80px; color: pink; }
+  h3 { font-size: 50px; text-transform: uppercase; margin: 60px; color: orange; font-style: italic; }
+  p { margin: 40px; font-style: italic; }
+  /* Echte prose-regels van nestor.be (main.css) */
+  .prose a { padding-bottom: .125rem; font-weight: 600; color: rgba(247,49,9,1); text-decoration: underline; }
+  .prose h3 { font-size: 1.25em; margin-top: 1.6em; margin-bottom: .6em; line-height: 1.6; color: #010306; font-weight: 600; }
+  .prose h2 { font-size: 2.5rem; line-height: 3rem; margin-top: 2em; margin-bottom: 1em; }
+  .prose p { margin-top: 1.25em; margin-bottom: 1.25em; }
+  .prose img, .prose video { margin-top: 2em; margin-bottom: 2em; }
+  .site-container { width: 700px; max-width: 100%; margin: 40px auto; background: #fff; padding: 20px; }
+  .site-container.w-375 { width: 375px; }
+  .site-container.w-1027 { width: 1027px; }
+  .site-container.w-full { width: 1400px; }
+  .demo-switch { position: fixed; top: 12px; left: 12px; z-index: 10000; display: flex; gap: 6px; background: rgba(0,0,0,.7); padding: 6px; border-radius: 9999px; }
+  .demo-switch button { font: 600 12px/1 "Baloo Paaji 2", sans-serif; padding: 8px 12px; border: 0; border-radius: 9999px; background: transparent; color: #fff; cursor: pointer; }
+  .demo-switch button.is-active { background: #fff; color: #000; }
+</style>
+</head>
+<body>
+<div class="demo-switch">
+  <button type="button" data-w="w-375">375</button>
+  <button type="button" data-w="" class="is-active">700</button>
+  <button type="button" data-w="w-1027">1027</button>
+  <button type="button" data-w="w-full">vol</button>
+</div>
+<script>
+  document.querySelectorAll('.demo-switch button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var c = document.querySelector('.site-container');
+      c.className = 'site-container prose ' + b.dataset.w;
+      document.querySelectorAll('.demo-switch button').forEach(function (x) { x.classList.toggle('is-active', x === b); });
+    });
+  });
+</script>
+<div class="site-container prose">
+  <h2>Site-kop boven het blok</h2>
+<div data-nestor-diensten style="min-height: 900px"></div>
+<script src="dist/diensten-loader.js" defer></script>
+
+  <p>Site-tekst onder het blok.</p>
+</div>
+</body>
+</html>

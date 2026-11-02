@@ -8,7 +8,8 @@
 En uit diensten.html (het blok "Dit is wat Nestor voor jou kan betekenen"):
 
   dist/diensten.css, dist/diensten.js, dist/diensten-snippet.html (laadt van GitHub Pages)
-  dist/diensten-embed.html  alles-in-één snippet zonder GitHub (aanbevolen voor dit blok)
+  dist/diensten-embed.html  alles-in-één snippet zonder GitHub
+  dist/diensten-loader.js + dist/diensten-remote-snippet.html  één script dat alles van GitHub laadt (één keer plakken)
   test-diensten.html        vijandige testpagina met schakelaar voor de containerbreedte
 
 Uitvoeren:  python3 build.py
@@ -275,6 +276,53 @@ dembed_local = dblock.replace("<!-- BLOK START -->\n", "").replace("<!-- BLOK EI
 dembed = dembed_local.replace('data-media="media/"', f'data-media="{MEDIA_CDN}"').replace('data-src="media/', f'src="{MEDIA_CDN}')
 (dist / "diensten-embed.html").write_text(dembed_intro + dembed + "\n", encoding="utf-8")
 
+# ---- loader: één script dat CSS én HTML op de pagina zet; de snippet in HubSpot is dan maar twee regels ----
+import json
+loader_html = dembed.replace('<section class="nd" id="nestor-diensten" data-media="', '<section class="nd" data-media="')   # geen id: mag meer dan één keer op een pagina
+loader = f"""/* Nestor diensten-blok: laadt opmaak en inhoud in elk element met data-nestor-diensten. Gemaakt door build.py uit diensten.html. */
+(function () {{
+  var CSS = {json.dumps(dcss)};
+  var HTML = {json.dumps(loader_html)};
+  function mount() {{
+    if (!document.getElementById('nestor-diensten-css')) {{
+      var st = document.createElement('style');
+      st.id = 'nestor-diensten-css';
+      st.textContent = CSS;
+      document.head.appendChild(st);
+    }}
+    var mounts = document.querySelectorAll('[data-nestor-diensten]');
+    for (var i = 0; i < mounts.length; i++) {{
+      var el = mounts[i];
+      if (el.getAttribute('data-nestor-diensten-klaar')) continue;
+      el.innerHTML = HTML;
+      el.style.minHeight = '';
+      el.setAttribute('data-nestor-diensten-klaar', '1');
+    }}
+  }}
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount); else mount();
+}})();
+"""
+(dist / "diensten-loader.js").write_text(loader, encoding="utf-8")
+
+def dremote(js_url):
+    return (f'<div data-nestor-diensten style="min-height: 900px"></div>\n'
+            f'<script src="{js_url}" defer></script>\n')
+
+dremote_intro = f"""<!--
+  NESTOR DIENSTEN-BLOK: "Dit is wat Nestor voor jou kan betekenen" (GitHub-versie: één keer plakken)
+
+  Plak deze twee regels in het HTML-/embed-veld. Het script zet de opmaak en de inhoud van het blok
+  op de pagina en laadt ze van GitHub Pages:
+      {CDN}/diensten-loader.js
+  Iets aanpassen (tekst, foto, taak, opmaak)? Pas diensten.html aan, draai python3 build.py, commit en
+  push. Binnen ongeveer 10 minuten staat het op elke pagina waar dit blok staat. Opnieuw plakken is
+  niet nodig.
+
+  De min-height houdt de plaats vrij tot het script geladen is, zodat de pagina niet verspringt.
+-->
+"""
+(dist / "diensten-remote-snippet.html").write_text(dremote_intro + dremote(f"{CDN}/diensten-loader.js"), encoding="utf-8")
+
 # testpagina: vijandige site-CSS, met schakelaar voor de containerbreedte (375, 700, 1027 en vol)
 dhost = f"""<!doctype html>
 <html lang="nl">
@@ -333,4 +381,7 @@ dhost = f"""<!doctype html>
 </html>
 """
 (HERE / "test-diensten.html").write_text(dhost, encoding="utf-8")
-print("ok: dist/diensten.css", len(dcss), "| dist/diensten.js", len(djs), "| dist/diensten-snippet.html | dist/diensten-embed.html", len(dembed), "| test-diensten.html")
+dhost_remote = dhost.replace(dembed_local, dremote("dist/diensten-loader.js")).replace("<title>Testpagina: diensten-blok in een vreemde site</title>", "<title>Testpagina: diensten-blok via loader-script</title>")
+assert dhost_remote != dhost
+(HERE / "test-diensten-remote.html").write_text(dhost_remote, encoding="utf-8")
+print("ok: dist/diensten.css", len(dcss), "| dist/diensten.js", len(djs), "| dist/diensten-snippet.html | dist/diensten-embed.html", len(dembed), "| dist/diensten-loader.js", len(loader), "| dist/diensten-remote-snippet.html | test-diensten.html | test-diensten-remote.html")
