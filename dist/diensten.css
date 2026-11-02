@@ -69,33 +69,39 @@
     .nd__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 40px; padding-bottom: 48px; }
   }
 
-  /* ---- Kaart: foto bovenaan, functie en taken eronder. Elke kaart is een link naar de database-tool. ---- */
+  /* ---- Kaart: foto als achtergrond met donker vlak, functie bovenaan, taken onderaan. Elke kaart is een link naar de database-tool. ---- */
   .nd a.nd__card, .nd a.nd__card:hover, .nd a.nd__card:focus {
-    display: flex; flex-direction: column; min-width: 0; overflow: hidden;
+    position: relative; display: flex; flex-direction: column; min-width: 0; min-height: var(--nd-card-h, 340px); overflow: hidden;
     background: var(--nd-card); border: 1px solid var(--nd-card-border); border-radius: var(--nd-radius);
-    color: var(--nd-card-text); text-decoration: none; font: inherit; padding: 0; margin: 0; border-bottom: 1px solid var(--nd-card-border);   /* .prose a van de site zet o.a. padding-bottom */
+    color: #fff; text-decoration: none; font: inherit; padding: 20px; margin: 0; border-bottom: 1px solid var(--nd-card-border);   /* .prose a van de site zet o.a. padding-bottom */
     cursor: pointer; transition: box-shadow .2s;
   }
   .nd a.nd__card:hover { box-shadow: 0 8px 24px rgba(0,0,0,.12); }
   .nd a.nd__card:focus-visible { outline: 2px solid var(--nd-accent); outline-offset: 2px; }
-  .nd__media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #e9e5dc; }
   .nd .nd__bg { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; object-fit: cover; transition: transform .4s; }
   .nd a.nd__card:hover .nd__bg { transform: scale(1.04); }
-  .nd__icon {
-    position: absolute; left: 12px; top: 12px; width: 40px; height: 40px; border-radius: 50%;
-    background: var(--nd-accent); color: #fff; display: grid; place-items: center;
+  .nd a.nd__card::after {   /* donker transparant vlak, onderaan het donkerst voor de tekst */
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,.4) 0%, rgba(0,0,0,.15) 30%, rgba(0,0,0,.55) 55%, rgba(0,0,0,.82) 100%);
   }
-  .nd .nd__icon svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-  .nd__body { padding: 16px 18px 20px; display: flex; flex-direction: column; gap: 10px; }
-  .nd .nd__fn { font-family: var(--nd-font-head); font-weight: 700; font-size: 20px; line-height: 1.15; color: var(--nd-card-text); }
+  .nd a.nd__card > :not(.nd__bg) { position: relative; z-index: 1; }
+  .nd__top { display: flex; align-items: center; gap: 12px; }
+  .nd__icon {
+    flex: none; width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(255,255,255,.18); color: #fff; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    display: grid; place-items: center;
+  }
+  .nd .nd__icon svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .nd .nd__fn { font-family: var(--nd-font-head); font-weight: 700; font-size: 20px; line-height: 1.15; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.4); }
+  .nd__grow { flex: 1 1 72px; min-height: 72px; }
   .nd__tasks { display: flex; flex-direction: column; gap: 6px; }
-  .nd__task { display: flex; align-items: flex-start; gap: 8px; font-size: 16px; line-height: 1.4; color: var(--nd-card-text); }
+  .nd__task { display: flex; align-items: flex-start; gap: 8px; font-size: 16px; line-height: 1.4; font-weight: 600; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.4); }
   .nd .nd__task span { color: inherit; font-size: inherit; font-weight: inherit; }   /* tekst in een link krijgt op de site soms een eigen kleur */
   .nd .nd__task svg { flex: none; width: 16px; height: 16px; margin-top: 3px; stroke: var(--nd-accent); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
 
-  /* Smalle containers (mobiel): foto minder hoog */
+  /* Smalle containers (mobiel): kaart iets lager */
   @container (max-width: 639px) {
-    .nd__media { aspect-ratio: 16 / 9; }
+    .nd a.nd__card { --nd-card-h: 300px; }
   }
 
   /* Compacte maten voor containers van 640 tot 959px */
@@ -107,11 +113,13 @@
     .nd .nd__intro { font-size: 16px; }
     .nd .nd__link { padding: 10px 18px; }
     .nd .nd__link, .nd .nd__link > span { font-size: 12px; }
-    .nd a.nd__card { border-radius: 10px; }
-    .nd__icon { width: 32px; height: 32px; left: 10px; top: 10px; }
-    .nd .nd__icon svg { width: 16px; height: 16px; }
-    .nd__body { padding: 12px 14px 16px; gap: 8px; }
+    .nd a.nd__card { padding: 14px; border-radius: 10px; --nd-card-h: 300px; }
+    .nd__top { gap: 8px; }
+    .nd__icon { width: 36px; height: 36px; }
+    .nd .nd__icon svg { width: 18px; height: 18px; }
     .nd .nd__fn { font-size: 16px; }
+    .nd__grow { flex-basis: 48px; min-height: 48px; }
+    .nd__tasks { gap: 4px; }
     .nd__task { font-size: 14px; line-height: 1.35; gap: 6px; }
     .nd .nd__task svg { width: 14px; height: 14px; margin-top: 2px; }
     .nd .nd__foot p { font-size: 16px; }

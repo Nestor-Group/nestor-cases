@@ -101,9 +101,8 @@ winkel, events). Zelfde huisstijl en zelfde werkproces als het cases-blok, met e
 zodat beide blokken op één pagina kunnen staan.
 
 - `diensten.html`: het bronbestand (CSS, HTML en script tussen `BLOK START` en `BLOK EINDE`). Pas hier de
-  teksten aan; elke kaart is één `<div class="nd__item">` met een icoon (inline SVG), de foto (`nd__media` met
-  `<img class="nd__bg">`, `object-position` bepaalt welk deel in beeld blijft), de functie (`nd__fn`) en drie taken
-  (`nd__task`).
+  teksten aan; elke kaart is één `<div class="nd__item">` met een icoon (inline SVG), de foto (`<img class="nd__bg">`,
+  `object-position` bepaalt welk deel in beeld blijft), de functie (`nd__fn`) en drie taken (`nd__task`).
 - `dist/diensten-embed.html`: **dit plak je in het HubSpot-embedveld.** Alles in één bestand (CSS, HTML en
   script), er wordt niets van GitHub geladen. Dit blok staat als eerste onder de hero, dus het mag niet
   wachten op een extern bestand.
@@ -116,8 +115,8 @@ Werkwijze bij een aanpassing: `diensten.html` aanpassen, `python3 build.py`, `di
 opnieuw plakken in HubSpot, en committen en pushen zodat GitHub de laatste versie heeft.
 
 Opmaak: een vast raster met alle kaarten, drie per rij vanaf 640px containerbreedte (compacter tussen 640 en
-959px), één per rij daaronder. Geen carrousel. Elke kaart is een link naar de database-tool met bovenaan een foto
-(`nd__media`, 4:3, op mobiel 16:9) met het icoon erop, en eronder de functie en drie taken (`nd__task`, met een
-oranje vinkje). De lijst is bewust geen `<ul>`: de site geeft lijsten een eigen opmaak met `!important`.
+959px), één per rij daaronder. Geen carrousel. Elke kaart is een link naar de database-tool met de foto als achtergrond
+en een donker transparant vlak erover; bovenaan het icoon en de functie, onderaan drie taken in het wit (`nd__task`, met
+een oranje vinkje). De lijst is bewust geen `<ul>`: de site geeft lijsten een eigen opmaak met `!important`.
 De foto's staan in de HubSpot File Manager (map "NE - Website") en in `media/`.
 De knop "Zoek gratis en vrijblijvend tussen onze kandidaten" en elke kaart verwijzen naar `https://interim.nestor.be/database-tool`.
