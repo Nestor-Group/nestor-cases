@@ -131,7 +131,10 @@
     display: grid; place-items: center;
   }
   .nd .nd__icon svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-  .nd .nd__fn { font-family: var(--nd-font-head); font-weight: 700; font-size: 20px; line-height: 1.15; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.4); }
+  .nd .nd__fn {
+    font-family: var(--nd-font-head); font-weight: 700; font-size: 20px; line-height: 1.15; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.4);
+    min-width: 0; overflow-wrap: normal; word-break: normal; hyphens: manual;   /* alleen afbreken op het zachte koppelteken (&shy;), niet midden in een woord */
+  }
   .nd__grow { flex: 1 1 72px; min-height: 72px; }
   .nd__tasks { display: flex; flex-direction: column; gap: 6px; }
   .nd__task { display: flex; align-items: flex-start; gap: 8px; font-size: 16px; line-height: 1.4; font-weight: 600; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.4); }
@@ -224,7 +227,7 @@
         <img class="nd__bg" src="media/diensten-logistiek.jpg" alt="Nestor-logistiek medewerker neemt een onderdeel uit de stelling" loading="lazy" style="object-position: 70% 28%;">
         <div class="nd__top">
           <div class="nd__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3 8 9-4 9 4v9l-9 4-9-4z"/><path d="M3 8l9 4 9-4"/><path d="M12 12v9"/><path d="M7.5 6l9 4"/></svg></div>
-          <h3 class="nd__fn">Logistiek medewerker</h3>
+          <h3 class="nd__fn">Logistiek mede&shy;werker</h3>
         </div>
         <div class="nd__grow"></div>
         <div class="nd__tasks">
@@ -240,7 +243,7 @@
         <img class="nd__bg" src="media/diensten-administratie.jpg" alt="Nestor aan haar bureau" loading="lazy" style="object-position: center 20%;">
         <div class="nd__top">
           <div class="nd__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8"/><path d="M8 17h8"/></svg></div>
-          <h3 class="nd__fn">Administratief medewerker</h3>
+          <h3 class="nd__fn">Administratief mede&shy;werker</h3>
         </div>
         <div class="nd__grow"></div>
         <div class="nd__tasks">
@@ -256,7 +259,7 @@
         <img class="nd__bg" src="media/diensten-onthaal.jpg" alt="Nestor aan de telefoon" loading="lazy" style="object-position: 60% 25%;">
         <div class="nd__top">
           <div class="nd__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 10a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v3H6z"/><path d="M4 13h16v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M12 8V5"/><path d="M12 5a2 2 0 1 1 2-2"/></svg></div>
-          <h3 class="nd__fn">Onthaalmedewerker</h3>
+          <h3 class="nd__fn">Onthaal&shy;medewerker</h3>
         </div>
         <div class="nd__grow"></div>
         <div class="nd__tasks">
@@ -272,7 +275,7 @@
         <img class="nd__bg" src="media/diensten-pendel.jpg" alt="Nestor-chauffeur bij de open deur van een personenbusje" loading="lazy" style="object-position: 60% 45%;">
         <div class="nd__top">
           <div class="nd__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M4 11h16"/><path d="M7 18v2"/><path d="M17 18v2"/><circle cx="8" cy="14.5" r="1"/><circle cx="16" cy="14.5" r="1"/></svg></div>
-          <h3 class="nd__fn">Pendelchauffeur</h3>
+          <h3 class="nd__fn">Pendel&shy;chauffeur</h3>
         </div>
         <div class="nd__grow"></div>
         <div class="nd__tasks">
@@ -320,7 +323,7 @@
         <img class="nd__bg" src="media/diensten-winkel.jpg" alt="Nestor-winkelmedewerker met een houten krat in de winkel" loading="lazy" style="object-position: center 20%;">
         <div class="nd__top">
           <div class="nd__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 7h12l1 13H5z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg></div>
-          <h3 class="nd__fn">Winkelmedewerker</h3>
+          <h3 class="nd__fn">Winkel&shy;medewerker</h3>
         </div>
         <div class="nd__grow"></div>
         <div class="nd__tasks">
@@ -336,7 +339,7 @@
         <img class="nd__bg" src="media/diensten-event.jpg" alt="Twee Nestors lachen bij een koffie" loading="lazy" style="object-position: center 35%;">
         <div class="nd__top">
           <div class="nd__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16"/><path d="M8 3v4"/><path d="M16 3v4"/><path d="m9.5 16 1.5 1.5 3.5-3.5"/></svg></div>
-          <h3 class="nd__fn">Eventmedewerker</h3>
+          <h3 class="nd__fn">Event&shy;medewerker</h3>
         </div>
         <div class="nd__grow"></div>
         <div class="nd__tasks">
