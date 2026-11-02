@@ -10,6 +10,7 @@ En uit diensten.html (het blok "Dit is wat Nestor voor jou kan betekenen"):
   dist/diensten.css, dist/diensten.js, dist/diensten-snippet.html (laadt van GitHub Pages)
   dist/diensten-embed.html  alles-in-één snippet zonder GitHub
   dist/diensten-loader.js + dist/diensten-remote-snippet.html  één script dat alles van GitHub laadt (één keer plakken)
+  dist/diensten-frame.html + dist/diensten-iframe-snippet.html  losse pagina op GitHub Pages, in HubSpot als iframe
   test-diensten.html        vijandige testpagina met schakelaar voor de containerbreedte
 
 Uitvoeren:  python3 build.py
@@ -323,6 +324,64 @@ dremote_intro = f"""<!--
 """
 (dist / "diensten-remote-snippet.html").write_text(dremote_intro + dremote(f"{CDN}/diensten-loader.js"), encoding="utf-8")
 
+# ---- iframe: een losse pagina op GitHub Pages met het blok; de snippet in HubSpot is een <iframe> ----
+# Links in het frame openen in de hoofdpagina (target="_top"); een script geeft de hoogte door aan de hoofdpagina.
+dframe_block = dembed.replace('<a class="nd__card" href="', '<a class="nd__card" target="_top" href="').replace('<a class="nd__link" href="', '<a class="nd__link" target="_top" href="')
+assert dframe_block.count('target="_top"') == 10
+dframe = f"""<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dit is wat Nestor voor jou kan betekenen</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  html, body {{ margin: 0; padding: 0; background: transparent; }}
+  .nd {{ --nd-pad-y: 0px; }}   /* de ruimte boven en onder komt van de pagina waarin het frame staat */
+</style>
+</head>
+<body>
+{dframe_block}
+<script>
+  /* Geeft de hoogte van het blok door aan de pagina waarin dit frame staat (zie de snippet). */
+  (function () {{
+    function send() {{
+      var h = Math.ceil(document.body.getBoundingClientRect().height);   /* hoogte van de inhoud, niet van het venster: krimpt ook terug */
+      if (window.parent !== window) window.parent.postMessage({{ nestorDienstenHoogte: h }}, '*');
+    }}
+    if ('ResizeObserver' in window) new ResizeObserver(send).observe(document.body);
+    window.addEventListener('load', send);
+    window.addEventListener('resize', send);
+    send();
+  }})();
+</script>
+</body>
+</html>
+"""
+(dist / "diensten-frame.html").write_text(dframe, encoding="utf-8")
+
+def diframe(frame_url, origin):
+    return (f'<iframe id="nestor-diensten-frame" src="{frame_url}" title="Dit is wat Nestor voor jou kan betekenen" '
+            f'loading="lazy" scrolling="no" style="display:block;width:100%;height:1200px;border:0;overflow:hidden;background:transparent"></iframe>\n'
+            f"<script>window.addEventListener('message',function(e){{if(e.origin==='{origin}'&&e.data&&e.data.nestorDienstenHoogte){{document.getElementById('nestor-diensten-frame').style.height=e.data.nestorDienstenHoogte+'px';}}}});</script>\n")
+
+diframe_intro = f"""<!--
+  NESTOR DIENSTEN-BLOK: "Dit is wat Nestor voor jou kan betekenen" (iframe-versie)
+
+  Plak dit in het HTML-/embed-veld. De iframe toont de pagina
+      {PAGES}/dist/diensten-frame.html
+  Het script eronder past de hoogte van de iframe aan aan de inhoud (drie kaarten per rij of één per rij),
+  zodat er geen scrollbalk komt en niets wordt afgesneden. Zonder dat script blijft de iframe 1200px hoog.
+
+  Iets aanpassen? Pas diensten.html aan, draai python3 build.py, commit en push. Binnen ongeveer 10 minuten
+  staat het op elke pagina met dit blok. Opnieuw plakken is niet nodig.
+-->
+"""
+(dist / "diensten-iframe-snippet.html").write_text(diframe_intro + diframe(f"{PAGES}/dist/diensten-frame.html", "https://nestor-group.github.io"), encoding="utf-8")
+
 # testpagina: vijandige site-CSS, met schakelaar voor de containerbreedte (375, 700, 1027 en vol)
 dhost = f"""<!doctype html>
 <html lang="nl">
@@ -384,4 +443,7 @@ dhost = f"""<!doctype html>
 dhost_remote = dhost.replace(dembed_local, dremote("dist/diensten-loader.js")).replace("<title>Testpagina: diensten-blok in een vreemde site</title>", "<title>Testpagina: diensten-blok via loader-script</title>")
 assert dhost_remote != dhost
 (HERE / "test-diensten-remote.html").write_text(dhost_remote, encoding="utf-8")
-print("ok: dist/diensten.css", len(dcss), "| dist/diensten.js", len(djs), "| dist/diensten-snippet.html | dist/diensten-embed.html", len(dembed), "| dist/diensten-loader.js", len(loader), "| dist/diensten-remote-snippet.html | test-diensten.html | test-diensten-remote.html")
+dhost_iframe = dhost.replace(dembed_local, diframe("dist/diensten-frame.html", "http://localhost:8766")).replace("<title>Testpagina: diensten-blok in een vreemde site</title>", "<title>Testpagina: diensten-blok in een iframe</title>")
+assert dhost_iframe != dhost
+(HERE / "test-diensten-iframe.html").write_text(dhost_iframe, encoding="utf-8")
+print("ok: dist/diensten.css", len(dcss), "| dist/diensten.js", len(djs), "| dist/diensten-snippet.html | dist/diensten-embed.html", len(dembed), "| dist/diensten-loader.js", len(loader), "| dist/diensten-remote-snippet.html | dist/diensten-frame.html | dist/diensten-iframe-snippet.html | test-diensten.html | test-diensten-remote.html | test-diensten-iframe.html")

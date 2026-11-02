@@ -1,0 +1,13 @@
+<!--
+  NESTOR DIENSTEN-BLOK: "Dit is wat Nestor voor jou kan betekenen" (iframe-versie)
+
+  Plak dit in het HTML-/embed-veld. De iframe toont de pagina
+      https://nestor-group.github.io/nestor-cases/dist/diensten-frame.html
+  Het script eronder past de hoogte van de iframe aan aan de inhoud (drie kaarten per rij of één per rij),
+  zodat er geen scrollbalk komt en niets wordt afgesneden. Zonder dat script blijft de iframe 1200px hoog.
+
+  Iets aanpassen? Pas diensten.html aan, draai python3 build.py, commit en push. Binnen ongeveer 10 minuten
+  staat het op elke pagina met dit blok. Opnieuw plakken is niet nodig.
+-->
+<iframe id="nestor-diensten-frame" src="https://nestor-group.github.io/nestor-cases/dist/diensten-frame.html" title="Dit is wat Nestor voor jou kan betekenen" loading="lazy" scrolling="no" style="display:block;width:100%;height:1200px;border:0;overflow:hidden;background:transparent"></iframe>
+<script>window.addEventListener('message',function(e){if(e.origin==='https://nestor-group.github.io'&&e.data&&e.data.nestorDienstenHoogte){document.getElementById('nestor-diensten-frame').style.height=e.data.nestorDienstenHoogte+'px';}});</script>

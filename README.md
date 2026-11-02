@@ -107,11 +107,14 @@ zodat beide blokken op één pagina kunnen staan.
   `dist/diensten-loader.js` zet opmaak en inhoud op de pagina en komt van GitHub Pages. Na een aanpassing hoef je
   nergens opnieuw te plakken: `diensten.html` aanpassen, `python3 build.py`, committen en pushen; binnen
   ongeveer 10 minuten staat het op elke pagina. De foto's komen uit de HubSpot File Manager.
+- `dist/diensten-iframe-snippet.html`: alternatief voor een embedveld dat scripts niet goed slikt: een `<iframe>` die
+  `dist/diensten-frame.html` op GitHub Pages toont, plus een regel script die de hoogte van de iframe aanpast aan de
+  inhoud. Links in het frame openen in de hoofdpagina. Ook hier: aanpassen in `diensten.html`, bouwen, pushen.
 - `dist/diensten-embed.html`: alternatief, alles in één bestand (CSS, HTML en script) zonder GitHub. Dan moet je bij
   elke aanpassing wel overal opnieuw plakken.
 - `dist/diensten.css`, `dist/diensten.js`, `dist/diensten-snippet.html`: de variant die CSS en script van
   GitHub Pages laadt, zoals het cases-blok. Alleen nodig als je liever niet bij elke wijziging opnieuw plakt.
-- `test-diensten.html` en `test-diensten-remote.html`: vijandige testpagina's met de alles-in-één snippet, resp. het loader-script, en linksboven een schakelaar voor de
+- `test-diensten.html`, `test-diensten-remote.html` en `test-diensten-iframe.html`: vijandige testpagina's met de alles-in-één snippet, het loader-script, resp. de iframe, en linksboven een schakelaar voor de
   containerbreedte (375, 700, 1027 of vol).
 
 Werkwijze bij een aanpassing: `diensten.html` aanpassen, `python3 build.py`, committen en pushen. Klaar.
